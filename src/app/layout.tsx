@@ -19,7 +19,7 @@ import MuiThemeProvider from '@/plugins/@mui/components/@mui-theme.provider'
 import { AppContextProvider } from '@/contexts'
 
 // global styles
-import './globals.css'
+
 
 const AppBar = dynamic(() => import('@/components/appbar/app-bar'), {
   loading: () => <div>Loading...</div>,
