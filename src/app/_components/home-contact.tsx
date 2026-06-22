@@ -8,9 +8,11 @@ import Grid from '@mui/material/Grid'
 import Divider from '@mui/material/Divider'
 import Link from 'next/link'
 import { StyledButton } from '@/components/core'
+import Image from 'next/image'
 import EmailIcon from '@/assets/icons/eva--email-outline.svg'
 import PhoneIcon from '@/assets/icons/eva--phone-outline.svg'
 import SendIcon from '@/assets/icons/picon--send.svg'
+
 
 const HomeContact = () => {
   return (
@@ -131,7 +133,12 @@ const HomeContact = () => {
                     },
                   }}
                 >
-                  <img src='/images/envelope-1.svg' alt='Footer contact' />
+<Image
+  src="/images/envelope-1.svg"
+  alt="Footer contact"
+  width={500}
+  height={500}
+/>
                 </Box>
                 <Box sx={{ mt: 4 }}>
                   <Link href='/contact' passHref>
