@@ -15,17 +15,18 @@ const nextConfig: NextConfig = {
                   params: {
                     overrides: {
                       removeViewBox: false,
-                      removeDimensions: true,
                     },
                   },
                 },
+                'removeDimensions', // ✅ هنا خارج preset-default
               ],
             },
-            dimensions: false, // Remove width/height from SVG
+            dimensions: false,
           },
         },
       ],
     })
+
     return config
   },
 }
