@@ -5,6 +5,8 @@ declare global {
     slug: string
     description: string
     icon?: ReactElement
+    subServices?: string[]   // ← ajoute cette ligne
+
     image?: string
   }
 }

@@ -3,9 +3,7 @@
 import React, { FC, memo, ReactElement } from 'react'
 
 // components
-import Link from 'next/link'
 import Box from '@mui/material/Box'
-import MuiLink from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
 // interfaces
@@ -13,23 +11,39 @@ import { Theme } from '@mui/material/styles'
 
 // hooks
 import { usePathname } from 'next/navigation'
+import { useScrollOrNavigate } from '../../hooks/useScrollOrNavigate'
 
 // constants
 import { companyMenus } from '@/constants/menus'
 
+// ─── Palette EXSETIA (dupliquée ici pour éviter un import croisé) ─────────────
+const BRAND = {
+  primary: '#B5377A',
+  primaryDark: '#570D3F',
+  primaryLight: '#FAC8EB',
+  white: '#FFFFFF',
+}
+
 interface LinkItemProps extends Props {
   label: string
   path: string
+  sectionId?: string | null
   icon?: ReactElement
 }
 
-const LinkItem: FC<LinkItemProps> = ({ label, path, icon }: LinkItemProps) => {
+const LinkItem: FC<LinkItemProps> = ({ label, path, sectionId, icon }: LinkItemProps) => {
   const pathName = usePathname()
+  const goTo = useScrollOrNavigate()
+  const isActive = pathName === path
+
   return (
-    <MuiLink
-      href={path}
-      component={Link}
+    <Box
+      component="button"
+      onClick={() => goTo({ path, sectionId })}
       sx={{
+        border: 'none',
+        background: 'none',
+        font: 'inherit',
         py: 0.8,
         px: 1.8,
         mx: 0.4,
@@ -38,10 +52,12 @@ const LinkItem: FC<LinkItemProps> = ({ label, path, icon }: LinkItemProps) => {
         overflow: 'hidden',
         alignItems: 'center',
         position: 'relative',
-        color: 'text.primary',
         textDecoration: 'none',
         display: 'inline-block',
-        // Icon
+        transition: (theme: Theme) =>
+          theme.transitions.create(['background-color', 'color', 'box-shadow']),
+
+        // Icône
         '& svg': {
           fontSize: 18,
           transform: 'translateX(-32px)',
@@ -51,15 +67,23 @@ const LinkItem: FC<LinkItemProps> = ({ label, path, icon }: LinkItemProps) => {
             theme.transitions.create(['transform', 'margin']),
         },
 
-        // Styles for active menu
-        ...(pathName === path && {
-          backgroundColor: 'primary.main',
-          color: '#fbfbfb',
+        // ── État actif ──
+        ...(isActive && {
+          background: `linear-gradient(135deg, ${BRAND.primary} 0%, ${BRAND.primaryDark} 100%)`,
+          color: BRAND.white,
+          boxShadow: `0 4px 12px ${BRAND.primary}44`,
         }),
 
+        // ── État inactif ──
+        ...(!isActive && {
+          color: 'text.primary',
+        }),
+
+        // ── Hover ──
         '&:hover': {
-          backgroundColor: 'primary.main',
-          color: '#fbfbfb',
+          background: `linear-gradient(135deg, ${BRAND.primary} 0%, ${BRAND.primaryDark} 100%)`,
+          color: BRAND.white,
+          boxShadow: `0 4px 12px ${BRAND.primary}44`,
           '& svg': {
             transform: 'translateX(0px)',
           },
@@ -75,6 +99,7 @@ const LinkItem: FC<LinkItemProps> = ({ label, path, icon }: LinkItemProps) => {
         component='p'
         sx={{
           fontSize: 14,
+          fontWeight: isActive ? 700 : 500,
           display: 'inline-block',
           color: 'inherit',
           marginLeft: '0',
@@ -83,9 +108,10 @@ const LinkItem: FC<LinkItemProps> = ({ label, path, icon }: LinkItemProps) => {
       >
         {label}
       </Typography>
-    </MuiLink>
+    </Box>
   )
 }
+
 const MemoizedLinkItem = memo(LinkItem)
 
 interface Props {}
@@ -93,19 +119,13 @@ interface Props {}
 const AppBarNavigation: FC<Props> = () => {
   return (
     <Box sx={{ mx: 'auto' }}>
-      <Box
-        component='ul'
-        sx={{
-          m: 0,
-          lineHeight: 0,
-          pl: 0,
-        }}
-      >
+      <Box component='ul' sx={{ m: 0, lineHeight: 0, pl: 0 }}>
         {companyMenus.map((item, index) => (
           <MemoizedLinkItem
             key={String(index)}
             label={item.label}
             path={item.path}
+            sectionId={item.sectionId}
             icon={item.icon}
           />
         ))}

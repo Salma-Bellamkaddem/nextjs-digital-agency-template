@@ -3,14 +3,12 @@ import dynamic from 'next/dynamic'
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
-
 // configs
 import { AppConfig } from '@/configs'
 
 // components
 // import AppBar from '@/components/appbar/app-bar'
 import Footer from '@/components/footer/footer'
-import FooterGithubBanner from '@/components/footer-github-banner'
 
 // @mui provider
 import MuiThemeProvider from '@/plugins/@mui/components/@mui-theme.provider'
@@ -51,7 +49,7 @@ export default function RootLayout({
               <AppBar />
               {children}
               <Footer />
-              <FooterGithubBanner />
+      
             </MuiThemeProvider>
           </AppContextProvider>
         </AppRouterCacheProvider>

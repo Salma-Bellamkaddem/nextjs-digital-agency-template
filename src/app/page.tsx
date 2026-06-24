@@ -3,14 +3,17 @@ import dynamic from 'next/dynamic'
 
 // components
 import Stack from '@mui/material/Stack'
+ 
+// components
 import PageLoader from '@/components/section-loader'
-
 const HomeHero = dynamic(() => import('./_components/home-hero'), {
   loading: () => <PageLoader />,
 })
 const HomeAbout = dynamic(() => import('./_components/home-about'), {
   loading: () => <PageLoader />,
 })
+
+
 const HomeMotivation = dynamic(
   () => import('./_components/home-our-motivation'),
   {
@@ -26,6 +29,7 @@ const HomeCTA = dynamic(() => import('./_components/home-cta'), {
 const HomeContact = dynamic(() => import('./_components/home-contact'), {
   loading: () => <PageLoader />,
 })
+ 
 
 const HomePage = (): JSX.Element => {
   return (
@@ -35,6 +39,7 @@ const HomePage = (): JSX.Element => {
       <HomeMotivation />
       <HomeServices />
       <HomeCTA />
+  
       <HomeContact />
     </Stack>
   )

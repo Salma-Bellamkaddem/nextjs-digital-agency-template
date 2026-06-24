@@ -1,6 +1,6 @@
 export const AppConfig = {
-  appName: 'NextJS Digital Agency Template',
+  appName: 'Nexsetia',
   appDescription:
-    'A Digital Modern Agency specializing in Design, Development, Branding and Online Marketing to elevate your business.',
-  authorGithubUrl: 'https://github.com/hiriski',
+    'Nexsetia accompagne les entreprises dans leur transformation digitale grâce à des solutions de développement web, design, acquisition de trafic, création de contenu et analyse de données.',
+  authorGithubUrl: 'https://github.com/Salma-Bellamkaddem',
 }

@@ -1,51 +1,83 @@
 export const services: IService[] = [
-  // public/icons/ai.png public/icons/content-strategy.png public/icons/conversation.png public/icons/mobile-app.png public/icons/pantone.png public/icons/shopping.png
   {
     id: 1,
-    title: 'Web Development',
-    slug: 'dev',
-    description:
-      "Strategy that involves creating and sharing content on social a website's media platforms",
-    image: '/icons/mobile-app.png',
-  },
-  {
-    id: 2,
-    title: 'Digital Marketing',
-    slug: 'marketing',
-    description:
-      'Lorem ipsum dolor sit amet elit sed, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+    title: 'Analyse des données & Études de marché',
+    slug: 'analyse-donnees',
+    description: 'Transformez vos données en décisions stratégiques grâce à des analyses précises et des tableaux de bord interactifs.',
+    subServices: [
+      'Dashboards Power BI',
+      'Reporting KPI',
+      'Google Analytics 4 (GA4)',
+      'Études de marché',
+      'Analyse de la concurrence',
+    ],
     image: '/icons/content-strategy.png',
   },
   {
+    id: 2,
+    title: 'Création de sites Web & Design',
+    slug: 'dev',
+    description: 'Concevez une présence digitale professionnelle qui inspire confiance et génère des résultats.',
+    subServices: [
+      'Sites vitrines & e-commerce',
+      'Landing pages',
+      'UX/UI Design & Figma',
+      'Développement Next.js',
+      'Responsive Design & maintenance',
+    ],
+    image: '/icons/mobile-app.png',
+  },
+  {
     id: 3,
-    title: 'E-commerce Solutions',
-    slug: 'e-commerce',
-    description:
-      'Lorem ipsum dolor sit amet elit sed, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    image: '/icons/shopping.png',
-  },
-  {
-    id: 4,
-    title: 'Branding & Graphic Design',
-    slug: 'branding',
-    description:
-      'Lorem ipsum dolor sit amet elit sed, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
-    image: '/icons/pantone.png',
-  },
-  {
-    id: 5,
-    title: 'Consulting & Strategy',
-    slug: 'consulting',
-    description:
-      'Lorem ipsum dolor sit amet elit sed, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+    title: 'Gestion des réseaux sociaux & Contenu',
+    slug: 'social-media',
+    description: 'Développez votre visibilité et engagez votre audience avec un contenu impactant.',
+    subServices: [
+      'Community Management',
+      'Création de visuels & vidéos (Reels/TikTok)',
+      'Calendrier éditorial',
+      'Gestion Facebook, Instagram & LinkedIn',
+      'Stratégie de contenu',
+    ],
     image: '/icons/conversation.png',
   },
   {
+    id: 4,
+    title: "Stratégie d'acquisition (SEO, GEO & SEA)",
+    slug: 'acquisition',
+    description: 'Attirez plus de prospects qualifiés grâce à des stratégies de visibilité performantes.',
+    subServices: [
+      'Audit SEO & SEO Local',
+      'Optimisation pour IA (ChatGPT, Gemini, Perplexity)',
+      'Google Ads & Meta Ads',
+      'Campagnes de génération de leads',
+      'Remarketing & optimisation ROI',
+    ],
+    image: '/icons/shopping.png',
+  },
+  {
+    id: 5,
+    title: 'Branding & Identité Visuelle',
+    slug: 'branding',
+    description: 'Construisez une image de marque forte et mémorable.',
+    subServices: [
+      'Création de logo',
+      'Charte graphique',
+      'Cartes de visite',
+      'Supports marketing',
+    ],
+    image: '/icons/pantone.png',
+  },
+  {
     id: 6,
-    title: 'AI & Machine Learning',
+    title: 'Automatisation & Intelligence Artificielle',
     slug: 'ai',
-    description:
-      'Lorem ipsum dolor sit amet elit sed, consectetur adipiscing elit, sed do eiusmod tempor incididunt.',
+    description: "Gagnez du temps et automatisez vos processus grâce à l'intelligence artificielle.",
+    subServices: [
+      'Chatbots IA',
+      'Automatisation WhatsApp & Email',
+      'CRM & workflows',
+    ],
     image: '/icons/ai.png',
   },
 ]

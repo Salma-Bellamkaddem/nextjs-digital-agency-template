@@ -4,6 +4,7 @@ declare global {
   interface IMenu {
     label: string
     path: string
+    sectionId?: string | null
     icon?: ReactElement
   }
 }

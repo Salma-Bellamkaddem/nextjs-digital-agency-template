@@ -1,20 +1,28 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import Grid from '@mui/material/Grid'
+import Grid from '@mui/material/Grid2'
 import Divider from '@mui/material/Divider'
-import Link from 'next/link'
 import { StyledButton } from '@/components/core'
 import Image from 'next/image'
 import EmailIcon from '@/assets/icons/eva--email-outline.svg'
 import PhoneIcon from '@/assets/icons/eva--phone-outline.svg'
 import SendIcon from '@/assets/icons/picon--send.svg'
+import ContactModal from '../_components/ContactModal'
 
+const BRAND = {
+  primary: '#B5377A',
+  primaryDark: '#570D3F',
+  primaryLight: '#FAC8EB',
+  primarySoft: '#FEDDF6',
+}
 
 const HomeContact = () => {
+  const [contactOpen, setContactOpen] = useState(false)
+
   return (
     <>
       <Box
@@ -26,87 +34,37 @@ const HomeContact = () => {
           borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
         }}
       >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-          }}
-        />
-        <Box
-          sx={{
-            pt: {
-              xs: 5,
-              md: 8,
-            },
-            pb: {
-              xs: 8,
-              md: 12,
-            },
-            position: 'relative',
-          }}
-        >
-          <Container
-            maxWidth='md'
-            sx={{
-              textAlign: {
-                xs: 'center',
-                md: 'left',
-              },
-            }}
-          >
+        <Box sx={{ pt: { xs: 5, md: 8 }, pb: { xs: 8, md: 12 }, position: 'relative' }}>
+          <Container maxWidth='md' sx={{ textAlign: { xs: 'center', md: 'left' } }}>
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, md: 7 }}>
                 <Box
-                  sx={(theme) => ({
+                  sx={{
                     mb: 3,
                     borderRadius: 1,
                     display: 'inline-block',
                     padding: '6px 14px',
-                    backgroundColor: theme.palette.primary.light,
-                    color: theme.palette.primary.main,
-                  })}
+                    backgroundColor: BRAND.primarySoft,
+                    color: BRAND.primary,
+                  }}
                 >
                   <Typography
-                    sx={{
-                      fontSize: 12,
-                      letterSpacing: 1,
-                      textTransform: 'uppercase',
-                    }}
+                    sx={{ fontSize: 12, letterSpacing: 1, textTransform: 'uppercase', fontWeight: 700 }}
                     variant='h5'
                   >
-                    Let&apos;s talk
+                    Discutons de votre projet
                   </Typography>
                 </Box>
-                <Typography
-                  sx={{
-                    mb: 2,
-                    fontSize: {
-                      xs: 22,
-                      md: 28,
-                      lg: 36,
-                    },
-                    fontWeight: '800',
-                  }}
-                >
-                  Let&apos;s make something
-                  <br /> great together.
+                <Typography sx={{ mb: 2, fontSize: { xs: 22, md: 28, lg: 36 }, fontWeight: 800 }}>
+                  Construisons quelque chose
+                  <br /> de grand ensemble.
                 </Typography>
-                <Typography
-                  variant='h5'
-                  sx={{
-                    color: 'text.secondary',
-                    mb: 2,
-                    fontWeight: '600',
-                    lineHeight: 1.8,
-                  }}
-                >
-                  We&apos;re excited to hear from you! Whether you have a
-                  question about our services, want to discuss a new project.
+                <Typography variant='h5' sx={{ color: 'text.secondary', mb: 2, fontWeight: 600, lineHeight: 1.8, fontSize: { xs: 15, md: 18 } }}>
+                  Une question sur nos services ? Un nouveau projet en tête ? Notre équipe est
+                  à votre écoute pour donner vie à votre prochaine campagne.
                 </Typography>
               </Grid>
+
               <Grid
                 size={{ xs: 12, md: 5 }}
                 sx={{
@@ -117,45 +75,36 @@ const HomeContact = () => {
                   mb: { xs: 0, md: 4 },
                 }}
               >
+                {/* Image enveloppe — masquée sur mobile */}
                 <Box
                   sx={{
-                    position: 'absolute',
-                    top: {
-                      xs: -8,
-                      md: -90,
-                    },
-                    right: 0,
-                    '& img': {
-                      width: {
-                        xs: 'auto',
-                        md: 500,
-                      },
-                    },
+                    position: { xs: 'static', md: 'absolute' },
+                    top: { md: -90 },
+                    right: { md: 0 },
+                    display: { xs: 'none', md: 'block' },
+                    '& img': { width: { md: 500 } },
                   }}
                 >
-<Image
-  src="/images/envelope-1.svg"
-  alt="Footer contact"
-  width={500}
-  height={500}
-/>
+                  <Image src='/images/envelope-1.svg' alt='Contactez EXSETIA' width={500} height={500} />
                 </Box>
-                <Box sx={{ mt: 4 }}>
-                  <Link href='/contact' passHref>
+                <Box sx={{ mt: { xs: 0, md: 4 } }}>
+                  <Box
+                    sx={{
+                      backgroundColor: BRAND.primary,
+                      '&:hover': { backgroundColor: BRAND.primaryDark },
+                      display: 'inline-block',
+                      borderRadius: 1,
+                    }}
+                  >
                     <StyledButton
                       variant='contained'
                       size='large'
-                      color='primary'
-                      endIcon={
-                        <Box
-                          component={SendIcon}
-                          sx={{ mr: 1, width: 18, height: 18 }}
-                        />
-                      }
+                      onClick={() => setContactOpen(true)}
+                      endIcon={<Box component={SendIcon} sx={{ mr: 1, width: 18, height: 18 }} />}
                     >
-                      Work With Us
+                      Travaillons ensemble
                     </StyledButton>
-                  </Link>
+                  </Box>
                 </Box>
               </Grid>
             </Grid>
@@ -165,98 +114,40 @@ const HomeContact = () => {
             <Divider sx={{ width: '100%', my: 4 }} />
           </Container>
 
-          <Container
-            maxWidth='md'
-            sx={{
-              textAlign: {
-                xs: 'center',
-                md: 'left',
-              },
-            }}
-          >
+          <Container maxWidth='md' sx={{ textAlign: { xs: 'center', md: 'left' } }}>
             <Grid container spacing={2}>
               <Grid size={{ xs: 12, md: 7 }}>
                 <Box
-                  sx={(theme) => ({
-                    fontWeight: '500',
-                    textDecoration: 'none',
-                    color: theme.palette.text.primary,
-                    ':hover': {
-                      color: 'primary.main',
-                    },
-                  })}
                   component='a'
-                  href='mailto:hello@example.com'
+                  href='mailto:contact@exsetia.com'
+                  sx={{ fontWeight: 500, textDecoration: 'none', color: 'text.primary', ':hover': { color: BRAND.primary } }}
                 >
-                  <>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: { xs: 'center', md: 'flex-start' },
-                      }}
-                    >
-                      <Box
-                        component={EmailIcon}
-                        sx={{ mr: 1, width: 26, height: 26 }}
-                      />
-                      <Typography sx={{ mb: 0 }} variant='h5'>
-                        hello@example.com
-                      </Typography>
-                    </Box>
-                    <Typography
-                      variant='subtitle1'
-                      sx={{ color: 'text.secondary' }}
-                    >
-                      Response within 24 hrs
-                    </Typography>
-                  </>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', md: 'flex-start' } }}>
+                    <Box component={EmailIcon} sx={{ mr: 1, width: 26, height: 26 }} />
+                    <Typography sx={{ mb: 0 }} variant='h5'>contact@exsetia.com</Typography>
+                  </Box>
+                  <Typography variant='subtitle1' sx={{ color: 'text.secondary' }}>Réponse sous 24h</Typography>
                 </Box>
               </Grid>
               <Grid size={{ xs: 12, md: 5 }}>
                 <Box
-                  sx={(theme) => ({
-                    fontWeight: '500',
-                    textDecoration: 'none',
-                    color: theme.palette.text.primary,
-                    ':hover': {
-                      color: 'primary.main',
-                    },
-                  })}
                   component='a'
-                  href='#'
-                  target={'_blank'}
-                  rel='noreferrer'
+                  href='tel:+212600000000'
+                  sx={{ fontWeight: 500, textDecoration: 'none', color: 'text.primary', ':hover': { color: BRAND.primary } }}
                 >
-                  <>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: { xs: 'center', md: 'flex-start' },
-                      }}
-                    >
-                      <Box
-                        component={PhoneIcon}
-                        sx={{ mr: 1, width: 25, height: 25 }}
-                      />
-                      <Typography sx={{ mb: 0 }} variant='h5'>
-                        +62 8881212121212
-                      </Typography>
-                    </Box>
-                    <Typography
-                      variant='subtitle1'
-                      sx={{ color: 'text.secondary' }}
-                    >
-                      Mon - Fri / 9 am - 5:00 PM
-                    </Typography>
-                  </>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', md: 'flex-start' } }}>
+                    <Box component={PhoneIcon} sx={{ mr: 1, width: 25, height: 25 }} />
+                    <Typography sx={{ mb: 0 }} variant='h5'>+212 6 00 00 00 00</Typography>
+                  </Box>
+                  <Typography variant='subtitle1' sx={{ color: 'text.secondary' }}>Lun - Ven / 9h - 18h</Typography>
                 </Box>
               </Grid>
             </Grid>
           </Container>
         </Box>
       </Box>
+
+      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </>
   )
 }
