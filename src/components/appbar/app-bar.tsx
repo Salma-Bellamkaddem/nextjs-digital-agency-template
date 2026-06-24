@@ -141,7 +141,7 @@ const DesktopNav: FC = () => {
             onClick={() => goTo(item)}
             sx={{
               border: 'none',
-              background: 'none',
+              backgroundColor: 'transparent',
               cursor: 'pointer',
               font: 'inherit',
               py: '7px',
