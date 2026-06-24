@@ -1,7 +1,7 @@
 'use client'
 
 import React, { FC, useState } from 'react'
-import { Box, Container, Typography, Grid, Stack, Button } from '@mui/material'
+import { Box, Container, Typography,  Stack, Button } from '@mui/material'
 import Logo from '@/assets/logo.svg'
 import HeartIcon from '@/assets/icons/ion--heart-sharp.svg'
 import { companyMenus, supportLinks } from '@/constants/menus'
