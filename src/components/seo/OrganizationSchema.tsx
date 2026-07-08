@@ -17,8 +17,7 @@ export default function OrganizationSchema() {
 
     address: {
       "@type": "PostalAddress",
-
-      addressCountry: "MA",
+      addressCountry: "Morocco"
     },
 
     areaServed: "Morocco",

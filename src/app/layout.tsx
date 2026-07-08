@@ -9,13 +9,19 @@ import MuiThemeProvider from '@/plugins/@mui/components/@mui-theme.provider'
 
 import AppBar from '@/components/appbar/app-bar'
 import Footer from '@/components/footer/footer'
-
+import type {  Viewport } from 'next'
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['300', '400', '500', '700', '800'],
   variable: '--font-plus-jakarta-sans',
   display: 'swap',
 })
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#B5377A',
+}
+
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.nexsetia.com'),
@@ -96,9 +102,11 @@ export const metadata: Metadata = {
 
     images: [
       {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
+        url: '/logo.webp',
+        width: 800,
+
+        height: 800,
+    
         alt: 'Nexsetia',
       },
     ],
@@ -112,7 +120,7 @@ export const metadata: Metadata = {
     description:
       'Marketing Digital • SEO • Développement Web • Branding • IA',
 
-    images: ['/og-image.jpg'],
+    images: ['/logo.webp'],
   },
 
   icons: {
@@ -134,8 +142,7 @@ export const metadata: Metadata = {
     apple: [
       {
         url: '/apple-touch-icon.png',
-        sizes: '180x180',
-        type: 'image/png',
+      
       },
     ],
   
@@ -153,20 +160,29 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
 
-      <body className={plusJakartaSans.variable}>
-        <AppRouterCacheProvider options={{ key: 'css' }}>
-          <AppContextProvider>
-            <MuiThemeProvider>
-              <AppBar />
+<body className={plusJakartaSans.variable}>
 
-              <main>{children}</main>
+<AppRouterCacheProvider options={{ key: 'css' }}>
 
-              <Footer />
-            </MuiThemeProvider>
-          </AppContextProvider>
-        </AppRouterCacheProvider>
-        <OrganizationSchema />
-      </body>
+  <AppContextProvider>
+
+    <MuiThemeProvider>
+
+      <AppBar />
+
+      <main>{children}</main>
+
+      <Footer />
+
+    </MuiThemeProvider>
+
+  </AppContextProvider>
+
+</AppRouterCacheProvider>
+
+<OrganizationSchema />
+
+</body>
     </html>
   )
 }
