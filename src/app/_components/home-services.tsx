@@ -2,11 +2,17 @@
 
 import React from 'react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation' // Utilisation du routeur App Router standard
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid2'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
 import { useTheme } from '@mui/material/styles'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import TrendingUpIcon from '@mui/icons-material/TrendingUp'
+import GroupIcon from '@mui/icons-material/Group'
+import GpsFixedIcon from '@mui/icons-material/GpsFixed'
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import { services } from '@/constants/service'
 import { AppConfig } from '@/configs'
 import ContactModal from './ContactModal'
@@ -18,115 +24,130 @@ const BRAND = {
   primaryLight: '#f8e8f3',
 }
 
+const CTA_VARIANTS: ('pink' | 'dark')[] = ['pink', 'pink', 'dark', 'dark', 'pink', 'dark']
+
+const ctaGradient = (variant: 'pink' | 'dark') =>
+  variant === 'pink'
+    ? `linear-gradient(90deg, ${BRAND.primary} 0%, #E0508F 100%)`
+    : `linear-gradient(90deg, ${BRAND.primaryDark} 0%, #2A0619 100%)`
+
 type ServiceItemProps = { item: IService; index: number }
 
 const HomeServiceItem = ({ item, index }: ServiceItemProps) => {
+  const router = useRouter()
   const [openContact, setOpenContact] = React.useState(false)
+  const [showAll, setShowAll] = React.useState(false)
+  
+  const { palette } = useTheme()
+  const isDark = palette.mode === 'dark'
+  const variant = CTA_VARIANTS[index % CTA_VARIANTS.length]
+  const number = String(index + 1).padStart(2, '0')
+
+  // Validation stricte du tableau pour TypeScript
+  const subServicesArray = item.subServices || []
+  const hasSubServices = subServicesArray.length > 0
+  
+  // Sélection des sous-services à afficher
+  const visibleSubServices = showAll ? subServicesArray : subServicesArray.slice(0, 3)
+  const remainingCount = Math.max(0, subServicesArray.length - 3)
+
+  const handleCardClick = () => {
+    router.push(`/services/${item.slug}`)
+  }
 
   return (
     <Grid size={{ xs: 12, sm: 6, lg: 4 }}>
       <Box
+        onClick={handleCardClick}
         sx={{
+          position: 'relative',
           borderRadius: 4,
-          px: { xs: 3, md: 4 },
-          py: { xs: 3, md: 4 },
+          px: { xs: 3.5, md: 4 },
+          py: { xs: 4, md: 4.5 },
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          backgroundColor: '#fff',
-          boxShadow: '0 4px 20px rgba(181,55,122,0.08)',
-          border: '1px solid rgba(181,55,122,0.08)',
-          // Fade-up animation avec délai selon l'index
+          overflow: 'hidden',
+          backgroundColor: isDark ? '#1f0a16' : '#fff',
+          boxShadow: isDark ? '0 4px 20px rgba(0,0,0,0.35)' : '0 10px 30px rgba(181,55,122,0.08)',
+          border: isDark ? `1px solid ${BRAND.primaryDark}` : '1px solid rgba(181,55,122,0.1)',
           animation: 'fadeUp 0.6s ease both',
           animationDelay: `${index * 0.1}s`,
           '@keyframes fadeUp': {
             from: { opacity: 0, transform: 'translateY(30px)' },
             to: { opacity: 1, transform: 'translateY(0)' },
           },
-          transition: 'transform 0.35s ease, box-shadow 0.35s ease',
+          cursor: 'pointer',
+          transition: 'all 0.35s ease',
           '&:hover': {
             boxShadow: `0 20px 50px ${BRAND.primary}25`,
             transform: 'translateY(-8px)',
-            border: `1px solid ${BRAND.primary}20`,
-          },
-          // Au hover, le bullet change de taille
-          '&:hover .bullet-dot': {
-            transform: 'scale(1.4)',
+            border: `1px solid ${BRAND.primary}40`,
           },
         }}
       >
-        {/* Icône avec animation pulse au hover */}
-        <Box
-          sx={{
-            width: { xs: 52, md: 60 },
-            height: { xs: 52, md: 60 },
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: BRAND.primarySoft,
-            mb: 2.5,
-            flexShrink: 0,
-            transition: 'transform 0.3s ease, background-color 0.3s ease',
-            '.MuiBox-root:hover &': {
-              backgroundColor: `${BRAND.primary}18`,
-              transform: 'rotate(5deg) scale(1.05)',
-            },
-          }}
-        >
-          <Image
-            src={item.image as string}
-            alt={item.title}
-            width={28}
-            height={28}
-            style={{ objectFit: 'contain' }}
-          />
+        {/* En-tête : icône + numéro filigrane */}
+        <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', mb: 2.5 }}>
+          <Box
+            sx={{
+              width: { xs: 56, md: 64 },
+              height: { xs: 56, md: 64 },
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: isDark ? `${BRAND.primary}20` : BRAND.primarySoft,
+              flexShrink: 0,
+            }}
+          >
+            <Image
+              src={item.image || '/icons/mobile-app.png'}
+              alt={item.title}
+              width={30}
+              height={30}
+              style={{ objectFit: 'contain' }}
+            />
+          </Box>
+          <Typography
+            sx={{
+              fontSize: { xs: 36, md: 46 },
+              fontWeight: 800,
+              lineHeight: 1,
+              color: isDark ? `${BRAND.primary}22` : `${BRAND.primary}14`,
+              userSelect: 'none',
+            }}
+          >
+            {number}
+          </Typography>
         </Box>
 
-        {/* Titre */}
+        {/* Titre du service */}
         <Typography
           component='h3'
           sx={{
-            fontSize: { xs: 15, md: 17 },
-            fontWeight: 700,
-            mb: 1,
-            lineHeight: 1.35,
-            color: '#1a1a2e',
+            fontSize: { xs: 18, md: 22 },
+            fontWeight: 800,
+            mb: 2,
+            lineHeight: 1.4,
+            color: isDark ? '#fff' : '#111122',
           }}
         >
           {item.title}
         </Typography>
 
-        {/* Description */}
-        <Typography
-          sx={{
-            color: '#6b7280',
-            fontSize: { xs: 13, md: 13.5 },
-            lineHeight: 1.7,
-            mb: 2,
-          }}
-        >
-          {item.description}
-        </Typography>
-
-        {/* Divider animé */}
+        {/* Divider */}
         <Box
           sx={{
-            width: 40,
-            height: 2,
+            width: 44,
+            height: 4,
             borderRadius: 1,
-            backgroundColor: BRAND.primarySoft,
-            mb: 2,
-            transition: 'width 0.4s ease, background-color 0.3s ease',
-            '.MuiBox-root:hover &': {
-              width: 70,
-              backgroundColor: BRAND.primary,
-            },
+            backgroundColor: BRAND.primary,
+            mb: 3,
           }}
         />
 
-        {/* Sous-services */}
-        {item.subServices && item.subServices.length > 0 && (
+        {/* Liste dynamique des sous-services */}
+        {hasSubServices && (
           <Box
             component='ul'
             sx={{
@@ -136,75 +157,101 @@ const HomeServiceItem = ({ item, index }: ServiceItemProps) => {
               flexGrow: 1,
               display: 'flex',
               flexDirection: 'column',
-              gap: 0.75,
+              gap: 1.5,
+              mb: 4,
             }}
           >
-            {item.subServices.map((sub) => (
+            {visibleSubServices.map((sub: string) => (
               <Box
                 component='li'
                 key={sub}
                 sx={{
                   display: 'flex',
                   alignItems: 'flex-start',
-                  gap: 1.25,
-                  fontSize: { xs: 12.5, md: 13 },
-                  color: '#4b5563',
-                  lineHeight: 1.5,
+                  gap: 1.5,
+                  fontSize: { xs: 14, md: 15 },
+                  color: isDark ? 'rgba(255,255,255,0.85)' : '#374151',
+                  lineHeight: 1.6,
+                  animation: 'fadeIn 0.25s ease both',
+                  '@keyframes fadeIn': {
+                    from: { opacity: 0, transform: 'translateY(-4px)' },
+                    to: { opacity: 1, transform: 'translateY(0)' },
+                  },
                 }}
               >
-                <Box
-                  className='bullet-dot'
+                <CheckCircleIcon
                   sx={{
-                    width: 7,
-                    height: 7,
-                    borderRadius: '50%',
-                    backgroundColor: BRAND.primary,
+                    fontSize: 19,
+                    color: BRAND.primary,
                     flexShrink: 0,
-                    mt: '5px',
-                    transition: 'transform 0.25s ease',
+                    mt: '2px',
                   }}
                 />
                 {sub}
               </Box>
             ))}
+
+            {/* Bouton de déploiement */}
+            {remainingCount > 0 && (
+              <Box
+                component='span'
+                onClick={(e) => {
+                  e.stopPropagation() // Bloque la redirection de la carte parent
+                  setShowAll(!showAll)
+                }}
+                sx={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  fontSize: { xs: 13, md: 14 },
+                  fontWeight: 700,
+                  color: BRAND.primary,
+                  cursor: 'pointer',
+                  mt: 1,
+                  width: 'fit-content',
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  },
+                }}
+              >
+                {showAll ? 'Voir moins ▲' : `+ ${remainingCount} autres services (Voir plus ▼)`}
+              </Box>
+            )}
           </Box>
         )}
 
-        {/* CTA */}
+        {/* CTA principal */}
         <Box
-          onClick={() => setOpenContact(true)}
+          onClick={(e) => {
+            e.stopPropagation() // Bloque la redirection pour ouvrir la modal de contact
+            setOpenContact(true)
+          }}
           sx={{
-            mt: 3,
-            pt: 2,
-            borderTop: `1px solid ${BRAND.primarySoft}`,
+            mt: 'auto',
             display: 'flex',
             alignItems: 'center',
-            gap: 0.75,
-            color: BRAND.primary,
-            fontWeight: 700,
-            fontSize: { xs: 13, md: 13.5 },
+            justifyContent: 'space-between',
+            gap: 1,
+            px: 3,
+            py: 1.7,
+            borderRadius: 3.5,
+            background: ctaGradient(variant),
+            color: '#fff',
+            fontWeight: 800,
+            fontSize: { xs: 14, md: 15 },
+            letterSpacing: '0.3px',
             cursor: 'pointer',
-            width: 'fit-content',
-            '& svg': { transition: 'transform 0.25s ease' },
-            '&:hover svg': { transform: 'translateX(6px)' },
-            '&:hover': { opacity: 0.8 },
+            transition: 'transform 0.25s ease, box-shadow 0.25s ease',
+            boxShadow: `0 8px 24px ${variant === 'pink' ? BRAND.primary : BRAND.primaryDark}40`,
+            '& svg': { transition: 'transform 0.25s ease', fontSize: 20 },
+            '&:hover': {
+              transform: 'translateY(-3px)',
+              boxShadow: `0 12px 28px ${variant === 'pink' ? BRAND.primary : BRAND.primaryDark}60`,
+            },
+            '&:hover svg': { transform: 'translateX(5px)' },
           }}
         >
-          Demander un devis
-          <Box
-            component='svg'
-            xmlns='http://www.w3.org/2000/svg'
-            width={15}
-            height={15}
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth={2.5}
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          >
-            <path d='M5 12h14M12 5l7 7-7 7' />
-          </Box>
+          {item.ctaLabel ?? 'Découvrir'}
+          <ArrowForwardIcon />
         </Box>
       </Box>
 
@@ -215,6 +262,7 @@ const HomeServiceItem = ({ item, index }: ServiceItemProps) => {
 
 const HomeServices = () => {
   const { palette } = useTheme()
+  const isDark = palette.mode === 'dark'
 
   return (
     <Box
@@ -222,16 +270,13 @@ const HomeServices = () => {
       component='section'
       sx={{
         width: '100%',
-        pt: { xs: 8, md: 14 },
-        pb: { xs: 8, md: 14 },
-        // Background clair au lieu du bordeaux foncé
-        background:
-          palette.mode === 'dark'
-            ? 'linear-gradient(160deg, #1a0612 0%, #2d0f22 100%)'
-            : 'linear-gradient(160deg, #fdf0f8 0%, #f9e4f3 40%, #fce8f5 100%)',
+        pt: { xs: 10, md: 16 },
+        pb: { xs: 10, md: 16 },
+        background: isDark
+          ? 'linear-gradient(160deg, #1a0612 0%, #2d0f22 100%)'
+          : 'linear-gradient(160deg, #fdf0f8 0%, #f9e4f3 40%, #fce8f5 100%)',
         position: 'relative',
         overflow: 'hidden',
-        // Cercles décoratifs en arrière-plan
         '&::before': {
           content: '""',
           position: 'absolute',
@@ -242,7 +287,7 @@ const HomeServices = () => {
           borderRadius: '50%',
           background: `radial-gradient(circle, ${BRAND.primary}12 0%, transparent 70%)`,
           pointerEvents: 'none',
-        },
+         },
         '&::after': {
           content: '""',
           position: 'absolute',
@@ -258,115 +303,180 @@ const HomeServices = () => {
     >
       <Container maxWidth='lg' sx={{ position: 'relative', zIndex: 1 }}>
 
-        {/* ── En-tête ── */}
-        <Box
-          sx={{
-            mb: { xs: 6, md: 8 },
-            textAlign: 'center',
-            animation: 'fadeDown 0.7s ease both',
-            '@keyframes fadeDown': {
-              from: { opacity: 0, transform: 'translateY(-20px)' },
-              to: { opacity: 1, transform: 'translateY(0)' },
-            },
-          }}
-        >
-          {/* Badge */}
-          <Box
-            sx={{
-              mb: 3,
-              borderRadius: 10,
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 1,
-              padding: '6px 18px',
-              backgroundColor: `${BRAND.primary}15`,
-              border: `1px solid ${BRAND.primary}25`,
-            }}
-          >
+        {/* En-tête de section */}
+        <Grid container spacing={{ xs: 5, md: 6 }} alignItems='center' sx={{ mb: { xs: 8, md: 10 } }}>
+          <Grid size={{ xs: 12, md: 7 }}>
             <Box
               sx={{
-                width: 6,
-                height: 6,
-                borderRadius: '50%',
-                backgroundColor: BRAND.primary,
-                animation: 'pulse 2s ease-in-out infinite',
-                '@keyframes pulse': {
-                  '0%, 100%': { opacity: 1, transform: 'scale(1)' },
-                  '50%': { opacity: 0.5, transform: 'scale(0.8)' },
+                display: 'flex',
+                alignItems: 'center',
+                gap: 1.5,
+                mb: 2.5,
+                animation: 'fadeDown 0.7s ease both',
+                '@keyframes fadeDown': {
+                  from: { opacity: 0, transform: 'translateY(-20px)' },
+                  to: { opacity: 1, transform: 'translateY(0)' },
                 },
               }}
-            />
+            >
+              <Box
+                sx={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: '50%',
+                  backgroundColor: BRAND.primary,
+                  animation: 'pulse 2s ease-in-out infinite',
+                  '@keyframes pulse': {
+                    '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+                    '50%': { opacity: 0.5, transform: 'scale(0.8)' },
+                  },
+                }}
+              />
+              <Typography
+                sx={{
+                  fontSize: 13,
+                  letterSpacing: 3,
+                  textTransform: 'uppercase',
+                  fontWeight: 800,
+                  color: BRAND.primary,
+                }}
+              >
+                Nos Services
+              </Typography>
+            </Box>
+
+            <Typography
+              component='h2'
+              sx={{
+                mb: 3,
+                lineHeight: 1.2,
+                fontWeight: 900,
+                fontSize: { xs: 32, sm: 42, md: 52 },
+                color: isDark ? '#fff' : '#1a1a2e',
+                letterSpacing: '-1px',
+              }}
+            >
+              Bâtissez une{' '}
+              <Box component='span' sx={{ color: BRAND.primary }}>
+                croissance durable
+              </Box>
+              , portée par le digital.
+            </Typography>
+
             <Typography
               sx={{
-                fontSize: 11,
-                letterSpacing: 2,
-                textTransform: 'uppercase',
-                fontWeight: 700,
-                color: BRAND.primary,
+                color: isDark ? 'rgba(255,255,255,0.7)' : '#4b5563',
+                fontSize: { xs: 15, md: 17 },
+                lineHeight: 1.8,
+                maxWidth: 560,
               }}
             >
-              Nos services
+              Nous vous offrons une large gamme de services couvrant les différentes facettes
+              du marketing digital, afin de{' '}
+              <Box component='span' sx={{ fontWeight: 700, color: isDark ? '#fff' : '#1a1a2e' }}>
+                répondre avec justesse aux besoins
+              </Box>{' '}
+              de votre entreprise, quels que soient vos objectifs, vos ambitions ou votre stade
+              de développement.
             </Typography>
-          </Box>
+          </Grid>
 
-          <Typography
-            component='h2'
-            sx={{
-              mb: 2.5,
-              lineHeight: 1.25,
-              fontWeight: 800,
-              fontSize: { xs: 26, sm: 34, md: 46 },
-              color: BRAND.primaryDark,
-              letterSpacing: '-0.5px',
-            }}
-          >
-            De quoi avez-vous besoin pour{' '}
-            <Box
-              component='span'
-              sx={{
-                color: BRAND.primary,
-                position: 'relative',
-                '&::after': {
-                  content: '""',
+          {/* Illustration décorative */}
+          <Grid size={{ xs: 12, md: 5 }} sx={{ display: { xs: 'none', md: 'block' } }}>
+            <Box sx={{ position: 'relative', height: 340 }}>
+              <Box
+                sx={{
                   position: 'absolute',
-                  bottom: -4,
-                  left: 0,
-                  width: '100%',
-                  height: 3,
-                  borderRadius: 2,
-                  backgroundColor: `${BRAND.primary}40`,
-                },
-              }}
-            >
-              faire grandir
-            </Box>{' '}
-            votre entreprise&nbsp;?
-          </Typography>
+                  top: '10%',
+                  right: '-10%',
+                  width: 340,
+                  height: 340,
+                  borderRadius: '50%',
+                  background: `conic-gradient(from 200deg, ${BRAND.primary}, ${BRAND.primaryLight}, #fff 60%, ${BRAND.primary})`,
+                  filter: 'blur(0.5px)',
+                  opacity: 0.9,
+                  WebkitMaskImage:
+                    'radial-gradient(circle, transparent 38%, black 40%, black 62%, transparent 64%)',
+                  maskImage:
+                    'radial-gradient(circle, transparent 38%, black 40%, black 62%, transparent 64%)',
+                  animation: 'spin 18s linear infinite',
+                  '@keyframes spin': {
+                    from: { transform: 'rotate(0deg)' },
+                    to: { transform: 'rotate(360deg)' },
+                  },
+                }}
+              />
 
-          <Typography
-            sx={{
-              color: '#6b7280',
-              fontSize: { xs: 14, md: 17 },
-              lineHeight: 1.7,
-              maxWidth: 580,
-              mx: 'auto',
-            }}
-          >
-            Nous proposons une large gamme de services pour accompagner les entreprises
-            dans leur croissance digitale.
-          </Typography>
-        </Box>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  left: '18%',
+                  width: 72,
+                  height: 72,
+                  borderRadius: '50%',
+                  backgroundColor: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 12px 30px rgba(181,55,122,0.25)',
+                  animation: 'floatA 4s ease-in-out infinite',
+                }}
+              >
+                <TrendingUpIcon sx={{ color: BRAND.primary, fontSize: 30 }} />
+              </Box>
 
-        {/* ── Grille services ── */}
-        <Grid container spacing={{ xs: 2, sm: 3, md: 3 }}>
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: '18%',
+                  right: 0,
+                  width: 60,
+                  height: 60,
+                  borderRadius: '50%',
+                  backgroundColor: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 12px 30px rgba(181,55,122,0.25)',
+                  animation: 'floatB 5s ease-in-out infinite',
+                }}
+              >
+                <GroupIcon sx={{ color: BRAND.primary, fontSize: 26 }} />
+              </Box>
+
+              <Box
+                sx={{
+                  position: 'absolute',
+                  bottom: '10%',
+                  right: '14%',
+                  width: 66,
+                  height: 66,
+                  borderRadius: '50%',
+                  backgroundColor: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow: '0 12px 30px rgba(181,55,122,0.25)',
+                  animation: 'floatC 4.5s ease-in-out infinite',
+                }}
+              >
+                <GpsFixedIcon sx={{ color: BRAND.primary, fontSize: 28 }} />
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+
+        {/* Grille des cartes de services */}
+        <Grid container spacing={{ xs: 3, sm: 3, md: 4 }}>
           {services.map((item, index) => (
-            <HomeServiceItem item={item} key={item.title} index={index} />
+            <HomeServiceItem item={item} key={item.id} index={index} />
           ))}
         </Grid>
 
-        {/* Note de bas */}
-        <Box sx={{ textAlign: 'center', mt: { xs: 5, md: 7 } }}>
-          <Typography sx={{ color: '#9ca3af', fontSize: { xs: 12, md: 13 } }}>
+        {/* Footer de section */}
+        <Box sx={{ textAlign: 'center', mt: { xs: 6, md: 8 } }}>
+          <Typography sx={{ color: isDark ? 'rgba(255,255,255,0.45)' : '#9ca3af', fontSize: { xs: 13, md: 14 } }}>
             Depuis sa création en 2026,{' '}
             <Box component='span' sx={{ color: BRAND.primary, fontWeight: 600 }}>
               {AppConfig.appName}

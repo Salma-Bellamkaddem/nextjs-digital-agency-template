@@ -6,7 +6,7 @@ declare global {
     description: string
     icon?: ReactElement
     subServices?: string[]   // ← ajoute cette ligne
-
+    ctaLabel?: string
     image?: string
   }
 }

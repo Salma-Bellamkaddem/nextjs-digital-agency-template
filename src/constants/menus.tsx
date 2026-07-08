@@ -4,8 +4,8 @@ import Box from '@mui/material/Box'
 import WorkOutlinedIcon from '@/assets/icons/material-symbols--work-outline.svg'
 import HomeOutlinedIcon from '@/assets/icons/fluent--home-32-regular.svg'
 import LayersOutlinedIcon from '@/assets/icons/fluent--layer-24-regular.svg'
-import FolderOutlinedIcon from '@/assets/icons/fluent--folder-32-regular.svg'
-import ContactOutlinedIcon from '@/assets/icons/fluent--contact-card-group-28-regular.svg'
+//import FolderOutlinedIcon from '@/assets/icons/fluent--folder-32-regular.svg'
+//import ContactOutlinedIcon from '@/assets/icons/fluent--contact-card-group-28-regular.svg'
 import InfoOutlinedIcon from '@/assets/icons/jam--info.svg'
 import ContactSupportOutlinedIcon from '@/assets/icons/material-symbols--contact-support-outline-rounded.svg'
 import PaperOutlinedIcon from '@/assets/icons/quill--paper.svg'
@@ -36,36 +36,19 @@ export const companyMenus: IMenu[] = [
     ),
   },
   {
-    label: 'Réalisations',
-    path: '/portfolio',
-    sectionId: 'home-portfolio',
-    icon: (
-      <Box component={FolderOutlinedIcon} sx={{ width: 18, height: 'auto' }} />
-    ),
-  },
-  {
-    label: 'Contact',
-    path: '/contact',
-    sectionId: 'home-contact',
-    icon: (
-      <Box component={ContactOutlinedIcon} sx={{ width: 18, height: 'auto' }} />
-    ),
-  },
-  {
-    label: 'Tarifs',
-    path: '/pricing',
-    sectionId: null, // vraie page dédiée, pas une ancre sur la home
-    icon: (
-      <Box component={LayersOutlinedIcon} sx={{ width: 18, height: 'auto' }} />
-    ),
-  },
-  {
-    label: 'Carrières',
-    path: '/career',
-    sectionId: 'home-career',
+    label: 'Notre méthode',
+    path: '/#home-method', // Cible l'ancre sur la page d'accueil au lieu d'un fichier fictif
+    sectionId: 'home-method',
     icon: (
       <Box component={WorkOutlinedIcon} sx={{ width: 18, height: 'auto' }} />
     ),
+  },
+
+  {
+    label: 'Notre vision',
+    path: '/vision',
+    sectionId: 'home-vision', // doit correspondre exactement à l'id={'home-vision'} du composant
+    icon: <Box component={InfoOutlinedIcon} sx={{ width: 18, height: 'auto' }} />, // ou une icône si les autres items en ont une
   },
   {
     label: 'À propos',
@@ -75,6 +58,25 @@ export const companyMenus: IMenu[] = [
       <Box component={InfoOutlinedIcon} sx={{ width: 18, height: 'auto' }} />
     ),
   },
+//  {
+  //  label: 'Réalisations',
+  //  path: '/portfolio',
+  //  sectionId: 'home-portfolio',
+  //  icon: (
+  //    <Box component={FolderOutlinedIcon} sx={{ width: 18, height: 'auto' }} />
+  //  ),
+  //},
+
+  //{
+  //  label: 'Tarifs',
+  //  path: '/pricing',
+  //  sectionId: null, // vraie page dédiée, pas une ancre sur la home
+  //  icon: (
+  //    <Box component={LayersOutlinedIcon} sx={{ width: 18, height: 'auto' }} />
+  //  ),
+  //},
+
+  
 ]
 
 // ─── Liens d'assistance (footer / aide) ────────────────────────────────────

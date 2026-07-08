@@ -110,7 +110,7 @@ const BrandLogo: FC<{ floating: boolean }> = ({ floating }) => (
           fontWeight: 500,
         }}
       >
-        EXSE
+        NEXSE
       </Box>
       {/* "TIA" — rose vif + ultra bold, comme "Ma" dans le design */}
       <Box component="span" sx={{ color: BRAND.primary, fontWeight: 900 }}>

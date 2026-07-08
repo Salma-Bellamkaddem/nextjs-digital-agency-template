@@ -1,12 +1,15 @@
 'use client'
 
-import React, { FC, useState } from 'react'
-import { Box, Container, Typography,  Stack, Button } from '@mui/material'
-import Logo from '@/assets/logo.svg'
-import HeartIcon from '@/assets/icons/ion--heart-sharp.svg'
-import { companyMenus, supportLinks } from '@/constants/menus'
-import { services } from '@/constants/service'
+import React, { FC, ReactNode, useEffect, useRef, useState } from 'react'
+import { Box, Container, Typography, Stack, Button, useTheme } from '@mui/material'
+import MuiLink from '@mui/material/Link'
+import RouterLink from 'next/link'
+import { keyframes } from '@emotion/react'
+import Logo from '@/assets/logo.webp'
 import ContactModal from '@/app/_components/ContactModal'
+import { companyMenus } from '@/constants/menus'
+// import { services } from '@/constants/service' // décommente si tu as ce fichier
+import Image from 'next/image'
 
 const BRAND = {
   primary: '#B5377A',
@@ -15,47 +18,179 @@ const BRAND = {
   primarySoft: '#FEDDF6',
 }
 
+// ─── Contenu ───────────────────────────────────────────────────────────────
+// Services : en attendant constants/service.ts, on définit ici label + href.
+// Remplace par `services.map(s => ({ label: s.title, href: `/services/${s.slug}` }))`
+// dès que tu me partages ce fichier.
+const servicesList = [
+  { label: 'Études de marché', href: '/services/etudes-de-marche' },
+  { label: 'SEO • GEO • SEA', href: '/services/seo-geo-sea' },
+  { label: 'Branding', href: '/services/branding' },
+  { label: 'Social Media', href: '/services/social-media' },
+  { label: 'Développement Web & Mobile', href: '/services/developpement-web-mobile' },
+]
+
+// Entreprise : on ne garde de companyMenus que les labels utilisés dans le footer,
+// et on construit le href en fonction du sectionId (ancre sur la home) ou du path.
+const entrepriseLabels = ['Accueil', 'À propos', 'Notre vision', 'Contact']
+const entrepriseList = entrepriseLabels
+  .map((label) => companyMenus.find((m) => m.label === label))
+  .filter(Boolean)
+  .map((m) => ({
+    label: m!.label,
+    href: m!.sectionId ? `/#${m!.sectionId}` : m!.path,
+  }))
+
+const legalLinks = ['Mentions légales', 'Politique de confidentialité']
+
 const socialLinks = [
   {
-    name: 'Facebook',
-    link: 'https://www.facebook.com',
+    name: 'LinkedIn',
+    link: 'https://www.linkedin.com/company/nexsetia/?viewAsMember=true',
     icon: (
-      <svg fill='currentColor' viewBox='0 0 24 24' width='18' height='18'>
-        <path d='M 12 2 C 6.4889971 2 2 6.4889971 2 12 C 2 17.511003 6.4889971 22 12 22 C 17.511003 22 22 17.511003 22 12 C 22 6.4889971 17.511003 2 12 2 z M 12 4 C 16.430123 4 20 7.5698774 20 12 C 20 16.014467 17.065322 19.313017 13.21875 19.898438 L 13.21875 14.384766 L 15.546875 14.384766 L 15.912109 12.019531 L 13.21875 12.019531 L 13.21875 10.726562 C 13.21875 9.7435625 13.538984 8.8710938 14.458984 8.8710938 L 15.935547 8.8710938 L 15.935547 6.8066406 C 15.675547 6.7716406 15.126844 6.6953125 14.089844 6.6953125 C 11.923844 6.6953125 10.654297 7.8393125 10.654297 10.445312 L 10.654297 12.019531 L 8.4277344 12.019531 L 8.4277344 14.384766 L 10.654297 14.384766 L 10.654297 19.878906 C 6.8702905 19.240845 4 15.970237 4 12 C 4 7.5698774 7.5698774 4 12 4 z' />
+      <svg fill='currentColor' viewBox='0 0 24 24' width='17' height='17'>
+        <path d='M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18.34V10.1H5.67v8.24h2.67zM7 8.9a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zM18.34 18.34v-4.52c0-2.42-1.29-3.55-3.02-3.55-1.39 0-2.01.77-2.36 1.3v-1.1h-2.66c.04.75 0 8.24 0 8.24h2.66v-4.6c0-.25.02-.5.1-.68.2-.5.66-1.03 1.44-1.03 1.02 0 1.43.78 1.43 1.92v4.39h2.66z' />
       </svg>
     ),
   },
   {
     name: 'Instagram',
-    link: 'https://www.instagram.com',
+    link: 'https://www.instagram.com/nexsetia.agency/',
     icon: (
-      <svg fill='currentColor' viewBox='0 0 24 24' width='18' height='18'>
-        <path d='M 8 3 C 5.243 3 3 5.243 3 8 L 3 16 C 3 18.757 5.243 21 8 21 L 16 21 C 18.757 21 21 18.757 21 16 L 21 8 C 21 5.243 18.757 3 16 3 L 8 3 z M 8 5 L 16 5 C 17.654 5 19 6.346 19 8 L 19 16 C 19 17.654 17.654 19 16 19 L 8 19 C 6.346 19 5 17.654 5 16 L 5 8 C 5 6.346 6.346 5 8 5 z M 17 6 A 1 1 0 0 0 16 7 A 1 1 0 0 0 17 8 A 1 1 0 0 0 18 7 A 1 1 0 0 0 17 6 z M 12 7 C 9.243 7 7 9.243 7 12 C 7 14.757 9.243 17 12 17 C 14.757 17 17 14.757 17 12 C 17 9.243 14.757 7 12 7 z M 12 9 C 13.654 9 15 10.346 15 12 C 15 13.654 13.654 15 12 15 C 10.346 15 9 13.654 9 12 C 9 10.346 10.346 9 12 9 z' />
+      <svg fill='currentColor' viewBox='0 0 24 24' width='17' height='17'>
+        <path d='M8 3C5.243 3 3 5.243 3 8v8c0 2.757 2.243 5 5 5h8c2.757 0 5-2.243 5-5V8c0-2.757-2.243-5-5-5H8zm0 2h8c1.654 0 3 1.346 3 3v8c0 1.654-1.346 3-3 3H8c-1.654 0-3-1.346-3-3V8c0-1.654 1.346-3 3-3zm9 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-5 1c-2.757 0-5 2.243-5 5s2.243 5 5 5 5-2.243 5-5-2.243-5-5-5zm0 2c1.654 0 3 1.346 3 3s-1.346 3-3 3-3-1.346-3-3 1.346-3 3-3z' />
       </svg>
     ),
   },
   {
-    name: 'WhatsApp',
-    link: 'https://wa.me/212600000000',
+    name: 'TikTok',
+    link: 'https://www.tiktok.com/@nexsetia',
     icon: (
-      <svg fill='currentColor' viewBox='0 0 24 24' width='18' height='18'>
-        <path d='M 12.011719 2 C 6.5057187 2 2.0234844 6.478375 2.0214844 11.984375 C 2.0204844 13.744375 2.4814687 15.462563 3.3554688 16.976562 L 2 22 L 7.2324219 20.763672 C 8.6914219 21.559672 10.333859 21.977516 12.005859 21.978516 L 12.009766 21.978516 C 17.514766 21.978516 21.995047 17.499141 21.998047 11.994141 C 22.000047 9.3251406 20.962172 6.8157344 19.076172 4.9277344 C 17.190172 3.0407344 14.683719 2.001 12.011719 2 z M 12.009766 4 C 14.145766 4.001 16.153109 4.8337969 17.662109 6.3417969 C 19.171109 7.8517969 20.000047 9.8581875 19.998047 11.992188 C 19.996047 16.396187 16.413812 19.978516 12.007812 19.978516 C 10.674812 19.977516 9.3544062 19.642812 8.1914062 19.007812 L 7.5175781 18.640625 L 6.7734375 18.816406 L 4.8046875 19.28125 L 5.2851562 17.496094 L 5.5019531 16.695312 L 5.0878906 15.976562 C 4.3898906 14.768562 4.0204844 13.387375 4.0214844 11.984375 C 4.0234844 7.582375 7.6067656 4 12.009766 4 z M 8.4765625 7.375 C 8.3095625 7.375 8.0395469 7.4375 7.8105469 7.6875 C 7.5815469 7.9365 6.9355469 8.5395781 6.9355469 9.7675781 C 6.9355469 10.995578 7.8300781 12.182609 7.9550781 12.349609 C 8.0790781 12.515609 9.68175 15.115234 12.21875 16.115234 C 14.32675 16.946234 14.754891 16.782234 15.212891 16.740234 C 15.670891 16.699234 16.690438 16.137687 16.898438 15.554688 C 17.106437 14.971687 17.106922 14.470187 17.044922 14.367188 C 16.982922 14.263188 16.816406 14.201172 16.566406 14.076172 C 16.317406 13.951172 15.090328 13.348625 14.861328 13.265625 C 14.632328 13.182625 14.464828 13.140625 14.298828 13.390625 C 14.132828 13.640625 13.655766 14.201187 13.509766 14.367188 C 13.363766 14.534188 13.21875 14.556641 12.96875 14.431641 C 12.71875 14.305641 11.914938 14.041406 10.960938 13.191406 C 10.218937 12.530406 9.7182656 11.714844 9.5722656 11.464844 C 9.4272656 11.215844 9.5585938 11.079078 9.6835938 10.955078 C 9.7955938 10.843078 9.9316406 10.663578 10.056641 10.517578 C 10.180641 10.371578 10.223641 10.267562 10.306641 10.101562 C 10.389641 9.9355625 10.347156 9.7890625 10.285156 9.6640625 C 10.223156 9.5390625 9.737625 8.3065 9.515625 7.8125 C 9.328625 7.3975 9.131125 7.3878594 8.953125 7.3808594 C 8.808125 7.3748594 8.6425625 7.375 8.4765625 7.375 z' />
+      <svg fill='currentColor' viewBox='0 0 24 24' width='17' height='17'>
+        <path d='M16.6 5.82c-.9-.98-1.4-2.26-1.4-3.62h-3.16v13.44a2.6 2.6 0 1 1-1.83-2.48V9.9a5.76 5.76 0 1 0 4.99 5.71c0-.03 0-.06 0-.09V9.4a7.9 7.9 0 0 0 4.4 1.34V7.58a4.85 4.85 0 0 1-3-1.76z' />
       </svg>
     ),
   },
   {
-    name: 'YouTube',
-    link: 'https://www.youtube.com',
+    name: 'Facebook',
+    link: 'https://www.facebook.com/people/Nexsetia/61590831196216/',
     icon: (
-      <svg fill='currentColor' viewBox='0 0 24 24' width='18' height='18'>
-        <path d='M 12 4 C 12 4 5.7455469 3.9999687 4.1855469 4.4179688 C 3.3245469 4.6479688 2.6479687 5.3255469 2.4179688 6.1855469 C 1.9999687 7.7455469 2 12 2 12 C 2 12 1.9999687 16.254453 2.4179688 17.814453 C 2.6479687 18.675453 3.3255469 19.352031 4.1855469 19.582031 C 5.7455469 20.000031 12 20 12 20 C 12 20 18.254453 20.000031 19.814453 19.582031 C 20.674453 19.352031 21.352031 18.674453 21.582031 17.814453 C 22.000031 16.254453 22 12 22 12 C 22 12 22.000031 7.7455469 21.582031 6.1855469 C 21.352031 5.3255469 20.674453 4.6479688 19.814453 4.4179688 C 18.254453 3.9999687 12 4 12 4 z M 12 6 C 14.882 6 18.490875 6.1336094 19.296875 6.3496094 C 19.465875 6.3946094 19.604391 6.533125 19.650391 6.703125 C 19.891391 7.601125 20 10.342 20 12 C 20 13.658 19.891391 16.397875 19.650391 17.296875 C 19.605391 17.465875 19.466875 17.604391 19.296875 17.650391 C 18.491875 17.866391 14.882 18 12 18 C 9.119 18 5.510125 17.866391 4.703125 17.650391 C 4.534125 17.605391 4.3956094 17.466875 4.3496094 17.296875 C 4.1086094 16.398875 4 13.658 4 12 C 4 10.342 4.1086094 7.6011719 4.3496094 6.7011719 C 4.3946094 6.5331719 4.533125 6.3946094 4.703125 6.3496094 C 5.508125 6.1336094 9.118 6 12 6 z M 10 8.5351562 L 10 15.464844 L 16 12 L 10 8.5351562 z' />
+      <svg fill='currentColor' viewBox='0 0 24 24' width='17' height='17'>
+        <path d='M12 2C6.49 2 2 6.49 2 12c0 4.99 3.66 9.13 8.44 9.88v-6.99H7.9v-2.89h2.54v-2.2c0-2.51 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.89h-2.34v6.99C18.34 21.13 22 16.99 22 12c0-5.51-4.49-10-10-10z' />
       </svg>
     ),
   },
 ]
 
+// ─── Keyframes ───────────────────────────────────────────────────────────────
+const floatY = keyframes`
+  0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+  50% { transform: translateY(-22px) rotateX(12deg) rotateY(10deg); }
+`
+
+const floatY2 = keyframes`
+  0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+  50% { transform: translateY(18px) rotateX(-10deg) rotateY(-14deg); }
+`
+
+const spin3d = keyframes`
+  0% { transform: rotateZ(0deg) rotateX(6deg); }
+  100% { transform: rotateZ(360deg) rotateX(6deg); }
+`
+
+// ─── Reveal on scroll hook ────────────────────────────────────────────────────
+function useReveal<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null)
+  const [visible, setVisible] = useState(false)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.15 }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  return { ref, visible }
+}
+
+const Reveal: FC<{ children: ReactNode; delay?: number }> = ({ children, delay = 0 }) => {
+  const { ref, visible } = useReveal<HTMLDivElement>()
+  return (
+    <Box
+      ref={ref}
+      sx={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0px)' : 'translateY(24px)',
+        transition: `opacity 0.7s ease ${delay}s, transform 0.7s ease ${delay}s`,
+      }}
+    >
+      {children}
+    </Box>
+  )
+}
+
+// ─── Orbe flottant avec parallaxe ────────────────────────────────────────────
+interface OrbProps {
+  size: number
+  top: string
+  left?: string
+  right?: string
+  bottom?: string
+  gradient: string
+  duration: number
+  reverse?: boolean
+  parallax: { x: number; y: number }
+  factor?: number
+  opacity?: number
+}
+
+const Orb: FC<OrbProps> = ({
+  size,
+  top,
+  left,
+  right,
+  bottom,
+  gradient,
+  duration,
+  reverse,
+  parallax,
+  factor = 12,
+  opacity = 1,
+}) => (
+  <Box
+    sx={{
+      position: 'absolute',
+      top,
+      left,
+      right,
+      bottom,
+      width: size,
+      height: size,
+      borderRadius: '50%',
+      background: gradient,
+      filter: 'blur(0.5px)',
+      opacity,
+      pointerEvents: 'none',
+      transformStyle: 'preserve-3d',
+      animation: `${reverse ? floatY2 : floatY} ${duration}s ease-in-out infinite`,
+      transition: 'transform 0.3s ease-out',
+      willChange: 'transform',
+      translate: `${parallax.x * factor}px ${parallax.y * factor}px`,
+    }}
+  />
+)
+
 // ─── Vague décorative ─────────────────────────────────────────────────────────
-const FooterWaveTop: FC = () => (
+const FooterWaveTop: FC<{ color: string }> = ({ color }) => (
   <Box
     sx={{
       position: 'absolute',
@@ -70,232 +205,341 @@ const FooterWaveTop: FC = () => (
   >
     <svg viewBox='0 0 1440 120' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'>
       <path
-        fill={BRAND.primaryDark}
+        fill={color}
         d='M0,64 C240,112 480,16 720,32 C960,48 1200,112 1440,64 L1440,120 L0,120 Z'
       />
     </svg>
   </Box>
 )
 
-// ─── InfoColumn ───────────────────────────────────────────────────────────────
-interface InfoColumnProps {
-  title: string
-  items: { label: string }[]
+// ─── Colonne de liens ─────────────────────────────────────────────────────────
+interface ColumnItem {
+  label: string
+  href: string
 }
 
-const InfoColumn: FC<InfoColumnProps> = ({ title, items }) => (
-  <Box>
-    <Typography
-      sx={{
-        fontSize: { xs: 12, sm: 13 },
-        fontWeight: 800,
-        letterSpacing: 0.6,
-        textTransform: 'uppercase',
-        color: BRAND.primaryLight,
-        mb: { xs: 1.25, sm: 1.75 },
-      }}
-    >
-      {title}
-    </Typography>
-    <Stack spacing={{ xs: 0.9, sm: 1.1 }}>
-      {items.map((item, i) => (
+interface ColumnProps {
+  title: string
+  items: ColumnItem[]
+  delay?: number
+}
+
+const FooterColumn: FC<ColumnProps> = ({ title, items, delay = 0 }) => (
+  <Reveal delay={delay}>
+    <Box>
+      <Typography
+        sx={{
+          fontSize: { xs: 12, sm: 13 },
+          fontWeight: 800,
+          letterSpacing: 0.5,
+          mb: { xs: 1.5, sm: 2 },
+          color: (t) => (t.palette.mode === 'dark' ? BRAND.primaryLight : BRAND.primary),
+        }}
+      >
+        {title}
+      </Typography>
+      <Stack spacing={1.1}>
+        {items.map((item) => (
+          <MuiLink
+            key={item.label}
+            component={RouterLink}
+            href={item.href}
+            sx={{
+              fontSize: { xs: 13.5, sm: 14.5 },
+              fontWeight: 500,
+              color: 'rgba(255,255,255,0.72)',
+              lineHeight: 1.4,
+              textDecoration: 'none',
+              transition: 'color 0.2s ease',
+              '&:hover': { color: BRAND.primaryLight },
+            }}
+          >
+            {item.label}
+          </MuiLink>
+        ))}
+      </Stack>
+    </Box>
+  </Reveal>
+)
+
+// ─── Colonne Contact ──────────────────────────────────────────────────────────
+const FooterContactColumn: FC<{ delay?: number }> = ({ delay = 0 }) => (
+  <Reveal delay={delay}>
+    <Box>
+      <Typography
+        sx={{
+          fontSize: { xs: 12, sm: 13 },
+          fontWeight: 800,
+          letterSpacing: 0.5,
+          mb: { xs: 1.5, sm: 2 },
+          color: (t) => (t.palette.mode === 'dark' ? BRAND.primaryLight : BRAND.primary),
+        }}
+      >
+        Contact
+      </Typography>
+      <Stack spacing={1.1}>
         <Typography
-          key={item.label + i}
+          component='a'
+          href='mailto:nexsetia@gmail.com'
           sx={{
-            fontSize: { xs: 13, sm: 14.5 },
+            fontSize: { xs: 13.5, sm: 14.5 },
             fontWeight: 500,
-            color: 'rgba(255,255,255,0.78)',
-            lineHeight: 1.4,
-            wordBreak: 'break-word',
+            color: 'rgba(255,255,255,0.72)',
+            textDecoration: 'none',
+            wordBreak: 'break-all',
+            '&:hover': { color: BRAND.primaryLight },
           }}
         >
-          {item.label}
+          nexsetia@gmail.com
         </Typography>
-      ))}
-    </Stack>
-  </Box>
+        <Typography
+          component='a'
+          href='tel:+212655760065'
+          sx={{
+            fontSize: { xs: 13.5, sm: 14.5 },
+            fontWeight: 500,
+            color: 'rgba(255,255,255,0.72)',
+            textDecoration: 'none',
+            '&:hover': { color: BRAND.primaryLight },
+          }}
+        >
+          +212 65 57 60 065
+        </Typography>
+        <Typography sx={{ fontSize: { xs: 13.5, sm: 14.5 }, fontWeight: 500, color: 'rgba(255,255,255,0.72)', mt: 1 }}>
+          Disponible partout au Maroc
+        </Typography>
+        <Typography sx={{ fontSize: { xs: 13.5, sm: 14.5 }, fontWeight: 500, color: 'rgba(255,255,255,0.72)' }}>
+          À distance & en visioconférence
+        </Typography>
+      </Stack>
+    </Box>
+  </Reveal>
 )
 
 // ─── Footer ───────────────────────────────────────────────────────────────────
 const Footer: FC = () => {
   const [contactOpen, setContactOpen] = useState(false)
+  const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
   const year = new Date().getFullYear()
+
+  const containerRef = useRef<HTMLDivElement | null>(null)
+  const [parallax, setParallax] = useState({ x: 0, y: 0 })
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const el = containerRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2
+    setParallax({ x, y })
+  }
+
+  const handleMouseLeave = () => setParallax({ x: 0, y: 0 })
+
+  const waveColor = isDark ? '#120a10' : BRAND.primaryDark
+  const bgGradient = isDark
+    ? 'linear-gradient(160deg, #1c0e17 0%, #2b0f22 55%, #120a10 100%)'
+    : `linear-gradient(160deg, ${BRAND.primaryDark} 0%, #6e1c4d 55%, ${BRAND.primaryDark} 100%)`
 
   return (
     <Box
       component='footer'
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       sx={{
         position: 'relative',
-        backgroundColor: BRAND.primaryDark,
+        background: bgGradient,
         color: '#fff',
-        // ✅ overflow: hidden sur le footer lui-même pour clipper la vague
-        // mais on ne clip pas le contenu — le problème vient du Grid spacing
         width: '100%',
         mt: { xs: 6, sm: 10 },
+        overflow: 'hidden',
       }}
     >
-      <FooterWaveTop />
+      <FooterWaveTop color={waveColor} />
 
-      {/* ✅ overflow: hidden ici pour absorber le margin négatif du Grid MUI */}
-      <Box sx={{ overflow: 'hidden' }}>
-        <Container
-          maxWidth='lg'
+      {/* ── Fond animé : orbes en parallaxe / rotation 3D ── */}
+      <Box sx={{ position: 'absolute', inset: 0, perspective: '900px', zIndex: 0 }}>
+        <Orb
+          size={140}
+          top='4%'
+          left='10%'
+          gradient={`radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5), ${BRAND.primaryLight}55)`}
+          duration={9}
+          parallax={parallax}
+          factor={16}
+          opacity={0.5}
+        />
+        <Orb
+          size={80}
+          top='14%'
+          left='38%'
+          gradient='radial-gradient(circle at 30% 30%, rgba(255,255,255,0.6), rgba(255,255,255,0.05))'
+          duration={7}
+          reverse
+          parallax={parallax}
+          factor={10}
+          opacity={0.35}
+        />
+        <Orb
+          size={60}
+          top='2%'
+          right='30%'
+          gradient='radial-gradient(circle at 30% 30%, rgba(255,255,255,0.55), rgba(255,255,255,0.05))'
+          duration={6}
+          parallax={parallax}
+          factor={8}
+          opacity={0.3}
+        />
+        <Orb
+          size={70}
+          top='auto'
+          bottom='30%'
+          right='6%'
+          gradient={`radial-gradient(circle at 30% 30%, ${BRAND.primaryLight}, ${BRAND.primary})`}
+          duration={8}
+          reverse
+          parallax={parallax}
+          factor={-14}
+          opacity={0.85}
+        />
+        <Orb
+          size={26}
+          top='auto'
+          bottom='10%'
+          right='24%'
+          gradient={`radial-gradient(circle at 30% 30%, ${BRAND.primaryLight}, ${BRAND.primary})`}
+          duration={5}
+          parallax={parallax}
+          factor={-8}
+          opacity={0.9}
+        />
+        <Box
           sx={{
-            position: 'relative',
-            // ✅ padding généreux sur mobile pour que le contenu ne sorte pas
-            px: { xs: 3, sm: 4, md: 3 },
+            position: 'absolute',
+            top: '18%',
+            right: '4%',
+            width: 90,
+            height: 90,
+            transformStyle: 'preserve-3d',
+            animation: `${spin3d} 22s linear infinite`,
+            opacity: 0.5,
           }}
         >
-          <Box sx={{ pt: { xs: 5, sm: 9 }, pb: { xs: 4, sm: 5 } }}>
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              borderRadius: '30%',
+              border: `2px solid ${BRAND.primaryLight}`,
+            }}
+          />
+        </Box>
+        <Box
+          sx={{
+            position: 'absolute',
+            top: -40,
+            left: -40,
+            width: 160,
+            height: 160,
+            borderTop: '1px solid rgba(255,255,255,0.12)',
+            borderLeft: '1px solid rgba(255,255,255,0.12)',
+            transform: 'rotate(45deg)',
+          }}
+        />
+        <Box
+          sx={{
+            position: 'absolute',
+            top: -20,
+            right: -60,
+            width: 220,
+            height: 220,
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            borderRight: '1px solid rgba(255,255,255,0.1)',
+            transform: 'rotate(-35deg)',
+          }}
+        />
+      </Box>
 
-            {/* ── CTA contact ── */}
-            <Box
-              sx={{
-                borderRadius: { xs: 3, sm: 4 },
-                p: { xs: 2.5, sm: 4 },
-                mb: { xs: 5, sm: 7 },
-                background: `linear-gradient(135deg, ${BRAND.primary} 0%, #8a2a60 100%)`,
-                display: 'flex',
-                flexDirection: { xs: 'column', sm: 'row' },
-                alignItems: { xs: 'stretch', sm: 'center' },
-                justifyContent: 'space-between',
-                gap: { xs: 2.25, sm: 3 },
-                boxShadow: '0 12px 32px rgba(0,0,0,0.25)',
-              }}
-            >
-              <Box>
-                <Typography sx={{ fontWeight: 800, fontSize: { xs: 17, sm: 22 }, mb: 0.5 }}>
-                  Un projet en tête ?
-                </Typography>
-                <Typography sx={{ fontSize: { xs: 13, sm: 14 }, color: 'rgba(255,255,255,0.85)' }}>
-                  Discutons-en — réponse sous 24h, sans engagement.
-                </Typography>
-              </Box>
-              <Button
-                onClick={() => setContactOpen(true)}
-                sx={{
-                  flexShrink: 0,
-                  width: { xs: '100%', sm: 'auto' },
-                  px: 3.5,
-                  py: { xs: 1.4, sm: 1.3 },
-                  borderRadius: 2.5,
-                  fontWeight: 700,
-                  fontSize: 14.5,
-                  textTransform: 'none',
-                  color: BRAND.primaryDark,
-                  backgroundColor: '#fff',
-                  '&:hover': { backgroundColor: BRAND.primarySoft },
-                }}
-              >
-                Nous contacter
-              </Button>
-            </Box>
-
-            {/* ── Grille principale ── */}
-            {/* ✅ Sur mobile : layout vertical empilé, pas de Grid qui déborde */}
-            <Box
-              sx={{
-                display: 'flex',
-                flexDirection: { xs: 'column', md: 'row' },
-                gap: { xs: 4, md: 6 },
-              }}
-            >
-              {/* Colonne identité */}
-              <Box sx={{ flexShrink: 0, width: { md: '33%' } }}>
-                <Stack direction='row' gap={1.5} sx={{ alignItems: 'center', mb: 2 }}>
-                  <Box
-                    component={Logo}
-                    sx={{ height: { xs: 26, sm: 30 }, width: 'auto', color: '#fff' }}
-                  />
-                  <Typography sx={{ fontWeight: 800, fontSize: { xs: 17, sm: 19 } }}>
-                    EXSETIA
+      <Container maxWidth='lg' sx={{ position: 'relative', zIndex: 1, px: { xs: 3, sm: 4, md: 3 } }}>
+        <Box sx={{ pt: { xs: 6, sm: 10 }, pb: { xs: 4, sm: 5 } }}>
+          <Box
+            sx={{
+              display: 'grid',
+              gridTemplateColumns: { xs: '1fr', sm: '1fr 1fr', md: '1.4fr 1fr 1fr 1fr' },
+              gap: { xs: 5, md: 6 },
+            }}
+          >
+            <Reveal>
+              <Box sx={{ maxWidth: { md: 340 } }}>
+                <Stack direction='row' gap={1.2} sx={{ alignItems: 'center', mb: 2.5 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+  <Image
+    src={Logo}
+    alt="Logo"
+    style={{
+      height: 30,
+      width: 'auto',
+    }}
+  />
+</Box>
+                  <Typography sx={{ fontWeight: 800, fontSize: 22, letterSpacing: 0.3 }}>
+                    Nexsetia
                   </Typography>
                 </Stack>
 
                 <Typography
-                  sx={{
-                    fontSize: { xs: 13.5, sm: 14 },
-                    lineHeight: 1.6,
-                    color: 'rgba(255,255,255,0.75)',
-                    mb: { xs: 2.5, sm: 3 },
-                    maxWidth: { md: 300 },
-                  }}
+                  component='h3'
+                  sx={{ fontWeight: 800, fontSize: { xs: 24, sm: 27 }, lineHeight: 1.25, mb: 2 }}
                 >
-                  Agence digitale basée à Marrakech : sites web, contenu, publicité et automatisation IA pour faire grandir votre activité.
+                  Les marques <br /> qu&apos;on remarque.
                 </Typography>
 
-                <Stack spacing={{ xs: 1.1, sm: 1.3 }}>
-                  <Typography
-                    component='a'
-                    href='mailto:contact@exsetia.com'
-                    sx={{
-                      fontSize: { xs: 13.5, sm: 14 },
-                      fontWeight: 600,
-                      color: 'rgba(255,255,255,0.9)',
-                      textDecoration: 'none',
-                      wordBreak: 'break-all',
-                      '&:hover': { color: BRAND.primaryLight },
-                    }}
-                  >
-                    ✉️ contact@exsetia.com
-                  </Typography>
-                  <Typography
-                    component='a'
-                    href='https://wa.me/212600000000'
-                    sx={{
-                      fontSize: { xs: 13.5, sm: 14 },
-                      fontWeight: 600,
-                      color: 'rgba(255,255,255,0.9)',
-                      textDecoration: 'none',
-                      '&:hover': { color: BRAND.primaryLight },
-                    }}
-                  >
-                    📞 +212 6 00 00 00 00
-                  </Typography>
-                  <Typography
-                    sx={{ fontSize: { xs: 13.5, sm: 14 }, fontWeight: 600, color: 'rgba(255,255,255,0.9)' }}
-                  >
-                    📍 Marrakech, Maroc
-                  </Typography>
-                </Stack>
+                <Typography
+                  sx={{
+                    fontSize: 14,
+                    lineHeight: 1.7,
+                    color: 'rgba(255,255,255,0.72)',
+                    mb: 3,
+                  }}
+                >
+                  Nous créons des stratégies digitales, des expériences web et des solutions
+                  marketing qui accompagnent durablement la croissance des entreprises.
+                </Typography>
+
+                <Button
+                  onClick={() => setContactOpen(true)}
+                  sx={{
+                    px: 3.2,
+                    py: 1.3,
+                    borderRadius: 6,
+                    fontWeight: 700,
+                    fontSize: 14,
+                    textTransform: 'none',
+                    color: '#fff',
+                    backgroundColor: BRAND.primary,
+                    boxShadow: `0 12px 28px ${BRAND.primary}55`,
+                    transition: 'transform 0.25s ease, background-color 0.25s ease',
+                    '&:hover': {
+                      backgroundColor: '#9c2e69',
+                      transform: 'translateY(-2px)',
+                    },
+                  }}
+                >
+                  Réserver une consultation
+                </Button>
               </Box>
+            </Reveal>
 
-              {/* ✅ Colonnes infos : 3 colonnes côte à côte sur mobile ET desktop */}
-              <Box
-                sx={{
-                  flex: 1,
-                  display: 'grid',
-                  // Sur mobile : 3 colonnes égales, sur desktop pareil
-                  gridTemplateColumns: { xs: 'repeat(3, 1fr)', sm: 'repeat(3, 1fr)' },
-                  gap: { xs: 2, sm: 4 },
-                }}
-              >
-                <InfoColumn
-                  title='Services'
-                  items={services.map((s) => ({ label: s.title }))}
-                />
-                <InfoColumn
-                  title='Entreprise'
-                  items={companyMenus.map((m) => ({ label: m.label }))}
-                />
-                <InfoColumn
-                  title='Support'
-                  items={supportLinks.map((s) => ({ label: s.label }))}
-                />
-              </Box>
-            </Box>
+            <FooterColumn title='Services' items={servicesList} delay={0.1} />
+            <FooterColumn title='Entreprise' items={entrepriseList} delay={0.2} />
+            <FooterContactColumn delay={0.3} />
+          </Box>
 
-            {/* ── Séparateur ── */}
-            <Box
-              sx={{
-                height: 1,
-                width: '100%',
-                backgroundColor: 'rgba(255,255,255,0.12)',
-                my: { xs: 3.5, sm: 5 },
-              }}
-            />
+          <Box sx={{ height: 1, width: '100%', backgroundColor: 'rgba(255,255,255,0.12)', my: { xs: 4, sm: 5 } }} />
 
-            {/* ── Bas de page ── */}
+          <Reveal delay={0.35}>
             <Box
               sx={{
                 display: 'flex',
@@ -307,27 +551,31 @@ const Footer: FC = () => {
               }}
             >
               <Stack
-                direction='row'
-                sx={{
-                  alignItems: 'center',
-                  justifyContent: { xs: 'center', sm: 'flex-start' },
-                  order: { xs: 2, sm: 1 },
-                  flexWrap: 'wrap',
-                }}
+                direction={{ xs: 'column', sm: 'row' }}
+                spacing={{ xs: 0.8, sm: 2.5 }}
+                sx={{ alignItems: 'center', order: { xs: 2, sm: 1 } }}
               >
-                <Typography sx={{ fontSize: { xs: 12.5, sm: 13.5 }, color: 'rgba(255,255,255,0.65)' }}>
-                  © {year} EXSETIA — Fait avec
+                <Typography sx={{ fontSize: 13, color: 'rgba(255,255,255,0.6)' }}>
+                  © {year} Nexsetia
                 </Typography>
-                <Box
-                  component={HeartIcon}
-                  sx={{ width: 14, height: 'auto', color: BRAND.primary, mx: 0.6 }}
-                />
-                <Typography sx={{ fontSize: { xs: 12.5, sm: 13.5 }, color: 'rgba(255,255,255,0.65)' }}>
-                  à Marrakech
-                </Typography>
+                {legalLinks.map((label) => (
+                  <Typography
+                    key={label}
+                    component='a'
+                    href='#'
+                    sx={{
+                      fontSize: 13,
+                      color: 'rgba(255,255,255,0.6)',
+                      textDecoration: 'none',
+                      '&:hover': { color: BRAND.primaryLight },
+                    }}
+                  >
+                    {label}
+                  </Typography>
+                ))}
               </Stack>
 
-              <Stack direction='row' spacing={1} sx={{ order: { xs: 1, sm: 2 } }}>
+              <Stack direction='row' spacing={1.2} sx={{ order: { xs: 1, sm: 2 } }}>
                 {socialLinks.map((item) => (
                   <Box
                     key={item.name}
@@ -343,12 +591,13 @@ const Footer: FC = () => {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      color: '#fff',
-                      backgroundColor: 'rgba(255,255,255,0.08)',
-                      transition: 'all 0.2s ease',
+                      color: BRAND.primary,
+                      backgroundColor: '#fff',
+                      transition: 'all 0.25s ease',
                       '&:hover': {
                         backgroundColor: BRAND.primary,
-                        transform: 'translateY(-2px)',
+                        color: '#fff',
+                        transform: 'translateY(-3px) scale(1.05)',
                       },
                     }}
                   >
@@ -357,10 +606,9 @@ const Footer: FC = () => {
                 ))}
               </Stack>
             </Box>
-
-          </Box>
-        </Container>
-      </Box>
+          </Reveal>
+        </Box>
+      </Container>
 
       <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </Box>

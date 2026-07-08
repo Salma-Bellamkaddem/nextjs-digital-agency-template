@@ -1,6 +1,23 @@
 import type { NextConfig } from 'next'
+import bundleAnalyzer from '@next/bundle-analyzer'
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+})
 
 const nextConfig: NextConfig = {
+  productionBrowserSourceMaps: true,
+
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
+    ],
+  },
+
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
@@ -8,6 +25,7 @@ const nextConfig: NextConfig = {
         {
           loader: '@svgr/webpack',
           options: {
+            dimensions: false,
             svgoConfig: {
               plugins: [
                 {
@@ -15,19 +33,19 @@ const nextConfig: NextConfig = {
                   params: {
                     overrides: {
                       removeViewBox: false,
-                      removeDimensions: true,
                     },
                   },
                 },
+                'removeDimensions',
               ],
             },
-            dimensions: false, // Remove width/height from SVG
           },
         },
       ],
     })
+
     return config
   },
 }
 
-export default nextConfig
+export default withBundleAnalyzer(nextConfig)

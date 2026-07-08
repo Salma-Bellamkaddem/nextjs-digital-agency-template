@@ -24,7 +24,7 @@ const SwitchDarkMode: FC = () => {
   const { isDark, setIsDark } = useApp()
 
   const toggleDarkMode = useCallback(() => {
-    saveCookies(isDark ? 'light' : 'dark')
+    saveCookies(isDark ? 'ligxht' : 'dark')
     setIsDark(!isDark)
   }, [isDark, setIsDark])
 

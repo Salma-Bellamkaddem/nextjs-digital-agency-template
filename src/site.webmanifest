@@ -1,0 +1,23 @@
+{
+  "name": "Nexsetia",
+  "short_name": "Nexsetia",
+  "description": "Agence digitale spécialisée en marketing digital, SEO, branding, IA et développement web.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#B5377A",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

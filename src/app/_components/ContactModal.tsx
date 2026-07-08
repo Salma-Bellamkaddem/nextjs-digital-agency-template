@@ -13,8 +13,9 @@ import LinearProgress from '@mui/material/LinearProgress'
 import CloseIcon from '@mui/icons-material/Close'
 import CircularProgress from '@mui/material/CircularProgress'
 import Grid from '@mui/material/Grid2'
+import { useTheme } from '@mui/material/styles'
 
-// ─── Icônes SVG inline (pas de dépendance externe) ───────────────────────────
+// ─── Icônes SVG inline ───────────────────────────────────────────────────────
 const IconMonitor = () => (
   <svg width='22' height='22' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'>
     <rect x='2' y='3' width='20' height='14' rx='2'/><line x1='8' y1='21' x2='16' y2='21'/><line x1='12' y1='17' x2='12' y2='21'/>
@@ -83,13 +84,16 @@ const initialForm = {
   telephone: '',
   entreprise: '',
   message: '',
-  autreSeceur: '',
+  autreSecteur: '',
 }
 
 // ─── Composant principal ──────────────────────────────────────────────────────
 const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
+  const { palette } = useTheme()
+  const isDark = palette.mode === 'dark'
+
   const [step, setStep] = useState(1)
-  const [services, setServices] = useState<string[]>([])
+  const [servicesSelected, setServicesSelected] = useState<string[]>([])
   const [secteur, setSecteur] = useState('')
   const [form, setForm] = useState(initialForm)
   const [errors, setErrors] = useState<Record<string, string>>({})
@@ -98,9 +102,8 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
   const TOTAL_STEPS = 3
   const progress = (step / TOTAL_STEPS) * 100
 
-  // ── Handlers ──
   const toggleService = (id: string) => {
-    setServices((prev) =>
+    setServicesSelected((prev) =>
       prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
     )
   }
@@ -121,7 +124,6 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
   }
 
   const handleNext = () => {
-    if (step === 1 && services.length === 0) return // optionnel : forcer un choix
     if (step < TOTAL_STEPS) setStep((s) => s + 1)
   }
 
@@ -134,7 +136,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
     onClose?.()
     setTimeout(() => {
       setStep(1)
-      setServices([])
+      setServicesSelected([])
       setSecteur('')
       setForm(initialForm)
       setErrors({})
@@ -151,8 +153,8 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          services,
-          secteur: secteur === 'Autre' ? form.autreSeceur : secteur,
+          services: servicesSelected,
+          secteur: secteur === 'Autre' ? form.autreSecteur : secteur,
           ...form,
         }),
       })
@@ -160,6 +162,20 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
       setStatus('success')
     } catch {
       setStatus('error')
+    }
+  }
+
+  // Styles TextField adaptatifs au thème
+  const textFieldSx = {
+    '& .MuiOutlinedInput-root': {
+      borderRadius: 2,
+      backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.01)',
+      '& fieldset': { borderColor: isDark ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)' },
+      '&:hover fieldset': { borderColor: BRAND.primary },
+      '&.Mui-focused fieldset': { borderColor: BRAND.primary, borderWidth: 1.5 },
+    },
+    '& .MuiInputBase-input': {
+      color: isDark ? '#fff' : 'text.primary'
     }
   }
 
@@ -174,13 +190,15 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
           borderRadius: { xs: 0, sm: 4 },
           m: { xs: 0, sm: 2 },
           maxHeight: { xs: '100dvh', sm: '92vh' },
+          backgroundColor: isDark ? '#1a0612' : '#fff',
+          backgroundImage: 'none'
         },
       }}
     >
       <IconButton
         onClick={handleClose}
         aria-label='Fermer'
-        sx={{ position: 'absolute', top: 12, right: 12, zIndex: 10, color: 'text.secondary' }}
+        sx={{ position: 'absolute', top: 12, right: 12, zIndex: 10, color: isDark ? 'rgba(255,255,255,0.6)' : 'text.secondary' }}
       >
         <CloseIcon />
       </IconButton>
@@ -195,11 +213,11 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
               background: `linear-gradient(135deg, ${BRAND.primary} 0%, ${BRAND.primaryDark} 100%)`,
               color: '#fff', fontSize: 34,
             }}>✓</Box>
-            <Typography sx={{ fontWeight: 800, fontSize: 22 }}>
+            <Typography sx={{ fontWeight: 800, fontSize: 22, color: isDark ? '#fff' : 'text.primary' }}>
               Merci, votre demande a été envoyée !
             </Typography>
-            <Typography sx={{ color: 'text.secondary', fontSize: 15, maxWidth: 360 }}>
-              Notre équipe vous contactera sous 24h pour discuter de votre projet.
+            <Typography sx={{ color: isDark ? 'rgba(255,255,255,0.6)' : 'text.secondary', fontSize: 15, maxWidth: 360 }}>
+              L&apos;équipe d&apos;EXSETIA vous contactera sous 24h pour discuter de votre projet.
             </Typography>
             <Button onClick={handleClose} sx={{ mt: 1, fontWeight: 700, color: BRAND.primary, textTransform: 'none' }}>
               Fermer
@@ -208,9 +226,9 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
         ) : (
           <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%', overflow: 'auto' }}>
             {/* ── Header ── */}
-            <Box sx={{ textAlign: 'center', pt: { xs: 4, sm: 5 }, pb: 2, px: 3, borderBottom: '1px solid', borderColor: 'divider' }}>
-              <Typography sx={{ fontSize: 13, color: 'text.secondary', mb: 0.5 }}>Parlons de</Typography>
-              <Typography component='h2' sx={{ fontSize: { xs: 26, sm: 32 }, fontWeight: 800 }}>
+            <Box sx={{ textAlign: 'center', pt: { xs: 4, sm: 5 }, pb: 2, px: 3, borderBottom: '1px solid', borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'divider' }}>
+              <Typography sx={{ fontSize: 13, color: isDark ? 'rgba(255,255,255,0.5)' : 'text.secondary', mb: 0.5 }}>Parlons de</Typography>
+              <Typography component='h2' sx={{ fontSize: { xs: 26, sm: 32 }, fontWeight: 800, color: isDark ? '#fff' : 'text.primary' }}>
                 votre projet.
               </Typography>
             </Box>
@@ -226,7 +244,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                 sx={{
                   height: 4,
                   borderRadius: 99,
-                  backgroundColor: 'rgba(0,0,0,0.08)',
+                  backgroundColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
                   '& .MuiLinearProgress-bar': {
                     backgroundColor: BRAND.primary,
                     borderRadius: 99,
@@ -241,15 +259,15 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
               {/* ── ÉTAPE 1 : Services ── */}
               {step === 1 && (
                 <Box>
-                  <Typography component='h3' sx={{ fontSize: { xs: 20, sm: 24 }, fontWeight: 800, mb: 0.5 }}>
+                  <Typography component='h3' sx={{ fontSize: { xs: 20, sm: 24 }, fontWeight: 800, mb: 0.5, color: isDark ? '#fff' : 'text.primary' }}>
                     Sélectionnez les services souhaités
                   </Typography>
-                  <Typography sx={{ fontSize: 13.5, color: 'text.secondary', mb: 3 }}>
+                  <Typography sx={{ fontSize: 13.5, color: isDark ? 'rgba(255,255,255,0.5)' : 'text.secondary', mb: 3 }}>
                     Plusieurs choix possibles.
                   </Typography>
                   <Grid container spacing={2}>
                     {SERVICES.map((s) => {
-                      const selected = services.includes(s.id)
+                      const selected = servicesSelected.includes(s.id)
                       return (
                         <Grid key={s.id} size={{ xs: 12, sm: 6 }}>
                           <Box
@@ -261,13 +279,14 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                               p: { xs: 2, sm: 2.5 },
                               borderRadius: 3,
                               border: '1.5px solid',
-                              borderColor: selected ? BRAND.primary : 'rgba(0,0,0,0.1)',
-                              backgroundColor: selected ? BRAND.primarySoft : 'background.paper',
+                              borderColor: selected ? BRAND.primary : (isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)'),
+                              backgroundColor: selected ? (isDark ? `${BRAND.primary}25` : BRAND.primarySoft) : 'transparent',
                               cursor: 'pointer',
                               transition: 'all 0.18s ease',
+                              color: isDark ? '#fff' : 'text.primary',
                               '&:hover': {
                                 borderColor: BRAND.primary,
-                                backgroundColor: BRAND.primarySoft,
+                                backgroundColor: isDark ? `${BRAND.primary}15` : BRAND.primarySoft,
                               },
                             }}
                           >
@@ -275,7 +294,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                               sx={{
                                 width: 44, height: 44, borderRadius: 2, flexShrink: 0,
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                backgroundColor: selected ? BRAND.primary : `${BRAND.primary}18`,
+                                backgroundColor: selected ? BRAND.primary : (isDark ? `${BRAND.primary}30` : `${BRAND.primary}18`),
                                 color: selected ? '#fff' : BRAND.primary,
                                 transition: 'all 0.18s ease',
                               }}
@@ -287,7 +306,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                                 {s.label}
                               </Typography>
                               {s.sub && (
-                                <Typography sx={{ fontSize: 12, color: 'text.secondary', mt: 0.3 }}>
+                                <Typography sx={{ fontSize: 12, color: isDark ? 'rgba(255,255,255,0.5)' : 'text.secondary', mt: 0.3 }}>
                                   {s.sub}
                                 </Typography>
                               )}
@@ -303,10 +322,10 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
               {/* ── ÉTAPE 2 : Secteur ── */}
               {step === 2 && (
                 <Box>
-                  <Typography component='h3' sx={{ fontSize: { xs: 20, sm: 24 }, fontWeight: 800, mb: 0.5 }}>
+                  <Typography component='h3' sx={{ fontSize: { xs: 20, sm: 24 }, fontWeight: 800, mb: 0.5, color: isDark ? '#fff' : 'text.primary' }}>
                     Votre secteur d&apos;activité
                   </Typography>
-                  <Typography sx={{ fontSize: 13.5, color: 'text.secondary', mb: 3 }}>
+                  <Typography sx={{ fontSize: 13.5, color: isDark ? 'rgba(255,255,255,0.5)' : 'text.secondary', mb: 3 }}>
                     Un seul choix.
                   </Typography>
                   <Grid container spacing={2}>
@@ -325,9 +344,9 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                               p: 2,
                               borderRadius: 3,
                               border: '1.5px solid',
-                              borderColor: selected ? BRAND.primary : 'rgba(0,0,0,0.1)',
-                              color: selected ? BRAND.primary : 'text.primary',
-                              backgroundColor: selected ? BRAND.primarySoft : 'background.paper',
+                              borderColor: selected ? BRAND.primary : (isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.1)'),
+                              color: selected ? BRAND.primary : (isDark ? '#fff' : 'text.primary'),
+                              backgroundColor: selected ? (isDark ? `${BRAND.primary}25` : BRAND.primarySoft) : 'transparent',
                               cursor: 'pointer',
                               fontWeight: 600,
                               fontSize: 15,
@@ -335,7 +354,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                               textAlign: 'center',
                               '&:hover': {
                                 borderColor: BRAND.primary,
-                                backgroundColor: BRAND.primarySoft,
+                                backgroundColor: isDark ? `${BRAND.primary}15` : BRAND.primarySoft,
                                 color: BRAND.primary,
                               },
                             }}
@@ -346,14 +365,13 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                       )
                     })}
                   </Grid>
-                  {/* Champ "Autre" si sélectionné */}
                   {secteur === 'Autre' && (
-                    <Box sx={{ mt: 2 }}>
+                    <Box sx={{ mt: 3 }}>
                       <TextField
                         fullWidth
                         placeholder='Précisez votre secteur d activité...'
-                        value={form.autreSeceur}
-                        onChange={handleChange('autreSeceur')}
+                        value={form.autreSecteur}
+                        onChange={handleChange('autreSecteur')}
                         size='small'
                         sx={textFieldSx}
                       />
@@ -362,20 +380,18 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                 </Box>
               )}
 
-              {/* ── ÉTAPE 3 : Formulaire + Sidebar ── */}
+              {/* ── ÉTAPE 3 : Formulaire ── */}
               {step === 3 && (
                 <Box component='form' onSubmit={handleSubmit} noValidate>
                   <Grid container spacing={4}>
-                    {/* Formulaire gauche */}
                     <Grid size={{ xs: 12, md: 7 }}>
-                      <Typography sx={{ fontSize: 13, color: 'text.secondary', mb: 2 }}>
+                      <Typography sx={{ fontSize: 13, color: isDark ? 'rgba(255,255,255,0.5)' : 'text.secondary', mb: 2 }}>
                         Nous vous répondons sous 24h.
                       </Typography>
 
-                      {/* Tags services sélectionnés */}
-                      {services.length > 0 && (
+                      {servicesSelected.length > 0 && (
                         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 3 }}>
-                          {services.map((id) => {
+                          {servicesSelected.map((id) => {
                             const s = SERVICES.find((s) => s.id === id)
                             return s ? (
                               <Box
@@ -394,9 +410,9 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                         </Box>
                       )}
 
-                      <Stack spacing={2}>
+                      <Stack spacing={2.5}>
                         <Box>
-                          <Typography sx={labelSx}>Nom complet <Req /></Typography>
+                          <Typography sx={{ fontSize: 13.5, fontWeight: 700, mb: 0.75, color: isDark ? '#fff' : 'text.primary' }}>Nom complet <Req /></Typography>
                           <TextField
                             fullWidth size='small'
                             placeholder='Votre nom complet'
@@ -410,7 +426,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
 
                         <Grid container spacing={2}>
                           <Grid size={{ xs: 12, sm: 6 }}>
-                            <Typography sx={labelSx}>Téléphone <Req /></Typography>
+                            <Typography sx={{ fontSize: 13.5, fontWeight: 700, mb: 0.75, color: isDark ? '#fff' : 'text.primary' }}>Téléphone <Req /></Typography>
                             <TextField
                               fullWidth size='small'
                               placeholder='06 XX XX XX XX'
@@ -422,7 +438,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                             />
                           </Grid>
                           <Grid size={{ xs: 12, sm: 6 }}>
-                            <Typography sx={labelSx}>Email <Req /></Typography>
+                            <Typography sx={{ fontSize: 13.5, fontWeight: 700, mb: 0.75, color: isDark ? '#fff' : 'text.primary' }}>Email <Req /></Typography>
                             <TextField
                               fullWidth size='small'
                               type='email'
@@ -437,7 +453,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                         </Grid>
 
                         <Box>
-                          <Typography sx={labelSx}>Entreprise <Req /></Typography>
+                          <Typography sx={{ fontSize: 13.5, fontWeight: 700, mb: 0.75, color: isDark ? '#fff' : 'text.primary' }}>Entreprise</Typography>
                           <TextField
                             fullWidth size='small'
                             placeholder='Nom de votre entreprise'
@@ -448,7 +464,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                         </Box>
 
                         <Box>
-                          <Typography sx={labelSx}>Message <Req /></Typography>
+                          <Typography sx={{ fontSize: 13.5, fontWeight: 700, mb: 0.75, color: isDark ? '#fff' : 'text.primary' }}>Message</Typography>
                           <TextField
                             fullWidth multiline minRows={4}
                             placeholder='Décrivez votre projet, vos objectifs, votre budget...'
@@ -466,36 +482,35 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                       </Stack>
                     </Grid>
 
-                    {/* Sidebar droite */}
+                    {/* Sidebar Coordonnées */}
                     <Grid size={{ xs: 12, md: 5 }}>
                       <Stack spacing={2}>
-                        {/* Coordonnées */}
                         <Box sx={{
-                          borderRadius: 3, border: '1px solid', borderColor: 'divider',
-                          p: 3, backgroundColor: 'background.paper',
+                          borderRadius: 3, border: '1px solid', borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'divider',
+                          p: 3, backgroundColor: isDark ? 'rgba(255,255,255,0.01)' : 'background.paper',
                         }}>
-                          <Typography sx={{ fontWeight: 700, fontSize: 16, mb: 2 }}>
+                          <Typography sx={{ fontWeight: 700, fontSize: 16, mb: 2, color: isDark ? '#fff' : 'text.primary' }}>
                             Nos coordonnées
                           </Typography>
                           <Stack spacing={2}>
                             {[
-                              { label: 'Téléphone', value: '+212 6 00 00 00 00', icon: '📞' },
-                              { label: 'Email', value: 'contact@exsetia.com', icon: '✉️' },
-                              { label: 'Adresse', value: 'Marrakech, Maroc', icon: '📍' },
+                              { label: 'Téléphone', value: '+212655760065', icon: '📞' },
+                              { label: 'Email', value: 'nexsetia@gmail.com', icon: '✉️' },
+
                             ].map((item) => (
                               <Box key={item.label} sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start' }}>
                                 <Box
                                   sx={{
                                     width: 36, height: 36, borderRadius: 2, flexShrink: 0,
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    backgroundColor: BRAND.primarySoft, fontSize: 16,
+                                    backgroundColor: isDark ? `${BRAND.primary}30` : BRAND.primarySoft, fontSize: 16,
                                   }}
                                 >
                                   {item.icon}
                                 </Box>
                                 <Box>
-                                  <Typography sx={{ fontSize: 12, color: 'text.secondary' }}>{item.label}</Typography>
-                                  <Typography sx={{ fontSize: 14, fontWeight: 700 }}>{item.value}</Typography>
+                                  <Typography sx={{ fontSize: 12, color: isDark ? 'rgba(255,255,255,0.5)' : 'text.secondary' }}>{item.label}</Typography>
+                                  <Typography sx={{ fontSize: 14, fontWeight: 700, color: isDark ? '#fff' : 'text.primary' }}>{item.value}</Typography>
                                 </Box>
                               </Box>
                             ))}
@@ -504,10 +519,10 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
 
                         {/* Réseaux sociaux */}
                         <Box sx={{
-                          borderRadius: 3, border: '1px solid', borderColor: 'divider',
-                          p: 3, backgroundColor: 'background.paper',
+                          borderRadius: 3, border: '1px solid', borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'divider',
+                          p: 3, backgroundColor: isDark ? 'rgba(255,255,255,0.01)' : 'background.paper',
                         }}>
-                          <Typography sx={{ fontWeight: 700, fontSize: 16, mb: 2 }}>
+                          <Typography sx={{ fontWeight: 700, fontSize: 16, mb: 2, color: isDark ? '#fff' : 'text.primary' }}>
                             Suivez-nous
                           </Typography>
                           <Box sx={{ display: 'flex', gap: 1.5 }}>
@@ -516,10 +531,11 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                                 key={i}
                                 sx={{
                                   width: 40, height: 40, borderRadius: 2,
-                                  border: '1px solid', borderColor: 'divider',
+                                  border: '1px solid', borderColor: isDark ? 'rgba(255,255,255,0.15)' : 'divider',
                                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                  fontSize: 14, fontWeight: 700, color: 'text.secondary',
+                                  fontSize: 14, fontWeight: 700, color: isDark ? 'rgba(255,255,255,0.6)' : 'text.secondary',
                                   cursor: 'pointer',
+                                  transition: 'all 0.2s ease',
                                   '&:hover': { borderColor: BRAND.primary, color: BRAND.primary },
                                 }}
                               >
@@ -541,10 +557,10 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                 px: { xs: 3, sm: 5 },
                 py: 2.5,
                 borderTop: '1px solid',
-                borderColor: 'divider',
+                borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'divider',
                 display: 'flex',
                 gap: 2,
-                backgroundColor: 'background.paper',
+                backgroundColor: isDark ? '#230b19' : 'background.paper',
               }}
             >
               {step > 1 && (
@@ -558,8 +574,8 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                     textTransform: 'none',
                     fontWeight: 700,
                     fontSize: 15,
-                    borderColor: 'divider',
-                    color: 'text.primary',
+                    borderColor: isDark ? 'rgba(255,255,255,0.2)' : 'divider',
+                    color: isDark ? '#fff' : 'text.primary',
                     '&:hover': { borderColor: BRAND.primary, color: BRAND.primary },
                   }}
                 >
@@ -617,18 +633,6 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
   )
 }
 
-// ─── Helpers ─────────────────────────────────────────────────────────────────
 const Req = () => <Box component='span' sx={{ color: BRAND.primary }}> *</Box>
-
-const labelSx = { fontSize: 13.5, fontWeight: 700, mb: 0.75 }
-
-const textFieldSx = {
-  '& .MuiOutlinedInput-root': {
-    borderRadius: 2,
-    '& fieldset': { borderColor: 'rgba(0,0,0,0.12)' },
-    '&:hover fieldset': { borderColor: BRAND.primary },
-    '&.Mui-focused fieldset': { borderColor: BRAND.primary, borderWidth: 1.5 },
-  },
-}
 
 export default ContactModal

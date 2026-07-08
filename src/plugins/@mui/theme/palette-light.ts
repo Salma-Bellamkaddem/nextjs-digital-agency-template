@@ -1,18 +1,20 @@
-import { alpha, PaletteOptions } from '@mui/material'
-import { grey, common } from '@mui/material/colors'
+import { PaletteOptions } from '@mui/material'
 
-const palette: PaletteOptions = {
+const paletteLight: PaletteOptions = {
   mode: 'light',
+
   background: {
-    default: '#f5f5f9',
-    paper: common.white,
+    default: '#FFFFFF',
+    paper: '#FDF8FC',
   },
+
   text: {
-    primary: grey[800],
-    secondary: grey[600],
-    disabled: grey[500],
+    primary: '#561244',
+    secondary: '#590842',
+    disabled: '#B73B7B',
   },
-  divider: alpha('#000', 0.07),
+
+  divider: '#F8CEEC',
 }
 
-export default palette
+export default paletteLight
