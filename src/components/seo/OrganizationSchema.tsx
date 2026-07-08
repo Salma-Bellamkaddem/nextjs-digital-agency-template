@@ -13,8 +13,7 @@ export default function OrganizationSchema() {
     image: "https://www.nexsetia.com/og-image.jpg",
 
     description:
-      "Agence digitale spécialisée en marketing digital, SEO, GEO, SEA, branding, développement web, création de contenu et automatisation IA.",
-
+  "Nexsetia est une agence marketing digital 360° au Maroc spécialisée en SEO, SEA, branding, développement web et acquisition digitale.",
     address: {
       "@type": "PostalAddress",
       addressCountry: "Morocco"

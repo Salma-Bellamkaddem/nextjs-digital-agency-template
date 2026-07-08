@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import OrganizationSchema from '@/components/seo/OrganizationSchema'
-import { AppConfig } from '@/configs'
+
 import { AppContextProvider } from '@/contexts'
 import MuiThemeProvider from '@/plugins/@mui/components/@mui-theme.provider'
 
@@ -27,35 +27,49 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.nexsetia.com'),
 
   title: {
-    default: AppConfig.appName,
-    template: `%s | ${AppConfig.appName}`,
+    default:
+      'Nexsetia | Agence Marketing Digital & Développement Web au Maroc',
+    template: `%s | Nexsetia`,
   },
 
   description:
-    'Agence digitale 360° spécialisée en marketing digital, SEO, GEO, SEA, branding, développement web, création de contenu, automatisation IA et solutions digitales sur mesure.',
-
+  "Nexsetia est une agence marketing digital 360° qui imagine des stratégies sur mesure pour développer votre visibilité, optimiser votre acquisition digitale, générer des prospects qualifiés et accélérer durablement votre croissance. Agence web, stratégie digitale, communication digitale, SEO, SEA, branding, développement web, IA et marketing digital.",
   applicationName: 'Nexsetia',
 
   keywords: [
-    'Agence Marketing Maroc',
-    'Agence Marketing Marrakech',
-    'Agence Digitale Maroc',
-    'Marketing Digital',
+    'Nexsetia',
+    'Agence marketing digital',
+    'Agence marketing digital Maroc',
+    'Agence digitale Maroc',
+    'Agence web',
+    'Agence web Maroc',
+    'Agence de communication digitale',
+    'Communication digitale',
+    'Stratégie digitale',
+    'Marketing digital',
+    'Digital marketing services',
+    'Acquisition digitale',
+    'Génération de leads',
+    'Prospects qualifiés',
+    'Croissance digitale',
     'SEO',
+    'Référencement naturel',
     'GEO',
     'SEA',
     'Google Ads',
     'Facebook Ads',
-    'Création Site Web',
-    'Développement Web',
-    'Développement Mobile',
-    'UI UX',
+    'Publicité en ligne',
+    'Création site web',
+    'Développement web',
+    'Développement mobile',
+    'UI UX Design',
     'Branding',
+    'Identité visuelle',
     'Community Management',
     'Création de contenu',
     'Automatisation IA',
     'Agence IA',
-    'Nexsetia',
+    'Solutions digitales',
   ],
 
   authors: [
@@ -98,8 +112,7 @@ export const metadata: Metadata = {
     title: 'Nexsetia | Agence Marketing Digital',
 
     description:
-      'Agence digitale spécialisée dans le marketing digital, le branding, le SEO, le développement web, les solutions IA et la croissance des entreprises.',
-
+    "Nexsetia est une agence marketing digital 360° spécialisée en stratégie digitale, acquisition digitale, SEO, SEA, branding, développement web et solutions IA pour accélérer la croissance des entreprises.",
     images: [
       {
         url: '/logo.webp',
@@ -118,8 +131,7 @@ export const metadata: Metadata = {
     title: 'Nexsetia | Agence Marketing Digital',
 
     description:
-      'Marketing Digital • SEO • Développement Web • Branding • IA',
-
+    "Agence marketing digital 360° • Stratégie digitale • Acquisition digitale • SEO • SEA • Développement Web • Branding • IA",
     images: ['/logo.webp'],
   },
 
