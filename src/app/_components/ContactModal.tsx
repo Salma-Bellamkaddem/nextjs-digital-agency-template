@@ -517,33 +517,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                           </Stack>
                         </Box>
 
-                        {/* Réseaux sociaux */}
-                        <Box sx={{
-                          borderRadius: 3, border: '1px solid', borderColor: isDark ? 'rgba(255,255,255,0.08)' : 'divider',
-                          p: 3, backgroundColor: isDark ? 'rgba(255,255,255,0.01)' : 'background.paper',
-                        }}>
-                          <Typography sx={{ fontWeight: 700, fontSize: 16, mb: 2, color: isDark ? '#fff' : 'text.primary' }}>
-                            Suivez-nous
-                          </Typography>
-                          <Box sx={{ display: 'flex', gap: 1.5 }}>
-                            {['f', 'in', '▶'].map((icon, i) => (
-                              <Box
-                                key={i}
-                                sx={{
-                                  width: 40, height: 40, borderRadius: 2,
-                                  border: '1px solid', borderColor: isDark ? 'rgba(255,255,255,0.15)' : 'divider',
-                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                  fontSize: 14, fontWeight: 700, color: isDark ? 'rgba(255,255,255,0.6)' : 'text.secondary',
-                                  cursor: 'pointer',
-                                  transition: 'all 0.2s ease',
-                                  '&:hover': { borderColor: BRAND.primary, color: BRAND.primary },
-                                }}
-                              >
-                                {icon}
-                              </Box>
-                            ))}
-                          </Box>
-                        </Box>
+                      
                       </Stack>
                     </Grid>
                   </Grid>

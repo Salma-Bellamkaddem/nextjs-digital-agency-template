@@ -1,22 +1,30 @@
 {
-  "name": "Nexsetia",
-  "short_name": "Nexsetia",
-  "description": "Agence digitale spécialisée en marketing digital, SEO, branding, IA et développement web.",
+  "name": "NEXSETIA",
+  "short_name": "NEXSETIA",
+  "description": "Agence digitale spécialisée en marketing digital, SEO, branding, intelligence artificielle et développement web.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#ffffff",
+  "background_color": "#FFFFFF",
   "theme_color": "#B5377A",
+  "lang": "fr",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png"
     }
   ]

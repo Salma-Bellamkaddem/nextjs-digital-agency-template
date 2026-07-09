@@ -1,5 +1,5 @@
 import { JSX } from 'react'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import OrganizationSchema from '@/components/seo/OrganizationSchema'
@@ -9,33 +9,29 @@ import MuiThemeProvider from '@/plugins/@mui/components/@mui-theme.provider'
 
 import AppBar from '@/components/appbar/app-bar'
 import Footer from '@/components/footer/footer'
-import type {  Viewport } from 'next'
+
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
   weight: ['300', '400', '500', '700', '800'],
   variable: '--font-plus-jakarta-sans',
   display: 'swap',
 })
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: '#B5377A',
 }
 
-
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.nexsetia.com'),
-
   title: {
-    default:
-      'Nexsetia | Agence Marketing Digital & Développement Web au Maroc',
+    default: 'Nexsetia | Agence Marketing Digital & Développement Web au Maroc',
     template: `%s | Nexsetia`,
   },
-
   description:
-  "Nexsetia est une agence marketing digital 360° qui imagine des stratégies sur mesure pour développer votre visibilité, optimiser votre acquisition digitale, générer des prospects qualifiés et accélérer durablement votre croissance. Agence web, stratégie digitale, communication digitale, SEO, SEA, branding, développement web, IA et marketing digital.",
+    "Nexsetia est une agence marketing digital 360° qui imagine des stratégies sur mesure pour développer votre visibilité, optimiser votre acquisition digitale, générer des prospects qualifiés et accélérer durablement votre croissance. Agence web, stratégie digitale, communication digitale, SEO, SEA, branding, développement web, IA et marketing digital.",
   applicationName: 'Nexsetia',
-
   keywords: [
     'Nexsetia',
     'Agence marketing digital',
@@ -71,20 +67,10 @@ export const metadata: Metadata = {
     'Agence IA',
     'Solutions digitales',
   ],
-
-  authors: [
-    {
-      name: 'Nexsetia',
-      url: 'https://www.nexsetia.com',
-    },
-  ],
-
+  authors: [{ name: 'Nexsetia', url: 'https://www.nexsetia.com' }],
   creator: 'Nexsetia',
-
   publisher: 'Nexsetia',
-
   category: 'Marketing',
-
   robots: {
     index: true,
     follow: true,
@@ -96,71 +82,44 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-
   alternates: {
     canonical: 'https://www.nexsetia.com',
   },
-
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-
     url: 'https://www.nexsetia.com',
-
     siteName: 'Nexsetia',
-
     title: 'Nexsetia | Agence Marketing Digital',
-
     description:
-    "Nexsetia est une agence marketing digital 360° spécialisée en stratégie digitale, acquisition digitale, SEO, SEA, branding, développement web et solutions IA pour accélérer la croissance des entreprises.",
+      "Nexsetia est une agence marketing digital 360° spécialisée en stratégie digitale, acquisition digitale, SEO, SEA, branding, développement web et solutions IA pour accélérer la croissance des entreprises.",
     images: [
       {
         url: '/logo.webp',
         width: 800,
-
         height: 800,
-    
         alt: 'Nexsetia',
       },
     ],
   },
-
   twitter: {
     card: 'summary_large_image',
-
     title: 'Nexsetia | Agence Marketing Digital',
-
     description:
-    "Agence marketing digital 360° • Stratégie digitale • Acquisition digitale • SEO • SEA • Développement Web • Branding • IA",
+      "Agence marketing digital 360° • Stratégie digitale • Acquisition digitale • SEO • SEA • Développement Web • Branding • IA",
     images: ['/logo.webp'],
   },
-
   icons: {
     icon: [
-      {
-        url: '/favicon.ico',
-      },
-      {
-        url: '/favicon.svg',
-        type: 'image/svg+xml',
-      },
-      {
-        url: '/favicon-96x96.png',
-        sizes: '96x96',
-        type: 'image/png',
-      },
+      { url: "/favicon.ico" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
     ],
-  
     apple: [
-      {
-        url: '/apple-touch-icon.png',
-      
-      },
+      { url: "/apple-touch-icon.png" },
     ],
-  
-    shortcut: '/favicon.ico',
+    shortcut: "/favicon.ico",
   },
-  
   manifest: '/site.webmanifest',
 }
 
@@ -171,30 +130,21 @@ export default function RootLayout({
 }>): JSX.Element {
   return (
     <html lang="fr" suppressHydrationWarning>
-
-<body className={plusJakartaSans.variable}>
-
-<AppRouterCacheProvider options={{ key: 'css' }}>
-
-  <AppContextProvider>
-
-    <MuiThemeProvider>
-
-      <AppBar />
-
-      <main>{children}</main>
-
-      <Footer />
-
-    </MuiThemeProvider>
-
-  </AppContextProvider>
-
-</AppRouterCacheProvider>
-
-<OrganizationSchema />
-
-</body>
+      <body
+        className={plusJakartaSans.variable}
+        style={{ overflowX: 'hidden', width: '100%', maxWidth: '100vw' }}
+      >
+        <AppRouterCacheProvider options={{ key: 'css' }}>
+          <AppContextProvider>
+            <MuiThemeProvider>
+              <AppBar />
+              <main>{children}</main>
+              <Footer />
+            </MuiThemeProvider>
+          </AppContextProvider>
+        </AppRouterCacheProvider>
+        <OrganizationSchema />
+      </body>
     </html>
   )
 }

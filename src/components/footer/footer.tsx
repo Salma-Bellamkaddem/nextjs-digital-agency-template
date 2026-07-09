@@ -1,4 +1,6 @@
 'use client'
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined'
 
 import React, { FC, ReactNode, useEffect, useRef, useState } from 'react'
 import { Box, Container, Typography, Stack, Button, useTheme } from '@mui/material'
@@ -278,33 +280,51 @@ const FooterContactColumn: FC<{ delay?: number }> = ({ delay = 0 }) => (
         Contact
       </Typography>
       <Stack spacing={1.1}>
-        <Typography
-          component='a'
-          href='mailto:nexsetia@gmail.com'
-          sx={{
-            fontSize: { xs: 13.5, sm: 14.5 },
-            fontWeight: 500,
-            color: 'rgba(255,255,255,0.72)',
-            textDecoration: 'none',
-            wordBreak: 'break-all',
-            '&:hover': { color: BRAND.primaryLight },
-          }}
-        >
-          nexsetia@gmail.com
-        </Typography>
-        <Typography
-          component='a'
-          href='tel:+212655760065'
-          sx={{
-            fontSize: { xs: 13.5, sm: 14.5 },
-            fontWeight: 500,
-            color: 'rgba(255,255,255,0.72)',
-            textDecoration: 'none',
-            '&:hover': { color: BRAND.primaryLight },
-          }}
-        >
-          +212 65 57 60 065
-        </Typography>
+      <Stack direction="row" spacing={1} alignItems="center">
+  <EmailOutlinedIcon
+    sx={{
+      fontSize: 18,
+      color: 'rgba(255,255,255,0.72)',
+    }}
+  />
+
+  <Typography
+    component="a"
+    href="mailto:nexsetia@gmail.com"
+    sx={{
+      fontSize: { xs: 13.5, sm: 14.5 },
+      fontWeight: 500,
+      color: 'rgba(255,255,255,0.72)',
+      textDecoration: 'none',
+      wordBreak: 'break-all',
+      '&:hover': { color: BRAND.primaryLight },
+    }}
+  >
+    nexsetia@gmail.com
+  </Typography>
+</Stack>
+<Stack direction="row" spacing={1} alignItems="center">
+  <PhoneOutlinedIcon
+    sx={{
+      fontSize: 18,
+      color: 'rgba(255,255,255,0.72)',
+    }}
+  />
+
+  <Typography
+    component="a"
+    href="tel:+212655760065"
+    sx={{
+      fontSize: { xs: 13.5, sm: 14.5 },
+      fontWeight: 500,
+      color: 'rgba(255,255,255,0.72)',
+      textDecoration: 'none',
+      '&:hover': { color: BRAND.primaryLight },
+    }}
+  >
+    +212 655 760 065
+  </Typography>
+</Stack>
         <Typography sx={{ fontSize: { xs: 13.5, sm: 14.5 }, fontWeight: 500, color: 'rgba(255,255,255,0.72)', mt: 1 }}>
           Disponible partout au Maroc
         </Typography>
