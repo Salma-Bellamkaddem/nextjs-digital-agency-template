@@ -83,6 +83,7 @@ const initialForm = {
   email: '',
   telephone: '',
   entreprise: '',
+  siteWeb: '',
   message: '',
   autreSecteur: '',
 }
@@ -119,6 +120,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
     if (!form.telephone.trim()) next.telephone = 'Le téléphone est requis.'
     else if (!/^[\d+\s().-]{6,}$/.test(form.telephone.trim())) next.telephone = 'Numéro invalide.'
     if (form.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) next.email = 'E-mail invalide.'
+    if (form.siteWeb.trim() && !/^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/\S*)?$/.test(form.siteWeb.trim())) next.siteWeb = 'URL invalide.'
     setErrors(next)
     return Object.keys(next).length === 0
   }
@@ -459,6 +461,19 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                             placeholder='Nom de votre entreprise'
                             value={form.entreprise}
                             onChange={handleChange('entreprise')}
+                            sx={textFieldSx}
+                          />
+                        </Box>
+
+                        <Box>
+                          <Typography sx={{ fontSize: 13.5, fontWeight: 700, mb: 0.75, color: isDark ? '#fff' : 'text.primary' }}>Site web actuel</Typography>
+                          <TextField
+                            fullWidth size='small'
+                            placeholder='https://votresite.com (si vous en avez déjà un)'
+                            value={form.siteWeb}
+                            onChange={handleChange('siteWeb')}
+                            error={Boolean(errors.siteWeb)}
+                            helperText={errors.siteWeb}
                             sx={textFieldSx}
                           />
                         </Box>
