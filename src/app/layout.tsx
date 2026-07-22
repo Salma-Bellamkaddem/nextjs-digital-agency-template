@@ -1,4 +1,3 @@
-import { JSX } from 'react'
 import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
@@ -30,10 +29,12 @@ export const metadata: Metadata = {
     template: `%s | Nexsetia`,
   },
   description:
-    "Nexsetia est une agence marketing digital 360° qui imagine des stratégies sur mesure pour développer votre visibilité, optimiser votre acquisition digitale, générer des prospects qualifiés et accélérer durablement votre croissance. Agence web, stratégie digitale, communication digitale, SEO, SEA, branding, développement web, IA et marketing digital.",
+    "Nexsetia est une agence marketing digital 360° qui imagine des stratégies sur mesure pour développer votre visibilité, optimiser votre acquisition digitale, générer des prospects qualifiés et accélérer durablement votre croissance.",
   applicationName: 'Nexsetia',
   keywords: [
     'Nexsetia',
+    'Nexsetia Maroc',
+    'Agence Nexsetia',
     'Agence marketing digital',
     'Agence marketing digital Maroc',
     'Agence digitale Maroc',
@@ -43,34 +44,21 @@ export const metadata: Metadata = {
     'Communication digitale',
     'Stratégie digitale',
     'Marketing digital',
-    'Digital marketing services',
     'Acquisition digitale',
     'Génération de leads',
-    'Prospects qualifiés',
-    'Croissance digitale',
     'SEO',
     'Référencement naturel',
-    'GEO',
-    'SEA',
     'Google Ads',
     'Facebook Ads',
-    'Publicité en ligne',
-    'Création site web',
     'Développement web',
-    'Développement mobile',
-    'UI UX Design',
     'Branding',
     'Identité visuelle',
-    'Community Management',
-    'Création de contenu',
-    'Automatisation IA',
-    'Agence IA',
     'Solutions digitales',
   ],
   authors: [{ name: 'Nexsetia', url: 'https://www.nexsetia.com' }],
   creator: 'Nexsetia',
   publisher: 'Nexsetia',
-  category: 'Marketing',
+  category: 'Marketing & Technology',
   robots: {
     index: true,
     follow: true,
@@ -90,15 +78,15 @@ export const metadata: Metadata = {
     locale: 'fr_FR',
     url: 'https://www.nexsetia.com',
     siteName: 'Nexsetia',
-    title: 'Nexsetia | Agence Marketing Digital',
+    title: 'Nexsetia | Agence Marketing Digital & Développement Web',
     description:
-      "Nexsetia est une agence marketing digital 360° spécialisée en stratégie digitale, acquisition digitale, SEO, SEA, branding, développement web et solutions IA pour accélérer la croissance des entreprises.",
+      "Nexsetia est une agence marketing digital 360° spécialisée en stratégie digitale, acquisition, SEO, branding, développement web et solutions IA.",
     images: [
       {
         url: '/logo.webp',
-        width: 800,
-        height: 800,
-        alt: 'Nexsetia',
+        width: 1200,
+        height: 630,
+        alt: 'Nexsetia Agence Digital',
       },
     ],
   },
@@ -106,19 +94,17 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Nexsetia | Agence Marketing Digital',
     description:
-      "Agence marketing digital 360° • Stratégie digitale • Acquisition digitale • SEO • SEA • Développement Web • Branding • IA",
+      "Agence marketing digital 360° • Stratégie digitale • Acquisition • SEO • Développement Web • Branding",
     images: ['/logo.webp'],
   },
   icons: {
     icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: '/favicon.ico' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
     ],
-    apple: [
-      { url: "/apple-touch-icon.png" },
-    ],
-    shortcut: "/favicon.ico",
+    apple: [{ url: '/apple-touch-icon.png' }],
+    shortcut: '/favicon.ico',
   },
   manifest: '/site.webmanifest',
 }
@@ -127,7 +113,7 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
-}>): JSX.Element {
+}>) {
   return (
     <html lang="fr" suppressHydrationWarning>
       <body
