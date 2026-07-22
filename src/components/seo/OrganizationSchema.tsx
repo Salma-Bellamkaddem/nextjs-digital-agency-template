@@ -23,7 +23,7 @@ export default function OrganizationSchema() {
 
     email: "nexsetia@gmail.com",
 
-    telephone: "+212655760065",
+    
 
     sameAs: [
       "https://www.linkedin.com/company/nexsetia",

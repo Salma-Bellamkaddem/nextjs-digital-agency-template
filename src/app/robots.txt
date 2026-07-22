@@ -6,9 +6,7 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-
     sitemap: 'https://www.nexsetia.com/sitemap.xml',
-
     host: 'https://www.nexsetia.com',
   }
 }

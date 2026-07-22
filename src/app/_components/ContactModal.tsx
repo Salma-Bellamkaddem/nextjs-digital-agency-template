@@ -509,7 +509,7 @@ const ContactModal = ({ open, onClose }: { open: boolean; onClose: () => void })
                           </Typography>
                           <Stack spacing={2}>
                             {[
-                              { label: 'Téléphone', value: '+212655760065', icon: '📞' },
+                            
                               { label: 'Email', value: 'nexsetia@gmail.com', icon: '✉️' },
 
                             ].map((item) => (

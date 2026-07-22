@@ -311,19 +311,7 @@ const FooterContactColumn: FC<{ delay?: number }> = ({ delay = 0 }) => (
     }}
   />
 
-  <Typography
-    component="a"
-    href="tel:+212655760065"
-    sx={{
-      fontSize: { xs: 13.5, sm: 14.5 },
-      fontWeight: 500,
-      color: 'rgba(255,255,255,0.72)',
-      textDecoration: 'none',
-      '&:hover': { color: BRAND.primaryLight },
-    }}
-  >
-    +212 655 760 065
-  </Typography>
+  
 </Stack>
         <Typography sx={{ fontSize: { xs: 13.5, sm: 14.5 }, fontWeight: 500, color: 'rgba(255,255,255,0.72)', mt: 1 }}>
           Disponible partout au Maroc
