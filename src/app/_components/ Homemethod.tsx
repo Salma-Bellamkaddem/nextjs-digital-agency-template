@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { useTranslations, useLocale } from 'next-intl'
 
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
@@ -12,7 +13,6 @@ const BRAND = {
   primaryLight: '#FAC8EB',
 }
 
-// ── Icônes inline ──
 const SearchIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
     <circle cx="11" cy="11" r="7" />
@@ -66,69 +66,39 @@ const RocketIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-const ArrowRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+const ArrowRightIcon = ({ isRtl, ...props }: React.SVGProps<SVGSVGElement> & { isRtl?: boolean }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ transform: isRtl ? 'rotate(180deg)' : 'none' }}
+    {...props}
+  >
     <path d="M5 12h14" />
     <path d="m12 5 7 7-7 7" />
   </svg>
 )
 
-type Step = {
-  number: string
-  title: string
-  description: string
-  icon: (props: React.SVGProps<SVGSVGElement>) => React.JSX.Element
-  color: string
-}
-
-const STEPS: Step[] = [
-  {
-    number: '01',
-    title: 'Comprendre',
-    description: 'Nous prenons le temps de comprendre votre activité, vos objectifs et vos enjeux.',
-    icon: SearchIcon,
-    color: BRAND.primary,
-  },
-  {
-    number: '02',
-    title: 'Analyser',
-    description: 'Nous analysons votre marché, votre audience et vos données pour identifier les leviers de croissance.',
-    icon: BarChartIcon,
-    color: BRAND.primaryDark,
-  },
-  {
-    number: '03',
-    title: 'Concevoir',
-    description: 'Nous concevons une stratégie sur mesure et des solutions créatives alignées avec vos objectifs.',    icon: BulbIcon,
-    color: BRAND.primary,
-  },
-  {
-    number: '04',
-    title: 'Développer',
-    description: 'Nous développons et intégrons les solutions avec rigueur, qualité et performance.',
-    icon: CodeIcon,
-    color: BRAND.primaryDark,
-  },
-  {
-    number: '05',
-    title: 'Mesurer',
-    description: "Nous mesurons les performances grâce à des indicateurs clés pour évaluer l'impact de nos actions.",
-    icon: PieChartIcon,
-    color: BRAND.primary,
-  },
-  {
-    number: '06',
-    title: 'Optimiser',
-    description: 'Nous optimisons en continu pour maximiser les résultats et assurer votre croissance durable.',
-    icon: TrendingUpIcon,
-    color: BRAND.primaryDark,
-  },
+const STEPS_CONFIG = [
+  { number: '01', key: 'step1', icon: SearchIcon, color: BRAND.primary },
+  { number: '02', key: 'step2', icon: BarChartIcon, color: BRAND.primaryDark },
+  { number: '03', key: 'step3', icon: BulbIcon, color: BRAND.primary },
+  { number: '04', key: 'step4', icon: CodeIcon, color: BRAND.primaryDark },
+  { number: '05', key: 'step5', icon: PieChartIcon, color: BRAND.primary },
+  { number: '06', key: 'step6', icon: TrendingUpIcon, color: BRAND.primaryDark },
 ]
 
 const HomeMethodSection = () => {
+  const t = useTranslations('Method')
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
+
   return (
     <Box
-      id="home-method" // <-- AJOUT DE L'ID DE SECTION ICI POUR CORRIGER LE LIEN
+      id="method"
       component="section"
       sx={(theme) => ({
         py: { xs: 8, md: 12 },
@@ -142,12 +112,12 @@ const HomeMethodSection = () => {
           sx={{
             color: BRAND.primary,
             fontWeight: 800,
-            letterSpacing: 2,
+            letterSpacing: isRtl ? 1 : 2,
             fontSize: 13,
             mb: 1,
           }}
         >
-          NOTRE MÉTHODE
+          {t('badge')}
         </Typography>
         <Box
           sx={{
@@ -163,14 +133,14 @@ const HomeMethodSection = () => {
           sx={(theme) => ({
             fontSize: { xs: 26, sm: 32, md: 42 },
             fontWeight: 800,
-            lineHeight: 1.2,
+            lineHeight: isRtl ? 1.4 : 1.2,
             color: theme.palette.text.primary,
             mb: 2,
           })}
         >
-          Une méthode claire.{' '}
+          {t('title.part1')}{' '}
           <Box component="span" sx={{ color: BRAND.primary }}>
-            Des résultats concrets.
+            {t('title.highlight')}
           </Box>
         </Typography>
         <Typography
@@ -178,11 +148,10 @@ const HomeMethodSection = () => {
             color: theme.palette.text.secondary,
             fontSize: { xs: 15, md: 17 },
             maxWidth: 620,
-            lineHeight: 1.6,
+            lineHeight: isRtl ? 1.8 : 1.6,
           })}
         >
-          Nous suivons un processus structuré pour transformer vos objectifs en solutions
-          performantes et durables.
+          {t('description')}
         </Typography>
       </Stack>
 
@@ -194,9 +163,9 @@ const HomeMethodSection = () => {
         spacing={{ xs: 4, lg: 0 }}
         sx={{ maxWidth: 1400, mx: 'auto' }}
       >
-        {STEPS.map((step, index) => {
+        {STEPS_CONFIG.map((step, index) => {
           const Icon = step.icon
-          const isLast = index === STEPS.length - 1
+          const isLast = index === STEPS_CONFIG.length - 1
 
           return (
             <React.Fragment key={step.number}>
@@ -204,8 +173,8 @@ const HomeMethodSection = () => {
                 {/* Icône ronde */}
                 <Box
                   sx={{
-                    width: 76,
-                    height: 76,
+                    width: 74,
+                    height: 74,
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -216,7 +185,7 @@ const HomeMethodSection = () => {
                     mb: 2,
                   }}
                 >
-                  <Icon width={30} height={30} />
+                  <Icon width={28} height={28} />
                 </Box>
 
                 {/* Numéro */}
@@ -234,13 +203,14 @@ const HomeMethodSection = () => {
                 {/* Titre */}
                 <Typography
                   sx={(theme) => ({
-                    fontSize: 19,
+                    fontSize: 18,
                     fontWeight: 800,
                     color: theme.palette.text.primary,
                     mb: 1,
+                    textAlign: 'center',
                   })}
                 >
-                  {step.title}
+                  {t(`steps.${step.key}.title`)}
                 </Typography>
 
                 {/* Trait */}
@@ -268,17 +238,17 @@ const HomeMethodSection = () => {
                 >
                   <Typography
                     sx={(theme) => ({
-                      fontSize: 14,
-                      lineHeight: 1.7,
+                      fontSize: 13.5,
+                      lineHeight: isRtl ? 1.8 : 1.65,
                       color: theme.palette.text.secondary,
                     })}
                   >
-                    {step.description}
+                    {t(`steps.${step.key}.description`)}
                   </Typography>
                 </Box>
               </Stack>
 
-              {/* Flèche entre les étapes (desktop uniquement) */}
+              {/* Flèche directionnelle (desktop) */}
               {!isLast && (
                 <Box
                   sx={{
@@ -290,7 +260,7 @@ const HomeMethodSection = () => {
                     pt: 4.5,
                   }}
                 >
-                  <ArrowRightIcon width={20} height={20} />
+                  <ArrowRightIcon width={20} height={20} isRtl={isRtl} />
                 </Box>
               )}
             </React.Fragment>
@@ -306,7 +276,6 @@ const HomeMethodSection = () => {
           mx: 'auto',
           borderRadius: 4,
           overflow: 'hidden',
-          position: 'relative',
           background: `linear-gradient(120deg, ${BRAND.primaryDark} 0%, #2A0A1F 60%, ${BRAND.primaryDark} 100%)`,
           px: { xs: 3, md: 5 },
           py: { xs: 4, md: 5 },
@@ -316,36 +285,38 @@ const HomeMethodSection = () => {
           direction={{ xs: 'column', md: 'row' }}
           spacing={{ xs: 3, md: 4 }}
           alignItems={{ xs: 'flex-start', md: 'center' }}
+          textAlign={{ xs: 'center', md: isRtl ? 'right' : 'left' }}
         >
           <Box
             sx={{
               flexShrink: 0,
-              width: 68,
-              height: 68,
+              width: 64,
+              height: 64,
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: BRAND.primaryLight,
               backgroundColor: 'rgba(255,255,255,0.08)',
+              mx: { xs: 'auto', md: 0 },
             }}
           >
-            <RocketIcon width={30} height={30} />
+            <RocketIcon width={28} height={28} />
           </Box>
 
           <Typography
             sx={{
-              fontSize: { xs: 20, md: 26 },
+              fontSize: { xs: 19, md: 24 },
               fontWeight: 800,
-              lineHeight: 1.3,
+              lineHeight: isRtl ? 1.5 : 1.3,
               color: '#fff',
               flexShrink: 0,
-              maxWidth: { md: 380 },
+              maxWidth: { md: 400 },
             }}
           >
-            Chaque étape compte.{' '}
+            {t('banner.title.part1')}{' '}
             <Box component="span" sx={{ color: BRAND.primaryLight }}>
-              Chaque détail fait la différence.
+              {t('banner.title.highlight')}
             </Box>
           </Typography>
 
@@ -360,13 +331,12 @@ const HomeMethodSection = () => {
 
           <Typography
             sx={{
-              fontSize: { xs: 14, md: 15.5 },
-              lineHeight: 1.7,
-              color: 'rgba(255,255,255,0.75)',
+              fontSize: { xs: 14, md: 15 },
+              lineHeight: isRtl ? 1.8 : 1.65,
+              color: 'rgba(255,255,255,0.8)',
             }}
           >
-            Cette méthode nous permet de créer des solutions impactantes, adaptées à vos
-            besoins et évolutives dans le temps.
+            {t('banner.text')}
           </Typography>
         </Stack>
       </Box>

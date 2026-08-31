@@ -1,24 +1,27 @@
 'use client'
 
-import React, { useState, useRef } from 'react'
+import React from 'react'
+import Image from 'next/image'
+import { useTranslations, useLocale } from 'next-intl'
+
 import Box from '@mui/material/Box'
 import Grid from '@mui/material/Grid2'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import CircularProgress from '@mui/material/CircularProgress'
-import { useTheme } from '@mui/material/styles'
-import PersonOutlineIcon from '@mui/icons-material/PersonOutline'
-import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone'
-import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline'
-import UploadFileIcon from '@mui/icons-material/UploadFile'
-import DescriptionIcon from '@mui/icons-material/Description'
-import CloseIcon from '@mui/icons-material/Close'
-import SendIcon from '@mui/icons-material/Send'
-import CheckCircleIcon from '@mui/icons-material/CheckCircle'
-import BadgeOutlinedIcon from '@mui/icons-material/BadgeOutlined'
+import Stack from '@mui/material/Stack'
+import { useTheme, alpha } from '@mui/material/styles'
+
+import CodeIcon from '@mui/icons-material/Code'
+import CampaignIcon from '@mui/icons-material/Campaign'
+import DesktopWindowsIcon from '@mui/icons-material/DesktopWindows'
+import SettingsIcon from '@mui/icons-material/Settings'
+import InsightsIcon from '@mui/icons-material/Insights'
+import TrackChangesIcon from '@mui/icons-material/TrackChanges'
+import EditIcon from '@mui/icons-material/Edit'
+import GroupsIcon from '@mui/icons-material/Groups'
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch'
+import GroupIcon from '@mui/icons-material/Group'
+import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 
 const BRAND = {
   primary: '#B5377A',
@@ -27,548 +30,398 @@ const BRAND = {
   primarySoft: '#FEDDF6',
 }
 
-const DARK_BG = '#0E0510'
-const DARK_CARD = '#170A1B'
-const DARK_BORDER = `${BRAND.primary}33`
-
-const MAX_CV_SIZE_MB = 5
-const ACCEPTED_CV_TYPES = [
-  'application/pdf',
-  'application/msword',
-  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+const MEMBERS = [
+  {
+    key: 'salma',
+    badgeIcon: CodeIcon,
+    image: '/images/salma.webp',
+    linkedin: 'https://www.linkedin.com/in/salma-bellamkaddem',
+    skills: [
+      { key: 's1', icon: DesktopWindowsIcon },
+      { key: 's2', icon: SettingsIcon },
+      { key: 's3', icon: InsightsIcon },
+    ],
+  },
+  {
+    key: 'imane',
+    badgeIcon: CampaignIcon,
+    image: '/images/iman.webp',
+    linkedin: 'https://www.linkedin.com/in/imane-elafati',
+    skills: [
+      { key: 's1', icon: TrackChangesIcon },
+      { key: 's2', icon: EditIcon },
+      { key: 's3', icon: GroupsIcon },
+    ],
+  },
 ]
 
-interface FormErrors {
-  fullName?: string
-  phone?: string
-  email?: string
-  poste?: string
-  message?: string
-  cv?: string
-}
-
-const HomeTeam = () => {
+const HomeOurMotivation = () => {
+  const t = useTranslations('Team')
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
   const { palette } = useTheme()
   const isDark = palette.mode === 'dark'
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
-  const [form, setForm] = useState({
-    fullName: '',
-    phone: '',
-    email: '',
-    poste: '',
-    message: '',
-  })
-  const [cvFile, setCvFile] = useState<File | null>(null)
-  const [errors, setErrors] = useState<FormErrors>({})
-  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
-
-  const pageBg = isDark
-    ? `radial-gradient(circle at 50% 0%, ${BRAND.primaryDark}33 0%, ${DARK_BG} 55%)`
-    : `linear-gradient(135deg, ${BRAND.primarySoft} 0%, #fff 45%, ${BRAND.primarySoft} 100%)`
-  const cardBg = isDark ? DARK_CARD : '#fff'
-  const cardBorder = isDark ? DARK_BORDER : BRAND.primaryLight
-  const textMain = isDark ? '#fff' : BRAND.primaryDark
-  const textMuted = isDark ? 'rgba(255,255,255,0.6)' : '#6b7280'
-
-  const fieldSx = {
-    '& .MuiOutlinedInput-root': {
-      borderRadius: 2.5,
-      backgroundColor: isDark ? `${BRAND.primary}0D` : BRAND.primarySoft + '55',
-      '& fieldset': { borderColor: cardBorder },
-      '&:hover fieldset': { borderColor: BRAND.primary },
-      '&.Mui-focused fieldset': { borderColor: BRAND.primary },
-    },
-    '& .MuiInputLabel-root': { color: textMuted },
-    '& .MuiInputLabel-root.Mui-focused': { color: BRAND.primary },
-    '& .MuiOutlinedInput-input': { color: textMain, fontSize: 14 },
-  }
-
-  const handleChange =
-    (field: keyof typeof form) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setForm((prev) => ({ ...prev, [field]: e.target.value }))
-      setErrors((prev) => ({ ...prev, [field]: undefined }))
-    }
-
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    if (!ACCEPTED_CV_TYPES.includes(file.type)) {
-      setErrors((prev) => ({ ...prev, cv: 'Formats acceptés : PDF, DOC, DOCX' }))
-      return
-    }
-    if (file.size > MAX_CV_SIZE_MB * 1024 * 1024) {
-      setErrors((prev) => ({
-        ...prev,
-        cv: `Le fichier ne doit pas dépasser ${MAX_CV_SIZE_MB} Mo`,
-      }))
-      return
-    }
-
-    setCvFile(file)
-    setErrors((prev) => ({ ...prev, cv: undefined }))
-  }
-
-  const removeFile = () => {
-    setCvFile(null)
-    if (fileInputRef.current) fileInputRef.current.value = ''
-  }
-
-  const validate = () => {
-    const next: FormErrors = {}
-    if (!form.fullName.trim()) next.fullName = 'Le nom complet est requis'
-    if (!form.phone.trim()) next.phone = 'Le numéro de téléphone est requis'
-    if (!form.email.trim()) next.email = "L'email est requis"
-    else if (!/^\S+@\S+\.\S+$/.test(form.email)) next.email = 'Email invalide'
-    if (!form.message.trim()) next.message = 'Un message de motivation est requis'
-    if (!cvFile) next.cv = 'Merci de joindre votre CV'
-    setErrors(next)
-    return Object.keys(next).length === 0
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!validate()) return
-
-    setStatus('submitting')
-    try {
-      const payload = new FormData()
-      payload.append('fullName', form.fullName)
-      payload.append('phone', form.phone)
-      payload.append('email', form.email)
-      payload.append('poste', form.poste)
-      payload.append('message', form.message)
-      if (cvFile) payload.append('cv', cvFile)
-
-      const res = await fetch('/api/recrutement', { method: 'POST', body: payload })
-      if (!res.ok) throw new Error('Echec de envoi')
-
-      setStatus('success')
-      setForm({ fullName: '', phone: '', email: '', poste: '', message: '' })
-      removeFile()
-    } catch {
-      setStatus('error')
-    }
-  }
+  const cardBg = isDark ? '#190616' : '#FFFFFF'
+  const cardBorder = isDark ? alpha(BRAND.primaryLight, 0.15) : alpha(BRAND.primary, 0.1)
+  const textMain = isDark ? '#FFFFFF' : '#1F0519'
+  const textMuted = isDark ? 'rgba(255,255,255,0.65)' : '#4B5563'
 
   return (
     <Box
-      id='home-team'
-      component='section'
+      component="section"
       sx={{
         width: '100%',
         py: { xs: 8, md: 12 },
-        background: pageBg,
-        overflow: 'hidden',
         position: 'relative',
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          top: -120,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: { xs: 300, md: 600 },
-          height: { xs: 300, md: 600 },
-          borderRadius: '50%',
-          background: `radial-gradient(circle, ${BRAND.primary}${
-            isDark ? '22' : '0D'
-          } 0%, transparent 70%)`,
-          pointerEvents: 'none',
-          zIndex: 0,
-        },
+        backgroundColor: isDark ? '#0F030E' : '#FDF7FB',
       }}
     >
-      <Container maxWidth='lg' sx={{ position: 'relative', zIndex: 1 }}>
+      <Container maxWidth="lg">
+        {/* ── En-tête ── */}
         <Box
-          id='recrutement'
           sx={{
-            borderRadius: 5,
-            overflow: 'hidden',
-            backgroundColor: cardBg,
-            border: `1px solid ${cardBorder}`,
-            boxShadow: isDark
-              ? `0 20px 60px rgba(0,0,0,0.45)`
-              : `0 4px 24px ${BRAND.primary}12`,
-            animation: 'fadeUp 0.7s ease both',
-            '@keyframes fadeUp': {
-              from: { opacity: 0, transform: 'translateY(28px)' },
-              to: { opacity: 1, transform: 'translateY(0)' },
-            },
+            textAlign: 'center',
+            maxWidth: 620,
+            mx: 'auto',
+            mb: { xs: 6, md: 8 },
           }}
         >
-          <Grid container>
-            <Grid
-              size={{ xs: 12, md: 4 }}
+          <Box
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 1,
+              px: 2,
+              py: 0.6,
+              mb: 2,
+              borderRadius: '2rem',
+              backgroundColor: alpha(BRAND.primary, 0.1),
+              border: `1px solid ${alpha(BRAND.primary, 0.25)}`,
+            }}
+          >
+            <Box
               sx={{
-                p: { xs: 3.5, md: 4.5 },
-                background: `linear-gradient(160deg, ${BRAND.primary}, ${BRAND.primaryDark})`,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
+                width: 6,
+                height: 6,
+                borderRadius: '50%',
+                backgroundColor: BRAND.primary,
+              }}
+            />
+            <Typography
+              sx={{
+                fontSize: 11.5,
+                letterSpacing: isRtl ? 0.5 : 1.5,
+                textTransform: 'uppercase',
+                fontWeight: 700,
+                color: BRAND.primary,
               }}
             >
-              <Box
-                sx={{
-                  position: 'absolute',
-                  top: -60,
-                  right: -60,
-                  width: 200,
-                  height: 200,
-                  borderRadius: '50%',
-                  backgroundColor: 'rgba(255,255,255,0.08)',
-                }}
-              />
-              <Box
-                sx={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 0.75,
-                  px: 2,
-                  py: 0.6,
-                  mb: 2.5,
-                  borderRadius: 10,
-                  backgroundColor: 'rgba(255,255,255,0.15)',
-                  width: 'fit-content',
-                }}
-              >
-                <WorkOutlineIcon sx={{ fontSize: 14, color: '#fff' }} />
-                <Typography
-                  sx={{
-                    fontSize: 10.5,
-                    letterSpacing: 1,
-                    textTransform: 'uppercase',
-                    fontWeight: 700,
-                    color: '#fff',
-                  }}
-                >
-                  Recrutement
-                </Typography>
-              </Box>
+              {t('badge')}
+            </Typography>
+          </Box>
 
-              <Typography
-                component='h3'
-                sx={{
-                  fontWeight: 800,
-                  fontSize: { xs: 22, md: 24 },
-                  color: '#fff',
-                  lineHeight: 1.3,
-                  mb: 1.5,
-                }}
-              >
-                Envie de rejoindre l&apos;aventure ?
-              </Typography>
-              <Typography
-                sx={{
-                  fontSize: { xs: 13, md: 13.5 },
-                  color: 'rgba(255,255,255,0.85)',
-                  lineHeight: 1.75,
-                  mb: 3,
-                }}
-              >
-                Partagez-nous vos coordonnées, votre motivation et votre CV. Nous étudions chaque
-                candidature avec attention et revenons vers vous rapidement.
-              </Typography>
+          <Typography
+            component="h2"
+            sx={{
+              fontWeight: 800,
+              fontSize: { xs: 26, sm: 34, md: 40 },
+              lineHeight: isRtl ? 1.35 : 1.2,
+              color: textMain,
+              mb: 1.5,
+            }}
+          >
+            {t('title.part1')}{' '}
+            <Box
+              component="span"
+              sx={{
+                background: `linear-gradient(135deg, ${BRAND.primary} 0%, #D84E97 100%)`,
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              {t('title.highlight')}
+            </Box>
+          </Typography>
 
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
-                {[
-                  { icon: BadgeOutlinedIcon, text: 'Réponse sous quelques jours ouvrés' },
-                  { icon: DescriptionIcon, text: 'CV au format PDF, DOC ou DOCX' },
-                ].map((item) => {
-                  const ItemIcon = item.icon
-                  return (
-                    <Box key={item.text} sx={{ display: 'flex', alignItems: 'center', gap: 1.25 }}>
-                      <ItemIcon sx={{ fontSize: 16, color: '#fff', flexShrink: 0 }} />
-                      <Typography sx={{ fontSize: 12.5, color: 'rgba(255,255,255,0.85)' }}>
-                        {item.text}
-                      </Typography>
-                    </Box>
-                  )
-                })}
-              </Box>
-            </Grid>
+          <Typography
+            sx={{
+              color: textMuted,
+              fontSize: { xs: 14.5, md: 16 },
+              lineHeight: isRtl ? 1.8 : 1.6,
+            }}
+          >
+            {t('description')}
+          </Typography>
+        </Box>
 
-            <Grid size={{ xs: 12, md: 8 }} sx={{ p: { xs: 3, md: 4.5 } }}>
-              {status === 'success' ? (
+        {/* ── Cartes Membres (2 colonnes élégantes) ── */}
+        <Grid container spacing={{ xs: 3, md: 4 }} alignItems="stretch">
+          {MEMBERS.map((member) => {
+            const BadgeIcon = member.badgeIcon
+            return (
+              <Grid size={{ xs: 12, md: 6 }} key={member.key}>
                 <Box
                   sx={{
                     height: '100%',
-                    minHeight: 320,
                     display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    textAlign: 'center',
-                    gap: 1.5,
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    borderRadius: 4,
+                    overflow: 'hidden',
+                    backgroundColor: cardBg,
+                    border: `1px solid ${cardBorder}`,
+                    boxShadow: isDark
+                      ? '0 12px 35px rgba(0,0,0,0.5)'
+                      : '0 12px 35px rgba(181,55,122,0.06)',
+                    transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                    '&:hover': {
+                      transform: 'translateY(-4px)',
+                      boxShadow: `0 18px 45px ${alpha(BRAND.primary, 0.16)}`,
+                      borderColor: alpha(BRAND.primary, 0.35),
+                    },
                   }}
                 >
-                  <CheckCircleIcon sx={{ fontSize: 48, color: BRAND.primary }} />
-                  <Typography sx={{ fontWeight: 800, fontSize: 18, color: textMain }}>
-                    Candidature envoyée !
-                  </Typography>
-                  <Typography sx={{ fontSize: 13.5, color: textMuted, maxWidth: 360 }}>
-                    Merci pour votre intérêt. Notre équipe va étudier votre profil et reviendra vers
-                    vous très prochainement.
-                  </Typography>
-                  <Button
-                    onClick={() => setStatus('idle')}
+                  {/* Photo */}
+                  <Box
                     sx={{
-                      mt: 1,
-                      textTransform: 'none',
-                      fontWeight: 700,
-                      color: BRAND.primary,
-                      '&:hover': { backgroundColor: `${BRAND.primary}15` },
+                      position: 'relative',
+                      width: { xs: '100%', sm: '40%' },
+                      minHeight: { xs: 240, sm: '100%' },
+                      flexShrink: 0,
+                      backgroundColor: isDark ? '#120410' : '#F8E9F3',
                     }}
                   >
-                    Envoyer une autre candidature
-                  </Button>
-                </Box>
-              ) : (
-                <Box component='form' onSubmit={handleSubmit} noValidate>
-                  <Grid container spacing={2}>
-                    <Grid size={{ xs: 12, sm: 6 }}>
-                      <TextField
-                        fullWidth
-                        label='Nom complet'
-                        placeholder='Votre nom et prénom'
-                        value={form.fullName}
-                        onChange={handleChange('fullName')}
-                        error={!!errors.fullName}
-                        helperText={errors.fullName}
-                        InputProps={{
-                          startAdornment: (
-                            <PersonOutlineIcon sx={{ fontSize: 18, color: BRAND.primary, mr: 1 }} />
-                          ),
-                        }}
-                        sx={fieldSx}
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
-                      <TextField
-                        fullWidth
-                        label='Téléphone'
-                        placeholder='+212 6 00 00 00 00'
-                        value={form.phone}
-                        onChange={handleChange('phone')}
-                        error={!!errors.phone}
-                        helperText={errors.phone}
-                        InputProps={{
-                          startAdornment: (
-                            <PhoneIphoneIcon sx={{ fontSize: 18, color: BRAND.primary, mr: 1 }} />
-                          ),
-                        }}
-                        sx={fieldSx}
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
-                      <TextField
-                        fullWidth
-                        type='email'
-                        label='Email'
-                        placeholder='vous@exemple.com'
-                        value={form.email}
-                        onChange={handleChange('email')}
-                        error={!!errors.email}
-                        helperText={errors.email}
-                        InputProps={{
-                          startAdornment: (
-                            <EmailOutlinedIcon sx={{ fontSize: 18, color: BRAND.primary, mr: 1 }} />
-                          ),
-                        }}
-                        sx={fieldSx}
-                      />
-                    </Grid>
-                    <Grid size={{ xs: 12, sm: 6 }}>
-                      <TextField
-                        fullWidth
-                        label='Poste souhaité (optionnel)'
-                        placeholder='Ex : Développeur, Chargé(e) marketing…'
-                        value={form.poste}
-                        onChange={handleChange('poste')}
-                        InputProps={{
-                          startAdornment: (
-                            <WorkOutlineIcon sx={{ fontSize: 18, color: BRAND.primary, mr: 1 }} />
-                          ),
-                        }}
-                        sx={fieldSx}
-                      />
-                    </Grid>
-                    <Grid size={12}>
-                      <TextField
-                        fullWidth
-                        multiline
-                        minRows={4}
-                        label='Message de motivation'
-                        placeholder='Parlez-nous de vous, de vos compétences et de ce qui vous motive à nous rejoindre…'
-                        value={form.message}
-                        onChange={handleChange('message')}
-                        error={!!errors.message}
-                        helperText={errors.message}
-                        sx={fieldSx}
-                      />
-                    </Grid>
+                    <Image
+                      src={member.image}
+                      alt={t(`members.${member.key}.name`)}
+                      fill
+                      sizes="(max-width: 600px) 100vw, 300px"
+                      style={{ objectFit: 'cover' }}
+                    />
+                  </Box>
 
-                    <Grid size={12}>
-                      <Typography sx={{ fontSize: 12.5, fontWeight: 700, color: textMain, mb: 1 }}>
-                        Votre CV
-                      </Typography>
-
-                      <input
-                        ref={fileInputRef}
-                        type='file'
-                        accept='.pdf,.doc,.docx'
-                        onChange={handleFileSelect}
-                        style={{ display: 'none' }}
-                      />
-
-                      {!cvFile ? (
-                        <Box
-                          onClick={() => fileInputRef.current?.click()}
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: 1,
-                            p: 3,
-                            borderRadius: 3,
-                            border: `1.5px dashed ${errors.cv ? '#d32f2f' : cardBorder}`,
-                            backgroundColor: isDark
-                              ? `${BRAND.primary}0D`
-                              : BRAND.primarySoft + '55',
-                            cursor: 'pointer',
-                            transition: 'border-color 0.2s ease, background-color 0.2s ease',
-                            '&:hover': {
-                              borderColor: BRAND.primary,
-                              backgroundColor: `${BRAND.primary}12`,
-                            },
-                          }}
-                        >
-                          <UploadFileIcon sx={{ fontSize: 26, color: BRAND.primary }} />
-                          <Typography sx={{ fontSize: 13, fontWeight: 700, color: textMain }}>
-                            Cliquez pour importer votre CV
-                          </Typography>
-                          <Typography sx={{ fontSize: 11.5, color: textMuted }}>
-                            PDF, DOC ou DOCX — {MAX_CV_SIZE_MB} Mo maximum
-                          </Typography>
-                        </Box>
-                      ) : (
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            gap: 1.5,
-                            p: 1.75,
-                            borderRadius: 3,
-                            border: `1px solid ${cardBorder}`,
-                            backgroundColor: isDark
-                              ? `${BRAND.primary}12`
-                              : BRAND.primarySoft,
-                          }}
-                        >
-                          <Box
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: 1.25,
-                              minWidth: 0,
-                            }}
-                          >
-                            <DescriptionIcon
-                              sx={{ fontSize: 20, color: BRAND.primary, flexShrink: 0 }}
-                            />
-                            <Typography
-                              sx={{
-                                fontSize: 12.5,
-                                fontWeight: 600,
-                                color: textMain,
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                whiteSpace: 'nowrap',
-                              }}
-                            >
-                              {cvFile.name}
-                            </Typography>
-                          </Box>
-                          <Box
-                            onClick={removeFile}
-                            sx={{
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              width: 26,
-                              height: 26,
-                              borderRadius: '50%',
-                              flexShrink: 0,
-                              cursor: 'pointer',
-                              backgroundColor: isDark
-                                ? 'rgba(255,255,255,0.08)'
-                                : '#fff',
-                              '&:hover': { backgroundColor: `${BRAND.primary}22` },
-                            }}
-                          >
-                            <CloseIcon sx={{ fontSize: 15, color: textMuted }} />
-                          </Box>
-                        </Box>
-                      )}
-                      {errors.cv && (
-                        <Typography sx={{ fontSize: 11.5, color: '#d32f2f', mt: 0.75, ml: 0.5 }}>
-                          {errors.cv}
-                        </Typography>
-                      )}
-                    </Grid>
-
-                    <Grid size={12}>
-                      {status === 'error' && (
-                        <Typography sx={{ fontSize: 12.5, color: '#d32f2f', mb: 1.5 }}>
-                          Une erreur est survenue lors de l&apos;envoi. Merci de réessayer.
-                        </Typography>
-                      )}
-                      <Button
-                        type='submit'
-                        disabled={status === 'submitting'}
-                        endIcon={
-                          status === 'submitting' ? null : <SendIcon sx={{ fontSize: 16 }} />
-                        }
+                  {/* Détails */}
+                  <Box
+                    sx={{
+                      p: { xs: 3, sm: 3.5 },
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      flexGrow: 1,
+                      textAlign: isRtl ? 'right' : 'left',
+                    }}
+                  >
+                    <Box>
+                      {/* Badge rôle */}
+                      <Box
                         sx={{
-                          color: '#fff',
-                          background: `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.primaryDark})`,
-                          px: 3.5,
-                          py: 1.25,
-                          borderRadius: 10,
-                          fontWeight: 700,
-                          fontSize: 13.5,
-                          textTransform: 'none',
-                          boxShadow: `0 8px 20px ${BRAND.primary}40`,
-                          transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                          '&:hover': {
-                            transform: 'translateY(-2px)',
-                            boxShadow: `0 10px 24px ${BRAND.primary}55`,
-                            background: `linear-gradient(90deg, ${BRAND.primary}, ${BRAND.primaryDark})`,
-                          },
-                          '&.Mui-disabled': { color: '#fff', opacity: 0.7 },
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: 0.8,
+                          px: 1.4,
+                          py: 0.4,
+                          mb: 1.5,
+                          borderRadius: '2rem',
+                          backgroundColor: alpha(BRAND.primary, 0.1),
                         }}
                       >
-                        {status === 'submitting' ? (
-                          <CircularProgress size={18} sx={{ color: '#fff' }} />
-                        ) : (
-                          'Envoyer ma candidature'
-                        )}
-                      </Button>
-                    </Grid>
-                  </Grid>
+                        <BadgeIcon sx={{ fontSize: 13, color: BRAND.primary }} />
+                        <Typography
+                          sx={{
+                            fontSize: 11,
+                            fontWeight: 700,
+                            color: BRAND.primary,
+                            letterSpacing: 0.5,
+                          }}
+                        >
+                          {t(`members.${member.key}.badge`)}
+                        </Typography>
+                      </Box>
+
+                      {/* Nom & Titre */}
+                      <Typography
+                        component="h3"
+                        sx={{
+                          fontWeight: 800,
+                          fontSize: { xs: 18, md: 20 },
+                          color: textMain,
+                          lineHeight: 1.25,
+                        }}
+                      >
+                        {t(`members.${member.key}.name`)}
+                      </Typography>
+
+                      <Typography
+                        sx={{
+                          fontSize: 12.5,
+                          fontWeight: 700,
+                          color: BRAND.primary,
+                          mb: 1.5,
+                          mt: 0.25,
+                        }}
+                      >
+                        {t(`members.${member.key}.role`)}
+                      </Typography>
+
+                      {/* Description concise */}
+                      <Typography
+                        sx={{
+                          color: textMuted,
+                          fontSize: 13,
+                          lineHeight: isRtl ? 1.75 : 1.6,
+                          mb: 2.5,
+                        }}
+                      >
+                        {t(`members.${member.key}.description`)}
+                      </Typography>
+
+                      {/* Compétences clés */}
+                      <Stack spacing={1} sx={{ mb: 3 }}>
+                        {member.skills.map((skill) => {
+                          const Icon = skill.icon
+                          return (
+                            <Box
+                              key={skill.key}
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 1.2,
+                                px: 1.5,
+                                py: 0.8,
+                                borderRadius: 2,
+                                backgroundColor: isDark
+                                  ? alpha(BRAND.primary, 0.08)
+                                  : '#FAF0F6',
+                                border: `1px solid ${cardBorder}`,
+                              }}
+                            >
+                              <Icon sx={{ fontSize: 15, color: BRAND.primary, flexShrink: 0 }} />
+                              <Typography
+                                sx={{
+                                  fontSize: 12,
+                                  fontWeight: 600,
+                                  color: textMain,
+                                }}
+                              >
+                                {t(`members.${member.key}.skills.${skill.key}`)}
+                              </Typography>
+                            </Box>
+                          )
+                        })}
+                      </Stack>
+                    </Box>
+
+                    {/* Lien LinkedIn minimaliste */}
+                    <Box
+                      component="a"
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: 1,
+                        fontSize: 12.5,
+                        fontWeight: 700,
+                        color: BRAND.primary,
+                        textDecoration: 'none',
+                        width: 'fit-content',
+                        marginInlineStart: isRtl ? 'auto' : 0,
+                        transition: 'opacity 0.2s ease',
+                        '&:hover': {
+                          opacity: 0.8,
+                          textDecoration: 'underline',
+                        },
+                      }}
+                    >
+                      <Box
+                        component="svg"
+                        width={14}
+                        height={14}
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14zM8.34 18.34V10.1H5.67v8.24h2.67zM7 8.96a1.55 1.55 0 1 0 0-3.1 1.55 1.55 0 0 0 0 3.1zM18.34 18.34v-4.5c0-2.41-1.29-3.53-3-3.53-1.38 0-2 0.76-2.34 1.3v-1.11H10.3c0.03 0.7 0 8.24 0 8.24h2.67v-4.6c0-0.25 0.02-0.5 0.1-0.68 0.2-0.5 0.66-1.03 1.44-1.03 1.02 0 1.43 0.78 1.43 1.92v4.39h2.4z" />
+                      </Box>
+                      <span>{t(`members.${member.key}.cta`)}</span>
+                    </Box>
+                  </Box>
                 </Box>
-              )}
-            </Grid>
-          </Grid>
+              </Grid>
+            )
+          })}
+        </Grid>
+
+        {/* ── Bandeau Stats / Valeur ── */}
+        <Box
+          sx={{
+            mt: { xs: 4, md: 5 },
+            p: { xs: 2.5, md: 3 },
+            borderRadius: 3.5,
+            backgroundColor: cardBg,
+            border: `1px solid ${cardBorder}`,
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 2.5,
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, textAlign: isRtl ? 'right' : 'left' }}>
+            <Box
+              sx={{
+                width: 44,
+                height: 44,
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                background: `linear-gradient(135deg, ${BRAND.primary} 0%, ${BRAND.primaryDark} 100%)`,
+                color: '#fff',
+                flexShrink: 0,
+              }}
+            >
+              <RocketLaunchIcon sx={{ fontSize: 20 }} />
+            </Box>
+            <Box>
+              <Typography sx={{ fontWeight: 800, fontSize: 14.5, color: textMain }}>
+                {t('stats.bannerTitle')}{' '}
+                <Box component="span" sx={{ color: BRAND.primary }}>
+                  {t('stats.bannerHighlight')}
+                </Box>
+              </Typography>
+              <Typography sx={{ fontSize: 12, color: textMuted }}>
+                {t('stats.bannerSub')}
+              </Typography>
+            </Box>
+          </Box>
+
+          <Stack direction="row" spacing={{ xs: 2.5, sm: 4 }} alignItems="center">
+            {[
+              { icon: GroupIcon, val: '2', labelKey: 's1' },
+              { icon: TrackChangesIcon, val: '1', labelKey: 's2' },
+              { icon: TrendingUpIcon, val: '100%', labelKey: 's3' },
+            ].map((stat) => {
+              const Icon = stat.icon
+              return (
+                <Box key={stat.labelKey} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Icon sx={{ color: BRAND.primary, fontSize: 18 }} />
+                  <Box sx={{ textAlign: isRtl ? 'right' : 'left' }}>
+                    <Typography sx={{ fontWeight: 800, fontSize: 16, color: textMain, lineHeight: 1 }}>
+                      {stat.val}
+                    </Typography>
+                    <Typography sx={{ fontSize: 11, color: textMuted, lineHeight: 1.2 }}>
+                      {t(`stats.${stat.labelKey}`)}
+                    </Typography>
+                  </Box>
+                </Box>
+              )
+            })}
+          </Stack>
         </Box>
       </Container>
     </Box>
   )
 }
 
-export default HomeTeam
+export default HomeOurMotivation

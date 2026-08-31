@@ -1,12 +1,16 @@
 'use client'
 
 import React, { FC, ReactNode } from 'react'
-import { Box, Typography } from '@mui/material'
-import MuiLink from '@mui/material/Link'
+import { Box, Typography, Stack } from '@mui/material'
 import RouterLink from 'next/link'
-import { Theme } from '@mui/material'
+import { useLocale, useTranslations } from 'next-intl'
 import { FooterSectionTitle } from '@/components/footer'
 import { supportLinks } from '@/constants/menus'
+
+const BRAND = {
+  primary: '#B5377A',
+  primaryLight: '#FAC8EB',
+}
 
 interface LinkItemProps {
   label: string
@@ -15,103 +19,87 @@ interface LinkItemProps {
 }
 
 const LinkItem: FC<LinkItemProps> = ({ label, path, icon }) => {
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
+
+  // Construction propre du lien avec la locale
+  const cleanPath = path.replace(/^\/(fr|ar|en)(?=\/|$)/, '')
+  const href = cleanPath.startsWith('/')
+    ? `/${locale}${cleanPath}`
+    : `/${locale}/${cleanPath}`
+
   return (
-    <MuiLink
-      component={RouterLink}
-      href={`/services/${path}`}
-      target='_blank'
-      sx={{
+    <RouterLink
+      href={href}
+      style={{
         textDecoration: 'none',
+        display: 'inline-flex',
         alignItems: 'center',
-        mb: 0.5,
-
-        color: 'text.primary',
-
-        display: 'flex',
-        alignItem: 'center',
-        justifyContent: {
-          xs: 'flex-start',
-          md: 'flex-end',
-        },
-
-        // Icon
-        '& svg': {
-          fontSize: 18,
-          verticalAlign: 'middle',
-          zIndex: 2,
-        },
-        '& p': {
-          marginRight: 1,
-        },
-
-        '& .icon-container': {
-          position: 'relative',
-          height: 28,
-          width: 28,
-          alignItems: 'center',
-          justifyContent: 'center',
-          '&:before': {
-            zIndex: -1,
-            content: '""',
-            display: 'block !important',
-            width: 28,
-            height: 28,
-            position: 'absolute',
-            top: 0,
-            backgroundColor: (theme: Theme) => theme.palette.primary.main,
-            transform: 'scale(0)',
-            borderRadius: '50%',
-            transition: (theme: Theme) =>
-              theme.transitions.create(
-                ['background-color', 'transform', 'scale'],
-                { duration: 250 }
-              ),
-          },
-        },
-        '&:hover': {
-          color: 'primary.main',
-          '& .icon-container': {
-            color: '#fff',
-            '&:before': {
-              transform: 'scale(1)',
-              zIndex: 1,
-            },
-          },
-        },
+        gap: '8px',
+        color: 'rgba(255, 255, 255, 0.75)',
+        fontSize: '0.875rem',
+        transition: 'color 0.2s ease',
       }}
     >
+      {icon && (
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: BRAND.primaryLight,
+            '& svg': {
+              fontSize: 16,
+            },
+          }}
+        >
+          {icon}
+        </Box>
+      )}
+
       <Typography
-        component='p'
+        component="span"
         sx={{
-          display: 'inline-block',
-          color: 'inherit',
-          fontWeight: '500',
+          fontSize: 'inherit',
+          fontWeight: 500,
+          textAlign: isRtl ? 'right' : 'left',
+          '&:hover': {
+            color: BRAND.primaryLight,
+            textDecoration: 'underline',
+          },
         }}
       >
         {label}
       </Typography>
-      <Box
-        className='icon-container'
-        sx={{ display: { xs: 'none', md: 'flex' } }}
-      >
-        {icon}
-      </Box>
-    </MuiLink>
+    </RouterLink>
   )
 }
 
 const FooterSupportLinks: FC = () => {
+  const tNav = useTranslations('Navigation')
+  const tFooter = useTranslations('Footer.columns')
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
+
   return (
-    <Box>
-      <FooterSectionTitle title='Support' alignItems='flex-end' />
-      {supportLinks.map((item, index) => (
-        <LinkItem
-          key={item.label + String(index)}
-          label={item.label}
-          path={item.path}
-          icon={item.icon}
-        />
-      ))}
+    <Box sx={{ textAlign: isRtl ? 'right' : 'left' }}>
+      <FooterSectionTitle title={tFooter('support')} />
+      <Stack spacing={1.2} sx={{ alignItems: isRtl ? 'flex-end' : 'flex-start' }}>
+        {supportLinks.map((item, index) => {
+          const label = item.labelKey
+            ? tNav(item.labelKey.replace('Navigation.', ''))
+            : (item as any).label || ''
+
+          return (
+            <LinkItem
+              key={`${item.labelKey || index}-${index}`}
+              label={label}
+              path={item.path}
+              icon={item.icon}
+            />
+          )
+        })}
+      </Stack>
     </Box>
   )
 }

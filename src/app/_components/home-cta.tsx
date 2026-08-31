@@ -1,12 +1,20 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useTranslations, useLocale } from 'next-intl'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import Typography from '@mui/material/Typography'
+import { alpha, Theme } from '@mui/material/styles'
 import ContactModal from './ContactModal'
 
-// Couleurs fixes (indépendantes du mode clair/sombre) pour le CTA principal
+const BRAND = {
+  primary: '#B5377A',
+  primaryDark: '#570D3F',
+  primaryLight: '#FAC8EB',
+  primarySoft: '#FEDDF6',
+}
+
 const CTA_BUTTON = {
   bg: '#561244',
   bgHover: '#40093B',
@@ -14,27 +22,37 @@ const CTA_BUTTON = {
 }
 
 const HomeCTA = () => {
+  const t = useTranslations('Cta')
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
   const [contactOpen, setContactOpen] = useState(false)
 
   return (
     <Box
-      id="home-cta"
       component="section"
-      sx={(theme) => ({
+      sx={(theme: Theme) => ({
         width: '100%',
-        py: { xs: 5, md: 8 },
+        py: { xs: 6, md: 10 },
         backgroundColor: theme.palette.background.default,
       })}
     >
       <Container maxWidth="lg">
         <Box
-          sx={(theme) => ({
+          sx={(theme: Theme) => ({
             position: 'relative',
-            borderRadius: { xs: 5, md: 7 },
+            borderRadius: { xs: 4, md: 6 },
             overflow: 'hidden',
-            backgroundColor: theme.palette.background.paper,
-            border: `1px solid ${theme.palette.divider}`,
-            boxShadow: '0 30px 80px -30px rgba(86,18,68,0.18)',
+            backgroundColor:
+              theme.palette.mode === 'dark' ? '#180313' : theme.palette.background.paper,
+            border: '1px solid',
+            borderColor:
+              theme.palette.mode === 'dark'
+                ? alpha(BRAND.primary, 0.2)
+                : theme.palette.divider,
+            boxShadow:
+              theme.palette.mode === 'dark'
+                ? '0 24px 70px rgba(0,0,0,0.55)'
+                : '0 30px 80px -30px rgba(86,18,68,0.18)',
           })}
         >
           <Box
@@ -42,92 +60,97 @@ const HomeCTA = () => {
               position: 'relative',
               zIndex: 1,
               display: 'flex',
-              flexDirection: { xs: 'column', md: 'row' },
+              flexDirection: { xs: 'column', md: isRtl ? 'row-reverse' : 'row' },
               alignItems: 'center',
-              minHeight: { md: 480 },
+              minHeight: { md: 460 },
             }}
           >
-            {/* ── Colonne gauche : texte ── */}
+            {/* ── Colonne texte ── */}
             <Box
               sx={{
-                flex: { md: '0 0 52%' },
-                px: { xs: 3.5, sm: 5, md: 8 },
-                py: { xs: 6, md: 0 },
-                animation: 'ctaFadeUp 0.8s ease both',
-                '@keyframes ctaFadeUp': {
-                  from: { opacity: 0, transform: 'translateY(20px)' },
-                  to: { opacity: 1, transform: 'translateY(0)' },
-                },
+                flex: { md: '0 0 54%' },
+                px: { xs: 3, sm: 5, md: 7 },
+                py: { xs: 5, md: 6 },
+                textAlign: isRtl ? 'right' : 'left',
+                width: '100%',
               }}
             >
               {/* Badge */}
               <Box
-                sx={(theme) => ({
-                  mb: 3,
+                sx={(theme: Theme) => ({
+                  mb: 2.5,
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: 1,
-                  px: 2.25,
-                  py: 0.8,
+                  px: 2,
+                  py: 0.75,
                   borderRadius: 10,
-                  backgroundColor: theme.palette.divider,
+                  backgroundColor:
+                    theme.palette.mode === 'dark'
+                      ? alpha(BRAND.primaryLight, 0.12)
+                      : alpha(BRAND.primary, 0.08),
+                  border: '1px solid',
+                  borderColor:
+                    theme.palette.mode === 'dark'
+                      ? alpha(BRAND.primaryLight, 0.2)
+                      : alpha(BRAND.primary, 0.15),
                 })}
               >
                 <Box
-                  sx={(theme) => ({
+                  sx={{
                     width: 6,
                     height: 6,
                     borderRadius: '50%',
-                    backgroundColor: theme.palette.text.disabled,
+                    backgroundColor: BRAND.primary,
                     animation: 'ctaPulse 2s ease-in-out infinite',
                     '@keyframes ctaPulse': {
                       '0%, 100%': { opacity: 1, transform: 'scale(1)' },
                       '50%': { opacity: 0.4, transform: 'scale(0.7)' },
                     },
-                  })}
+                  }}
                 />
                 <Typography
-                  sx={(theme) => ({
-                    fontSize: { xs: 11, sm: 11.5, md: 12 },
-                    letterSpacing: 1.2,
+                  sx={{
+                    fontSize: { xs: 11, sm: 11.5 },
+                    letterSpacing: isRtl ? 0.5 : 1,
                     textTransform: 'uppercase',
                     fontWeight: 700,
-                    color: theme.palette.text.primary,
-                  })}
+                    color: BRAND.primary,
+                  }}
                 >
-                  Prêt à passer à l&apos;action
+                  {t('badge')}
                 </Typography>
               </Box>
 
               {/* Titre */}
               <Typography
                 component="h2"
-                sx={(theme) => ({
+                sx={(theme: Theme) => ({
                   fontWeight: 800,
-                  fontSize: { xs: 28, sm: 36, md: 44, lg: 50 },
-                  lineHeight: 1.14,
+                  fontSize: { xs: 26, sm: 34, md: 42 },
+                  lineHeight: isRtl ? 1.35 : 1.18,
                   color: theme.palette.text.primary,
-                  mb: 2.5,
-                  letterSpacing: '-0.02em',
+                  mb: 2,
+                  letterSpacing: isRtl ? 0 : '-0.02em',
                 })}
               >
-                Prêt à faire grandir
+                {t('title.line1')}
                 <br />
-                votre entreprise&nbsp;?
+                {t('title.line2')}
               </Typography>
 
               {/* Sous-titre */}
               <Typography
-                sx={(theme) => ({
-                  fontSize: { xs: 14.5, sm: 15.5, md: 17 },
-                  fontWeight: 400,
+                sx={(theme: Theme) => ({
+                  fontSize: { xs: 14.5, sm: 15.5 },
                   color: theme.palette.text.secondary,
-                  lineHeight: 1.65,
-                  mb: { xs: 4, md: 4.5 },
-                  maxWidth: 440,
+                  lineHeight: isRtl ? 1.8 : 1.65,
+                  mb: { xs: 3.5, md: 4 },
+                  maxWidth: 460,
+                  mx: { xs: 'auto', md: isRtl ? '0 0 0 auto' : '0 auto 0 0' },
                 })}
               >
-                Construisons ensemble une stratégie digitale sur mesure.
+                {t('subtitle')}
               </Typography>
 
               {/* Boutons */}
@@ -135,69 +158,74 @@ const HomeCTA = () => {
                 sx={{
                   display: 'flex',
                   flexDirection: { xs: 'column', sm: 'row' },
-                  gap: 2,
-                  alignItems: 'center',
-                  width: { xs: '100%', sm: 'auto' },
+                  gap: 1.5,
+                  alignItems: { xs: 'stretch', sm: 'center' },
+                  justifyContent: { xs: 'center', md: isRtl ? 'flex-end' : 'flex-start' },
                 }}
               >
                 <Box
+                  component="button"
+                  type="button"
                   onClick={() => setContactOpen(true)}
                   sx={{
+                    border: 'none',
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     gap: 1,
-                    px: { xs: 3.5, sm: 4, md: 4.5 },
-                    py: { xs: 1.6, md: 1.85 },
-                    borderRadius: 10,
-                    backgroundColor: CTA_BUTTON.bg,
+                    px: { xs: 3, sm: 3.5 },
+                    py: { xs: 1.4, md: 1.6 },
+                    borderRadius: '2rem',
+                    background: `linear-gradient(135deg, ${BRAND.primary} 0%, ${BRAND.primaryDark} 100%)`,
                     color: CTA_BUTTON.text,
                     fontWeight: 700,
-                    fontSize: { xs: 14, sm: 14.5, md: 15 },
-                    letterSpacing: '0.01em',
-                    lineHeight: 1.3,
+                    fontSize: 14,
                     cursor: 'pointer',
-                    width: { xs: '100%', sm: 'auto' },
-                    textAlign: 'center',
-                    boxShadow: '0 10px 26px -8px rgba(86,18,68,0.55)',
-                    transition: 'all 0.3s ease',
+                    boxShadow: `0 8px 24px ${alpha(BRAND.primary, 0.4)}`,
+                    transition: 'all 0.25s ease',
                     '&:hover': {
-                      backgroundColor: CTA_BUTTON.bgHover,
-                      transform: 'translateY(-3px)',
-                      boxShadow: '0 16px 34px -8px rgba(86,18,68,0.6)',
+                      transform: 'translateY(-2px)',
+                      boxShadow: `0 12px 28px ${alpha(BRAND.primary, 0.55)}`,
+                      filter: 'brightness(1.06)',
                     },
                   }}
                 >
-                  Réservez une consultation gratuite
+                  {t('buttons.consultation')}
                 </Box>
 
                 <Box
                   component="a"
                   href="#home-services"
-                  sx={(theme) => ({
+                  sx={(theme: Theme) => ({
                     display: 'inline-flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: 1,
-                    px: { xs: 3.5, md: 4.25 },
-                    py: { xs: 1.5, md: 1.75 },
-                    borderRadius: 10,
+                    px: { xs: 3, sm: 3.5 },
+                    py: { xs: 1.3, md: 1.5 },
+                    borderRadius: '2rem',
                     backgroundColor: 'transparent',
                     color: theme.palette.text.primary,
                     fontWeight: 700,
-                    fontSize: { xs: 13.5, md: 14.5 },
+                    fontSize: 14,
                     cursor: 'pointer',
-                    width: { xs: '100%', sm: 'auto' },
                     textDecoration: 'none',
-                    border: `1.5px solid ${theme.palette.divider}`,
-                    transition: 'all 0.3s ease',
+                    border: '1.5px solid',
+                    borderColor:
+                      theme.palette.mode === 'dark'
+                        ? alpha(BRAND.primaryLight, 0.2)
+                        : alpha(BRAND.primary, 0.2),
+                    transition: 'all 0.25s ease',
                     '&:hover': {
-                      backgroundColor: theme.palette.divider,
-                      transform: 'translateY(-3px)',
+                      backgroundColor:
+                        theme.palette.mode === 'dark'
+                          ? alpha(BRAND.primaryLight, 0.08)
+                          : alpha(BRAND.primary, 0.06),
+                      borderColor: BRAND.primary,
+                      transform: 'translateY(-2px)',
                     },
                   })}
                 >
-                  Voir nos services
+                  {t('buttons.services')}
                 </Box>
               </Box>
             </Box>
@@ -205,13 +233,14 @@ const HomeCTA = () => {
             {/* ── Colonne droite : composition 3D ── */}
             <Box
               sx={{
-                flex: { md: '0 0 48%' },
+                flex: { md: '0 0 46%' },
                 display: { xs: 'none', md: 'flex' },
                 position: 'relative',
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: 480,
+                height: 460,
                 width: '100%',
+                direction: 'ltr',
               }}
             >
               <CtaSceneDecoration />
@@ -226,13 +255,12 @@ const HomeCTA = () => {
 }
 
 // ─────────────────────────────────────────────────────────────
-// Composition 3D flottante : anneaux orbitaux, sphère glassy,
-// petit cube et sphère dégradée chaude — animations CSS pures.
+// Composition 3D épurée et géométrie verrouillée LTR
 // ─────────────────────────────────────────────────────────────
 const CtaSceneDecoration = () => {
   return (
-    <Box sx={{ position: 'relative', width: 420, height: 420 }}>
-      {/* Anneaux orbitaux (SVG, rotation lente) */}
+    <Box sx={{ position: 'relative', width: 380, height: 380 }}>
+      {/* Anneaux orbitaux */}
       <Box
         component="svg"
         viewBox="0 0 420 420"
@@ -251,35 +279,35 @@ const CtaSceneDecoration = () => {
         <ellipse
           cx="210"
           cy="210"
-          rx="175"
-          ry="70"
+          rx="170"
+          ry="65"
           fill="none"
           stroke="#B73B7B"
           strokeOpacity="0.25"
-          strokeWidth="1"
+          strokeWidth="1.2"
           transform="rotate(-18 210 210)"
         />
         <ellipse
           cx="210"
           cy="210"
-          rx="150"
-          ry="95"
+          rx="145"
+          ry="90"
           fill="none"
           stroke="#590842"
-          strokeOpacity="0.15"
-          strokeWidth="1"
+          strokeOpacity="0.2"
+          strokeWidth="1.2"
           transform="rotate(24 210 210)"
         />
       </Box>
 
-      {/* Sphère centrale "glassy" */}
+      {/* Sphère centrale */}
       <Box
         sx={{
           position: 'absolute',
-          top: 90,
-          left: 90,
-          width: 220,
-          height: 220,
+          top: 80,
+          left: 80,
+          width: 210,
+          height: 210,
           borderRadius: '50%',
           background:
             'radial-gradient(circle at 32% 28%, rgba(255,255,255,0.95) 0%, rgba(238,225,236,0.75) 35%, rgba(183,59,123,0.35) 75%, rgba(86,18,68,0.25) 100%)',
@@ -288,21 +316,21 @@ const CtaSceneDecoration = () => {
           animation: 'ctaFloatSlow 7s ease-in-out infinite',
           '@keyframes ctaFloatSlow': {
             '0%, 100%': { transform: 'translateY(0px)' },
-            '50%': { transform: 'translateY(-16px)' },
+            '50%': { transform: 'translateY(-14px)' },
           },
         }}
       />
 
-      {/* Anneau / torus en haut à gauche de la sphère */}
+      {/* Torus / Anneau transparent */}
       <Box
         sx={{
           position: 'absolute',
-          top: 50,
-          left: 60,
-          width: 110,
-          height: 110,
+          top: 45,
+          left: 50,
+          width: 100,
+          height: 100,
           borderRadius: '50%',
-          border: '22px solid transparent',
+          border: '20px solid transparent',
           background:
             'linear-gradient(135deg, rgba(255,255,255,0.7), rgba(183,59,123,0.35)) border-box',
           WebkitMask:
@@ -314,7 +342,7 @@ const CtaSceneDecoration = () => {
           animation: 'ctaFloatMed 8s ease-in-out infinite',
           '@keyframes ctaFloatMed': {
             '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
-            '50%': { transform: 'translateY(10px) rotate(6deg)' },
+            '50%': { transform: 'translateY(8px) rotate(6deg)' },
           },
         }}
       />
@@ -323,105 +351,62 @@ const CtaSceneDecoration = () => {
       <Box
         sx={{
           position: 'absolute',
-          top: 40,
-          right: 30,
-          width: 60,
-          height: 60,
+          top: 35,
+          right: 25,
+          width: 54,
+          height: 54,
           transformStyle: 'preserve-3d',
           transform: 'rotateX(-18deg) rotateY(28deg)',
           animation: 'ctaCubeFloat 6s ease-in-out infinite',
           '@keyframes ctaCubeFloat': {
             '0%, 100%': { transform: 'rotateX(-18deg) rotateY(28deg) translateY(0px)' },
-            '50%': { transform: 'rotateX(-14deg) rotateY(40deg) translateY(-14px)' },
+            '50%': { transform: 'rotateX(-14deg) rotateY(40deg) translateY(-12px)' },
           },
         }}
       >
         <Box
           sx={{
             position: 'absolute',
-            width: 60,
-            height: 60,
+            width: 54,
+            height: 54,
             background: 'linear-gradient(135deg, #FDF8FC 0%, #E9D3E2 100%)',
-            transform: 'translateZ(30px)',
+            transform: 'translateZ(27px)',
           }}
         />
         <Box
           sx={{
             position: 'absolute',
-            width: 60,
-            height: 60,
+            width: 54,
+            height: 54,
             background: 'linear-gradient(135deg, #B73B7B 0%, #590842 100%)',
-            transform: 'rotateY(90deg) translateZ(30px)',
+            transform: 'rotateY(90deg) translateZ(27px)',
           }}
         />
         <Box
           sx={{
             position: 'absolute',
-            width: 60,
-            height: 60,
+            width: 54,
+            height: 54,
             background: 'linear-gradient(135deg, #E9D3E2 0%, #B73B7B 100%)',
-            transform: 'rotateX(90deg) translateZ(30px)',
+            transform: 'rotateX(90deg) translateZ(27px)',
           }}
         />
       </Box>
 
-      {/* Sphère dégradée chaude, en bas à gauche */}
+      {/* Sphère chaude */}
       <Box
         sx={{
           position: 'absolute',
-          bottom: 55,
-          left: 55,
-          width: 78,
-          height: 78,
+          bottom: 50,
+          left: 45,
+          width: 70,
+          height: 70,
           borderRadius: '50%',
           background: 'radial-gradient(circle at 35% 30%, #F3C77A 0%, #B73B7B 55%, #561244 100%)',
           boxShadow: '0 18px 34px -10px rgba(86,18,68,0.5)',
           animation: 'ctaFloatMed 9s ease-in-out infinite',
         }}
       />
-
-      {/* Halo diffus derrière la scène */}
-      <Box
-        sx={{
-          position: 'absolute',
-          bottom: -30,
-          right: -20,
-          width: 260,
-          height: 260,
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(183,59,123,0.18) 0%, rgba(183,59,123,0) 70%)',
-          zIndex: -1,
-        }}
-      />
-
-      {/* Points flottants */}
-      {[
-        { top: 20, left: 30, size: 6, dur: '4s' },
-        { top: 55, right: 10, size: 5, dur: '5s' },
-        { bottom: 90, left: 5, size: 4, dur: '3.5s' },
-        { bottom: 15, right: 70, size: 5, dur: '4.5s' },
-        { top: 140, left: 0, size: 3, dur: '6s' },
-      ].map((p, i) => (
-        <Box
-          key={i}
-          sx={{
-            position: 'absolute',
-            top: p.top,
-            left: p.left,
-            right: p.right,
-            bottom: p.bottom,
-            width: p.size,
-            height: p.size,
-            borderRadius: '50%',
-            backgroundColor: '#B73B7B',
-            animation: `ctaDotFloat ${p.dur} ease-in-out infinite`,
-            '@keyframes ctaDotFloat': {
-              '0%, 100%': { transform: 'translateY(0px)', opacity: 0.35 },
-              '50%': { transform: 'translateY(-10px)', opacity: 0.9 },
-            },
-          }}
-        />
-      ))}
     </Box>
   )
 }

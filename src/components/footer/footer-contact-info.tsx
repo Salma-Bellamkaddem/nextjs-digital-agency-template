@@ -1,106 +1,94 @@
 'use client'
 
-import React, { FC, ReactNode } from 'react'
-import { Box, Typography } from '@mui/material'
-import { FooterSectionTitle } from '@/components/footer'
+import React from 'react'
+import Box from '@mui/material/Box'
+import Stack from '@mui/material/Stack'
+import Typography from '@mui/material/Typography'
+import { useLocale, useTranslations } from 'next-intl'
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined'
+import PhoneOutlinedIcon from '@mui/icons-material/PhoneOutlined'
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined'
+import FooterSectionTitle from './footer-section-title'
 
-// icons
-import EmailIcon from '@/assets/icons/eva--email-outline.svg'
-import PhoneIcon from '@/assets/icons/eva--phone-outline.svg'
-import LocationIcon from '@/assets/icons/tdesign--location.svg'
+const FooterContactInfo = () => {
+  const t = useTranslations('Footer')
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
 
-interface ContactInfoItemProps {
-  icon: ReactNode
-  label: string
-  value: string
-  link: string
-}
-
-const ContactInfoItem: FC<ContactInfoItemProps> = ({
-  icon,
-  label,
-  value,
-  link,
-}: ContactInfoItemProps) => {
   return (
-    <Box
-      sx={{
-        mb: 2.2,
-        display: 'block',
-        width: {
-          xs: '100%',
-          md: 360,
-        },
-        color: 'text.primary',
-        textDecoration: 'none',
-        ':hover': {
-          color: 'primary.main',
-        },
-      }}
-      component='a'
-      href={link}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-        }}
-      >
-        {icon}
-        <Box>
-          <Typography
-            dangerouslySetInnerHTML={{ __html: value }}
-            sx={{ mb: 0.6, fontSize: 15, lineHeight: 1.3 }}
-            variant='h6'
-          />
-        </Box>
-      </Box>
-      <Typography
-        variant='subtitle1'
-        sx={{ color: 'text.secondary', ml: '32px' }}
-      >
-        {label}
-      </Typography>
-    </Box>
-  )
-}
+    <Box sx={{ textAlign: isRtl ? 'right' : 'left' }}>
+      <FooterSectionTitle title={t('columns.contact')} />
+      <Stack spacing={1.6} sx={{ alignItems: isRtl ? 'flex-end' : 'flex-start' }}>
+        {/* Email */}
+        <Stack
+          direction="row"
+          spacing={1.2}
+          alignItems="center"
+          sx={{ justifyContent: isRtl ? 'flex-end' : 'flex-start' }}
+        >
+          {!isRtl && <EmailOutlinedIcon sx={{ fontSize: 18, color: '#FAC8EB' }} />}
+          <Box
+            component="a"
+            href="mailto:nexsetia@gmail.com"
+            sx={{
+              fontSize: '0.875rem',
+              color: 'rgba(255, 255, 255, 0.75)',
+              textDecoration: 'none',
+              '&:hover': { color: '#FAC8EB', textDecoration: 'underline' },
+            }}
+          >
+            nexsetia@gmail.com
+          </Box>
+          {isRtl && <EmailOutlinedIcon sx={{ fontSize: 18, color: '#FAC8EB' }} />}
+        </Stack>
 
-const FooterContactInfo: FC = () => {
-  return (
-    <Box sx={{ mb: { xs: 4, md: 0 } }}>
-      <FooterSectionTitle title='Contact Info' />
-      <ContactInfoItem
-        value='info@example.com'
-        label='Response within 24hrs'
-        link='mailto:info@example.com'
-        icon={
+        {/* Téléphone */}
+        <Stack
+          direction="row"
+          spacing={1.2}
+          alignItems="center"
+          sx={{ justifyContent: isRtl ? 'flex-end' : 'flex-start' }}
+        >
+          {!isRtl && <PhoneOutlinedIcon sx={{ fontSize: 18, color: '#FAC8EB' }} />}
           <Box
-            component={EmailIcon}
-            sx={{ mr: 1.4, width: 22, height: 'auto' }}
-          />
-        }
-      />
-      <ContactInfoItem
-        value='+62 812000xxxx'
-        label='Sen - Jum / 9am - 5:30pm'
-        link='https://wa.me/62812000xxxx'
-        icon={
-          <Box
-            component={PhoneIcon}
-            sx={{ mr: 1.4, width: 22, height: 'auto' }}
-          />
-        }
-      />
-      <ContactInfoItem
-        value='123 Business St., Suite 456, City, State, ZIP Code, Country'
-        label='Office'
-        link='#'
-        icon={
-          <Box
-            component={LocationIcon}
-            sx={{ mr: 1.4, width: 22, height: 'auto' }}
-          />
-        }
-      />
+            component="a"
+            href="tel:+212600000000"
+            sx={{
+              fontSize: '0.875rem',
+              color: 'rgba(255, 255, 255, 0.75)',
+              textDecoration: 'none',
+              direction: 'ltr',
+              '&:hover': { color: '#FAC8EB', textDecoration: 'underline' },
+            }}
+          >
+            +212 6 00 00 00 00
+          </Box>
+          {isRtl && <PhoneOutlinedIcon sx={{ fontSize: 18, color: '#FAC8EB' }} />}
+        </Stack>
+
+        {/* Localisation */}
+        <Stack
+          direction="row"
+          spacing={1.2}
+          alignItems="flex-start"
+          sx={{ justifyContent: isRtl ? 'flex-end' : 'flex-start' }}
+        >
+          {!isRtl && (
+            <LocationOnOutlinedIcon sx={{ fontSize: 19, color: '#FAC8EB', mt: 0.2 }} />
+          )}
+          <Box>
+            <Typography sx={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.75)' }}>
+              {t('contact.location')}
+            </Typography>
+            <Typography sx={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
+              {t('contact.subLocation')}
+            </Typography>
+          </Box>
+          {isRtl && (
+            <LocationOnOutlinedIcon sx={{ fontSize: 19, color: '#FAC8EB', mt: 0.2 }} />
+          )}
+        </Stack>
+      </Stack>
     </Box>
   )
 }

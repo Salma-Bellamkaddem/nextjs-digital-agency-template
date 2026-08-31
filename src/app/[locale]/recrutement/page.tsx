@@ -1,4 +1,4 @@
-import HomeTeam from '@/app/_components/home-our-motivation' // Ajustez le chemin selon votre projet
+import HomeTeam from '@/app/_components/recrutement' // Ajustez le chemin selon votre projet
 
 export const metadata = {
   title: "Recrutement & Offres d'emploi | Nexsetia",

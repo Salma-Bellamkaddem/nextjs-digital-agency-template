@@ -1,22 +1,21 @@
 'use client'
 
-import React, { FC, memo, ReactElement } from 'react'
+import React, { FC, memo, ReactNode } from 'react'
 
-// components
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-
-// interfaces
 import { Theme } from '@mui/material/styles'
 
-// hooks
 import { usePathname } from 'next/navigation'
-import { useScrollOrNavigate } from '../../hooks/useScrollOrNavigate'
+import { useTranslations } from 'next-intl'
 
-// constants
+import { useScrollOrNavigate } from '../../hooks/useScrollOrNavigate'
 import { companyMenus } from '@/constants/menus'
 
-// ─── Palette EXSETIA (dupliquée ici pour éviter un import croisé) ─────────────
+// ─────────────────────────────────────────────
+// BRAND
+// ─────────────────────────────────────────────
+
 const BRAND = {
   primary: '#B5377A',
   primaryDark: '#570D3F',
@@ -24,69 +23,156 @@ const BRAND = {
   white: '#FFFFFF',
 }
 
-interface LinkItemProps extends Props {
+// ─────────────────────────────────────────────
+// PROPS
+// ─────────────────────────────────────────────
+
+interface LinkItemProps {
   label: string
   path: string
   sectionId?: string | null
-  icon?: ReactElement
+  icon?: ReactNode
 }
 
-const LinkItem: FC<LinkItemProps> = ({ label, path, sectionId, icon }: LinkItemProps) => {
-  const pathName = usePathname()
+// ─────────────────────────────────────────────
+// LINK ITEM
+// ─────────────────────────────────────────────
+
+const LinkItem: FC<LinkItemProps> = ({
+  label,
+  path,
+  sectionId,
+  icon,
+}) => {
+  const pathname = usePathname()
   const goTo = useScrollOrNavigate()
-  const isActive = pathName === path
+
+  // Retire /fr, /ar ou /en du pathname
+  const normalizedPath =
+    pathname?.replace(/^\/(fr|ar|en)(?=\/|$)/, '') || '/'
+
+  // Normalise également le path du menu
+  const normalizedMenuPath =
+    path.replace(/^\/(fr|ar|en)(?=\/|$)/, '') || '/'
+
+  const isActive =
+    normalizedPath === normalizedMenuPath ||
+    (sectionId !== null &&
+      sectionId !== undefined &&
+      pathname?.includes(sectionId))
+
+  const handleClick = () => {
+    goTo({
+      path,
+      sectionId,
+    })
+  }
 
   return (
     <Box
       component="button"
-      onClick={() => goTo({ path, sectionId })}
+      type="button"
+      onClick={handleClick}
       sx={{
         border: 'none',
         background: 'none',
         font: 'inherit',
+
         py: 0.8,
         px: 1.8,
         mx: 0.4,
+
         borderRadius: 10,
+
         cursor: 'pointer',
         overflow: 'hidden',
+
         alignItems: 'center',
         position: 'relative',
+
         textDecoration: 'none',
         display: 'inline-block',
-        transition: (theme: Theme) =>
-          theme.transitions.create(['background-color', 'color', 'box-shadow']),
 
-        // Icône
+        transition: (theme: Theme) =>
+          theme.transitions.create([
+            'background-color',
+            'color',
+            'box-shadow',
+          ]),
+
+        // ─────────────────────────────────────
+        // ICON
+        // ─────────────────────────────────────
+
         '& svg': {
-          fontSize: 18,
+          width: 18,
+          height: 18,
+
           transform: 'translateX(-32px)',
+
           position: 'absolute',
-          top: '8px',
+          top: '50%',
+          left: '14px',
+
+          translate: '0 -50%',
+
           transition: (theme: Theme) =>
-            theme.transitions.create(['transform', 'margin']),
+            theme.transitions.create([
+              'transform',
+            ]),
         },
 
-        // ── État actif ──
+        // ─────────────────────────────────────
+        // ACTIVE
+        // ─────────────────────────────────────
+
         ...(isActive && {
-          background: `linear-gradient(135deg, ${BRAND.primary} 0%, ${BRAND.primaryDark} 100%)`,
+          background: `linear-gradient(
+            135deg,
+            ${BRAND.primary} 0%,
+            ${BRAND.primaryDark} 100%
+          )`,
+
           color: BRAND.white,
+
           boxShadow: `0 4px 12px ${BRAND.primary}44`,
+
+          '& svg': {
+            transform: 'translateX(0)',
+          },
+
+          '& p': {
+            marginLeft: '26px',
+          },
         }),
 
-        // ── État inactif ──
+        // ─────────────────────────────────────
+        // INACTIVE
+        // ─────────────────────────────────────
+
         ...(!isActive && {
           color: 'text.primary',
         }),
 
-        // ── Hover ──
+        // ─────────────────────────────────────
+        // HOVER
+        // ─────────────────────────────────────
+
         '&:hover': {
-          background: `linear-gradient(135deg, ${BRAND.primary} 0%, ${BRAND.primaryDark} 100%)`,
+          background: `linear-gradient(
+            135deg,
+            ${BRAND.primary} 0%,
+            ${BRAND.primaryDark} 100%
+          )`,
+
           color: BRAND.white,
+
           boxShadow: `0 4px 12px ${BRAND.primary}44`,
+
           '& svg': {
-            transform: 'translateX(0px)',
+            transform: 'translateX(0)',
           },
+
           '& p': {
             marginLeft: '26px',
           },
@@ -94,16 +180,23 @@ const LinkItem: FC<LinkItemProps> = ({ label, path, sectionId, icon }: LinkItemP
       }}
     >
       {icon}
+
       <Typography
-        variant='h6'
-        component='p'
+        variant="h6"
+        component="p"
         sx={{
           fontSize: 14,
+
           fontWeight: isActive ? 700 : 500,
+
           display: 'inline-block',
+
           color: 'inherit',
-          marginLeft: '0',
-          transition: (theme: Theme) => theme.transitions.create(['margin']),
+
+          marginLeft: 0,
+
+          transition: (theme: Theme) =>
+            theme.transitions.create(['margin']),
         }}
       >
         {label}
@@ -112,18 +205,42 @@ const LinkItem: FC<LinkItemProps> = ({ label, path, sectionId, icon }: LinkItemP
   )
 }
 
+// ─────────────────────────────────────────────
+// MEMO
+// ─────────────────────────────────────────────
+
 const MemoizedLinkItem = memo(LinkItem)
+
+// ─────────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────────
 
 interface Props {}
 
 const AppBarNavigation: FC<Props> = () => {
+  // IMPORTANT :
+  // Le namespace doit correspondre à ton fichier messages/fr.json
+  const t = useTranslations('Navigation')
+
   return (
     <Box sx={{ mx: 'auto' }}>
-      <Box component='ul' sx={{ m: 0, lineHeight: 0, pl: 0 }}>
+      <Box
+        component="ul"
+        sx={{
+          m: 0,
+          p: 0,
+          lineHeight: 0,
+
+          display: 'flex',
+          alignItems: 'center',
+
+          listStyle: 'none',
+        }}
+      >
         {companyMenus.map((item, index) => (
           <MemoizedLinkItem
-            key={String(index)}
-            label={item.label}
+            key={`${item.labelKey}-${index}`}
+            label={t(item.labelKey)}
             path={item.path}
             sectionId={item.sectionId}
             icon={item.icon}

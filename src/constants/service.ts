@@ -1,114 +1,157 @@
-import { ReactElement } from 'react';
+import { ReactElement } from 'react'
 
-declare global {
-  interface IService {
-    id: number;
-    title: string;
-    slug: string;
-    description: string;      // Résumé pour la carte de l'accueil
-    longDescription?: string;  // <-- NOUVEAU : Texte complet pour la page détail
-    icon?: ReactElement;
-    subServices?: string[];
-    ctaLabel?: string;
-    image?: string;
-  }
+export interface IService {
+  id: number
+  slug: string
+  titleKey: string
+  descriptionKey: string
+  longDescriptionKey: string
+  ctaLabelKey: string
+  subServicesKeys: string[]
+  icon?: ReactElement
+  image?: string
 }
 
 export const services: IService[] = [
   {
     id: 1,
-    title: 'Études de marché & Analyse des comportements',
     slug: 'etudes-marche',
-    description: 'Comprenez en profondeur votre marché et les attentes de vos clients pour orienter vos décisions stratégiques.',
-    longDescription: 'Notre méthodologie d’étude de marché combine des approches quantitatives et qualitatives avancées. Nous concevons des questionnaires sur-mesure diffusés auprès de panels qualifiés pour capter la réalité du terrain. Grâce à l’analyse sémantique des verbatims clients et à une veille concurrentielle intransigeante, nous décodons les motivations profondes de vos consommateurs. Vous obtenez un rapport stratégique clé en main, mettant en lumière les opportunités de croissance inexploitées, les barrières à l’entrée et une segmentation précise de votre future clientèle.',
-    subServices: [
-      'Enquêtes en ligne & questionnaires',
-      'Analyses sémantiques & concurrentielles',
-      'Comportements des consommateurs',
-      'Segmentation, tendances & opportunités',
-      'Analyse des besoins & attentes clients',
+    titleKey: 'Services.items.marketResearch.title',
+    descriptionKey: 'Services.items.marketResearch.description',
+    longDescriptionKey: 'Services.items.marketResearch.longDescription',
+    ctaLabelKey: 'Services.items.marketResearch.ctaLabel',
+    subServicesKeys: [
+      'Services.items.marketResearch.sub1',
+      'Services.items.marketResearch.sub2',
+      'Services.items.marketResearch.sub3',
+      'Services.items.marketResearch.sub4',
+      'Services.items.marketResearch.sub5',
     ],
-    ctaLabel: 'Découvrir',
     image: '/icons/content-strategy.png',
   },
   {
     id: 2,
-    title: 'Analyse des données & suivi des performances',
     slug: 'analyse-donnees',
-    description: 'Collectez, centralisez et visualisez vos indicateurs clés pour transformer vos données en insights actionnables.',
-    longDescription: 'La donnée n’a de valeur que si elle est comprise. Nous intervenons pour structurer l’ensemble de vos flux de données business (CRM, site web, ventes, publicité). En centralisant ces informations dans des tableaux de bord interactifs et automatisés (Business Intelligence), nous vous offrons une visibilité en temps réel sur vos performances. Nos analystes traquent les anomalies, détectent les baisses de performance avant qu’elles ne deviennent critiques et traduisent les chiffres bruts en recommandations concrètes pour guider vos choix managériaux au quotidien.',
-    subServices: [
-      'Collecte, centralisation & segmentation',
-      'Analyse des KPI',
-      'Visualisation & croisement des données (BI)',
-      'Détection de tendances & anomalies',
-      'Insights actionnables & reporting décisionnel',
+    titleKey: 'Services.items.dataAnalytics.title',
+    descriptionKey: 'Services.items.dataAnalytics.description',
+    longDescriptionKey: 'Services.items.dataAnalytics.longDescription',
+    ctaLabelKey: 'Services.items.dataAnalytics.ctaLabel',
+    subServicesKeys: [
+      'Services.items.dataAnalytics.sub1',
+      'Services.items.dataAnalytics.sub2',
+      'Services.items.dataAnalytics.sub3',
+      'Services.items.dataAnalytics.sub4',
+      'Services.items.dataAnalytics.sub5',
     ],
-    ctaLabel: 'En savoir plus',
     image: '/icons/mobile-app.png',
   },
   {
     id: 3,
-    title: "Stratégie d'acquisition (SEO, GEO & SEA)",
     slug: 'acquisition',
-    description: 'Maximisez votre visibilité sur les moteurs de recherche traditionnels et génératifs pour attirer des prospects qualifiés.',
-    longDescription: 'Pour exister aujourd’hui, votre entreprise doit être visible là où vos clients cherchent des réponses. Notre pôle acquisition combine le référencement naturel technique (SEO), la puissance immédiate des campagnes payantes Google Ads (SEA) et l’optimisation pour les nouveaux moteurs de recherche basés sur l’intelligence artificielle (GEO - Generative Engine Optimization). Nous réalisons un audit complet de votre écosystème, optimisons la structure sémantique de votre site et créons des campagnes publicitaires ultra-ciblées au ROI mesurable pour générer des prospects qualifiés en continu.',
-    subServices: [
-      'Audit SEO',
-      'Optimisation SEO (technique & éditoriale)',
-      'Campagnes SEA performantes',
-      'Optimisation sur les moteurs génératifs (GEO)',
-      'Suivi des KPI & veille concurrentielle',
+    titleKey: 'Services.items.acquisition.title',
+    descriptionKey: 'Services.items.acquisition.description',
+    longDescriptionKey: 'Services.items.acquisition.longDescription',
+    ctaLabelKey: 'Services.items.acquisition.ctaLabel',
+    subServicesKeys: [
+      'Services.items.acquisition.sub1',
+      'Services.items.acquisition.sub2',
+      'Services.items.acquisition.sub3',
+      'Services.items.acquisition.sub4',
+      'Services.items.acquisition.sub5',
     ],
-    ctaLabel: 'Voir le service',
     image: '/icons/shopping.png',
   },
   {
     id: 4,
-    title: 'Gestion des réseaux sociaux & Création de contenu',
     slug: 'social-media',
-    description: 'Développez votre communauté et engagez votre audience grâce à un calendrier éditorial et des visuels impactants.',
-    longDescription: 'Faites de vos réseaux sociaux un puissant levier d’acquisition et de fidélisation. Nous concevons une stratégie éditoriale sur-mesure alignée avec les codes de chaque plateforme (LinkedIn, Instagram, TikTok). De la direction artistique à la rédaction des scripts et des légendes, notre équipe prend en charge la production de vos contenus visuels et vidéos. En combinant un community management actif (gestion des interactions, réponses aux messages) et une analyse rigoureuse des statistiques d’engagement, nous transformons votre audience passive en une communauté d’ambassadeurs engagés.',
-    subServices: [
-      'Gestion & animation des réseaux sociaux',
-      'Création de contenus visuels',
-      'Calendrier éditorial & planification',
-      'Community management',
-      'Suivi des performances & ajustements',
+    titleKey: 'Services.items.socialMedia.title',
+    descriptionKey: 'Services.items.socialMedia.description',
+    longDescriptionKey: 'Services.items.socialMedia.longDescription',
+    ctaLabelKey: 'Services.items.socialMedia.ctaLabel',
+    subServicesKeys: [
+      'Services.items.socialMedia.sub1',
+      'Services.items.socialMedia.sub2',
+      'Services.items.socialMedia.sub3',
+      'Services.items.socialMedia.sub4',
+      'Services.items.socialMedia.sub5',
     ],
-    ctaLabel: 'Réserver un appel',
     image: '/icons/conversation.png',
   },
   {
     id: 5,
-    title: 'Branding & Identité Visuelle',
     slug: 'branding',
-    description: 'Bâtissez une image de marque forte, cohérente et mémorable sur l’ensemble de vos supports de communication.',
-    longDescription: 'Votre identité visuelle est le premier point de contact avec votre public : elle se doit d’exprimer instantanément vos valeurs et votre professionnalisme. Nous créons des univers de marque uniques et pérennes. De la conception de votre logo phare à la définition d’une charte graphique complète (typographies, palettes de couleurs, règles d’usage), nous veillons à la cohérence de votre image. Nous déclinons cette identité sur tous vos supports essentiels : bannières de réseaux sociaux, cartes de visite premium, présentations commerciales et documents marketing.',
-    subServices: [
-      'Création de logo & bannières LinkedIn',
-      'Charte graphique',
-      'Cartes de visite',
-      'Supports de communication/marketing',
+    titleKey: 'Services.items.branding.title',
+    descriptionKey: 'Services.items.branding.description',
+    longDescriptionKey: 'Services.items.branding.longDescription',
+    ctaLabelKey: 'Services.items.branding.ctaLabel',
+    subServicesKeys: [
+      'Services.items.branding.sub1',
+      'Services.items.branding.sub2',
+      'Services.items.branding.sub3',
+      'Services.items.branding.sub4',
     ],
-    ctaLabel: 'Obtenir un devis',
     image: '/icons/pantone.png',
   },
   {
     id: 6,
-    title: 'Sites Web & Développement',
     slug: 'dev',
-    description: 'Concevez des solutions digitales modernes, performantes et évolutives pour développer votre activité.',
-    longDescription: 'Nous développons des plateformes web et mobiles de haute performance, centrées sur l’expérience utilisateur (UX) et optimisées pour la conversion. Qu’il s’agisse d’un site vitrine élégant, d’une boutique e-commerce robuste ou d’une application web/mobile sur-mesure, nous utilisons les technologies les plus modernes et évolutives. Chaque projet bénéficie d’un design responsive soigné, d’un code optimisé pour le référencement et d’une sécurité maximale. Nous assurons également la maintenance et le support technique continu pour garantir la pérennité de votre outil digital.',
-    subServices: [
-      'Sites vitrines & e-commerce',
-      'Landing pages à fort taux de conversion',
-      'Applications Web sur mesure',
-      'Applications mobiles (Android & iOS)',
-      'UX/UI Design & Responsive Design',
-      'Maintenance, optimisation & support',
+    titleKey: 'Services.items.webDev.title',
+    descriptionKey: 'Services.items.webDev.description',
+    longDescriptionKey: 'Services.items.webDev.longDescription',
+    ctaLabelKey: 'Services.items.webDev.ctaLabel',
+    subServicesKeys: [
+      'Services.items.webDev.sub1',
+      'Services.items.webDev.sub2',
+      'Services.items.webDev.sub3',
+      'Services.items.webDev.sub4',
+      'Services.items.webDev.sub5',
+      'Services.items.webDev.sub6',
     ],
-    ctaLabel: 'Parlons de votre projet',
     image: '/icons/mobile-app.png',
-  }
-];
+  },
+  {
+    id: 7,
+    slug: 'startups-mvp',
+    titleKey: 'Services.items.startupsMvp.title',
+    descriptionKey: 'Services.items.startupsMvp.description',
+    longDescriptionKey: 'Services.items.startupsMvp.longDescription',
+    ctaLabelKey: 'Services.items.startupsMvp.ctaLabel',
+    subServicesKeys: [
+      'Services.items.startupsMvp.sub1',
+      'Services.items.startupsMvp.sub2',
+      'Services.items.startupsMvp.sub3',
+      'Services.items.startupsMvp.sub4',
+    ],
+    image: '/icons/mobile-app.png',
+  },
+  {
+    id: 8,
+    slug: 'ai-automation',
+    titleKey: 'Services.items.aiAutomation.title',
+    descriptionKey: 'Services.items.aiAutomation.description',
+    longDescriptionKey: 'Services.items.aiAutomation.longDescription',
+    ctaLabelKey: 'Services.items.aiAutomation.ctaLabel',
+    subServicesKeys: [
+      'Services.items.aiAutomation.sub1',
+      'Services.items.aiAutomation.sub2',
+      'Services.items.aiAutomation.sub3',
+      'Services.items.aiAutomation.sub4',
+    ],
+    image: '/icons/content-strategy.png',
+  },
+  {
+    id: 9,
+    slug: 'enterprise-apps',
+    titleKey: 'Services.items.enterpriseApps.title',
+    descriptionKey: 'Services.items.enterpriseApps.description',
+    longDescriptionKey: 'Services.items.enterpriseApps.longDescription',
+    ctaLabelKey: 'Services.items.enterpriseApps.ctaLabel',
+    subServicesKeys: [
+      'Services.items.enterpriseApps.sub1',
+      'Services.items.enterpriseApps.sub2',
+      'Services.items.enterpriseApps.sub3',
+      'Services.items.enterpriseApps.sub4',
+    ],
+    image: '/icons/shopping.png',
+  },
+]

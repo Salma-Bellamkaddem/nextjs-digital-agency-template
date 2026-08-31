@@ -2,40 +2,47 @@
 
 import React, { FC } from 'react'
 import Box from '@mui/material/Box'
-import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
+import { useLocale } from 'next-intl'
 
 interface Props {
   title: string
-  alignItems?: 'center' | 'flex-start' | 'flex-end'
 }
 
-const FooterSectionTitle: FC<Props> = ({ title, alignItems }: Props) => {
+const FooterSectionTitle: FC<Props> = ({ title }) => {
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
+
   return (
     <Box
       sx={{
+        mb: 2,
         display: 'flex',
         flexDirection: 'column',
-        mb: 2,
-        alignItems: {
-          xs: 'flex-start',
-          md: alignItems || 'flex-start',
-        },
+        alignItems: isRtl ? 'flex-end' : 'flex-start',
       }}
     >
       <Typography
-        component='p'
-        variant='subtitle2'
+        component="h4"
         sx={{
-          mb: 1,
+          fontSize: '0.8125rem',
+          fontWeight: 800,
+          letterSpacing: isRtl ? 0.5 : 1,
           textTransform: 'uppercase',
-          color: 'text.secondary',
-          fontWeight: '500',
+          color: '#FAC8EB',
+          mb: 1,
         }}
       >
         {title}
       </Typography>
-      <Divider sx={{ width: 50 }} />
+      <Box
+        sx={{
+          width: 36,
+          height: 2.5,
+          borderRadius: 2,
+          backgroundColor: '#B5377A',
+        }}
+      />
     </Box>
   )
 }

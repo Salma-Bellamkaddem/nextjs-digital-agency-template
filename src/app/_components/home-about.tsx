@@ -8,6 +8,8 @@ import Grid from '@mui/material/Grid2'
 import Container from '@mui/material/Container'
 import { SectionTitle } from '@/components/core'
 import { useTheme } from '@mui/material/styles'
+import { useTranslations } from 'next-intl'
+
 import TrackChangesIcon from '@mui/icons-material/TrackChanges'
 import DesignServicesIcon from '@mui/icons-material/DesignServices'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
@@ -29,38 +31,6 @@ interface FeatureData {
   icon: ReactNode
 }
 
-export const features: FeatureData[] = [
-  {
-    id: 1,
-    title: 'Stratégie sur mesure',
-    description:
-      'Nous analysons vos enjeux pour créer des stratégies digitales adaptées à vos objectifs.',
-    icon: <TrackChangesIcon sx={{ fontSize: 26 }} />,
-  },
-  {
-    id: 2,
-    title: 'Créativité & Innovation',
-    description:
-      'Des idées originales et des solutions innovantes pour vous démarquer.',
-    icon: <DesignServicesIcon sx={{ fontSize: 26 }} />,
-  },
-  {
-    id: 3,
-    title: 'Résultats mesurables',
-    description:
-      'Nous mettons en place des actions orientées performance pour un impact durable.',
-    icon: <TrendingUpIcon sx={{ fontSize: 26 }} />,
-  },
-  {
-    id: 4,
-    title: 'Accompagnement',
-    description:
-      'Nous vous accompagnons à chaque étape de votre développement digital.',
-    icon: <GroupIcon sx={{ fontSize: 26 }} />,
-  },
-]
-
-// Icône ronde associée à chaque paragraphe du bloc de texte (comme sur le visuel)
 const paragraphIcon = (icon: ReactNode) => (
   <Box
     sx={{
@@ -79,7 +49,13 @@ const paragraphIcon = (icon: ReactNode) => (
   </Box>
 )
 
-const FeatureItem = ({ item, isLast }: { item: FeatureData; isLast: boolean }) => (
+const FeatureItem = ({
+  item,
+  isLast,
+}: {
+  item: FeatureData
+  isLast: boolean
+}) => (
   <Grid size={{ xs: 12, sm: 6, md: 3 }}>
     <Box
       sx={{
@@ -89,7 +65,9 @@ const FeatureItem = ({ item, isLast }: { item: FeatureData; isLast: boolean }) =
         pr: { md: isLast ? 0 : 3 },
         borderRight: {
           xs: 'none',
-          md: isLast ? 'none' : `1px solid ${BRAND.primarySoft}`,
+          md: isLast
+            ? 'none'
+            : `1px solid ${BRAND.primarySoft}`,
         },
         height: '100%',
       }}
@@ -109,11 +87,25 @@ const FeatureItem = ({ item, isLast }: { item: FeatureData; isLast: boolean }) =
       >
         {item.icon}
       </Box>
+
       <Box>
-        <Typography sx={{ fontWeight: 700, fontSize: { xs: 14, md: 15 }, mb: 0.5 }}>
+        <Typography
+          sx={{
+            fontWeight: 700,
+            fontSize: { xs: 14, md: 15 },
+            mb: 0.5,
+          }}
+        >
           {item.title}
         </Typography>
-        <Typography sx={{ fontSize: { xs: 12.5, md: 13.5 }, color: 'text.secondary', lineHeight: 1.6 }}>
+
+        <Typography
+          sx={{
+            fontSize: { xs: 12.5, md: 13.5 },
+            color: 'text.secondary',
+            lineHeight: 1.6,
+          }}
+        >
           {item.description}
         </Typography>
       </Box>
@@ -124,40 +116,94 @@ const FeatureItem = ({ item, isLast }: { item: FeatureData; isLast: boolean }) =
 const HomeAbout = () => {
   const { palette } = useTheme()
 
+  const t = useTranslations('HomePage.About')
+
+  /*
+   * IMPORTANT :
+   * Les features doivent être créées ici,
+   * car t() ne doit pas être appelé hors du composant.
+   */
+  const features: FeatureData[] = [
+    {
+      id: 1,
+      title: t('features.strategy.title'),
+      description: t('features.strategy.description'),
+      icon: <TrackChangesIcon sx={{ fontSize: 26 }} />,
+    },
+    {
+      id: 2,
+      title: t('features.creativity.title'),
+      description: t('features.creativity.description'),
+      icon: <DesignServicesIcon sx={{ fontSize: 26 }} />,
+    },
+    {
+      id: 3,
+      title: t('features.results.title'),
+      description: t('features.results.description'),
+      icon: <TrendingUpIcon sx={{ fontSize: 26 }} />,
+    },
+    {
+      id: 4,
+      title: t('features.support.title'),
+      description: t('features.support.description'),
+      icon: <GroupIcon sx={{ fontSize: 26 }} />,
+    },
+  ]
+
   return (
     <Box
-      id='home-about'
+      id="home-about"
       sx={{
         width: '100%',
         py: { xs: 7, md: 14, lg: 18 },
         backgroundColor: 'background.paper',
         overflow: 'hidden',
-        fontFamily: "'Poppins', 'Plus Jakarta Sans', sans-serif",
+        fontFamily:
+          "'Poppins', 'Plus Jakarta Sans', sans-serif",
       }}
     >
       <Container>
-        <Grid container spacing={{ xs: 5, md: 6 }} alignItems='center'>
+        <Grid
+          container
+          spacing={{ xs: 5, md: 6 }}
+          alignItems="center"
+        >
+          {/* ================================================= */}
+          {/* COLONNE TEXTE */}
+          {/* ================================================= */}
 
-          {/* ── Colonne texte ── */}
           <Grid size={{ xs: 12, md: 6 }}>
-            <SectionTitle sx={{ color: BRAND.primary, backgroundColor: BRAND.primarySoft }}>
-              QUI SOMMES-NOUS ?
+            <SectionTitle
+              sx={{
+                color: BRAND.primary,
+                backgroundColor: BRAND.primarySoft,
+              }}
+            >
+              {t('sectionTitle')}
             </SectionTitle>
 
+            {/* TITLE */}
+
             <Typography
-              component='h2'
+              component="h2"
               sx={{
                 fontFamily: "'Poppins', sans-serif",
-                fontSize: { xs: 26, sm: 32, md: 36, lg: 40 },
+                fontSize: {
+                  xs: 26,
+                  sm: 32,
+                  md: 36,
+                  lg: 40,
+                },
                 fontWeight: 800,
                 lineHeight: 1.2,
                 mb: 2.5,
                 mt: 1.5,
               }}
             >
-              Nexsetia, votre partenaire <br />
-              de <Box component='span' sx={{ color: BRAND.primary }}>croissance digitale</Box>
+              {t('heading')}
             </Typography>
+
+            {/* LINE */}
 
             <Box
               sx={{
@@ -165,98 +211,354 @@ const HomeAbout = () => {
                 height: 5,
                 borderRadius: 3,
                 mb: 3,
-                background: `linear-gradient(90deg, ${BRAND.primary} 0%, ${BRAND.primaryLight} 100%)`,
+                background: `linear-gradient(
+                  90deg,
+                  ${BRAND.primary} 0%,
+                  ${BRAND.primaryLight} 100%
+                )`,
               }}
             />
 
-            {/* Paragraphe 1 — icône fusée */}
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2.5 }}>
-              {paragraphIcon(<RocketLaunchIcon sx={{ fontSize: 22 }} />)}
-              <Typography sx={{ color: 'text.secondary', fontSize: { xs: 14, md: 16 }, lineHeight: 1.8 }}>
-                <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>Nexsetia</Box> est
-                une agence digitale 360°, née de la volonté d&apos;une équipe de passionnés aux
-                parcours complémentaires de mettre en commun leurs expertises, leur créativité
-                et leur esprit d&apos;analyse pour accompagner les entreprises dans leur{' '}
-                <Box component='span' sx={{ fontWeight: 700, color: BRAND.primary }}>développement digital</Box>.
+            {/* ================================================= */}
+            {/* PARAGRAPHE 1 */}
+            {/* ================================================= */}
+
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 2,
+                mb: 2.5,
+              }}
+            >
+              {paragraphIcon(
+                <RocketLaunchIcon sx={{ fontSize: 22 }} />
+              )}
+
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                  fontSize: { xs: 14, md: 16 },
+                  lineHeight: 1.8,
+                }}
+              >
+                {t.rich('paragraph1', {
+                  brand: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+
+                  highlight: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: BRAND.primary,
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+                })}
               </Typography>
             </Box>
 
-            {/* Paragraphe 2 — icône groupe */}
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2.5 }}>
-              {paragraphIcon(<GroupIcon sx={{ fontSize: 22 }} />)}
-              <Typography sx={{ color: 'text.secondary', fontSize: { xs: 14, md: 16 }, lineHeight: 1.8 }}>
-                Aujourd&apos;hui, nous collaborons avec des entreprises issues d&apos;horizons variés,
-                des jeunes structures aux entreprises déjà bien établies. Chaque projet est
-                différent, tout comme les <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>défis</Box> qui l&apos;accompagnent.
+            {/* ================================================= */}
+            {/* PARAGRAPHE 2 */}
+            {/* ================================================= */}
+
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 2,
+                mb: 2.5,
+              }}
+            >
+              {paragraphIcon(
+                <GroupIcon sx={{ fontSize: 22 }} />
+              )}
+
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                  fontSize: { xs: 14, md: 16 },
+                  lineHeight: 1.8,
+                }}
+              >
+                {t.rich('paragraph2', {
+                  highlight: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+                })}
               </Typography>
             </Box>
 
-            {/* Paragraphe 3 — icône cible */}
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 2.5 }}>
-              {paragraphIcon(<TrackChangesIcon sx={{ fontSize: 22 }} />)}
-              <Typography sx={{ color: 'text.secondary', fontSize: { xs: 14, md: 16 }, lineHeight: 1.8 }}>
-                Certaines de nos clientes nous sollicitent pour concevoir l&apos;ensemble de leur{' '}
-                <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>stratégie digitale</Box>, tandis que
-                d&apos;autres recherchent un coup de boost ciblé, que ce soit pour optimiser leur{' '}
-                <Box component="span" sx={{ fontWeight: 700, color: 'text.primary' }}>
-  référencement naturel (SEO)
-</Box>
-, développer leur{' '}
-<Box component="span" sx={{ fontWeight: 700, color: 'text.primary' }}>
-  communication digitale
-</Box>
-, piloter leurs campagnes
-                <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>Google Ads</Box>, renforcer leur
-                présence sur les <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>réseaux sociaux</Box> ou
-                repenser leur <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>stratégie marketing</Box>.
+            {/* ================================================= */}
+            {/* PARAGRAPHE 3 */}
+            {/* ================================================= */}
+
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 2,
+                mb: 2.5,
+              }}
+            >
+              {paragraphIcon(
+                <TrackChangesIcon sx={{ fontSize: 22 }} />
+              )}
+
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                  fontSize: { xs: 14, md: 16 },
+                  lineHeight: 1.8,
+                }}
+              >
+                {t.rich('paragraph3', {
+                  highlight1: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+
+                  highlight2: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+
+                  highlight3: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+
+                  highlight4: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+
+                  highlight5: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+
+                  highlight6: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+                })}
               </Typography>
             </Box>
 
-            {/* Paragraphe 4 — icône tendance */}
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mb: 0 }}>
-              {paragraphIcon(<TrendingUpIcon sx={{ fontSize: 22 }} />)}
-              <Typography sx={{ color: 'text.secondary', fontSize: { xs: 14, md: 16 }, lineHeight: 1.8 }}>
-                Quelle que soit l&apos;étape à laquelle se trouve votre entreprise, nous nous
-                intégrons à votre projet pour intervenir là où nous pouvons avoir{' '}
-                <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>le plus d&apos;impact</Box>. Notre
-                objectif est de mettre en place les{' '}
-                <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>solutions les plus adaptées</Box> afin
-                de pérenniser <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>votre empreinte digitale</Box> et
-                projeter votre visibilité, de manière optimale, au cœur de vos{' '}
-                <Box component='span' sx={{ fontWeight: 700, color: 'text.primary' }}>audiences cibles</Box>.
+            {/* ================================================= */}
+            {/* PARAGRAPHE 4 */}
+            {/* ================================================= */}
+
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'flex-start',
+                gap: 2,
+                mb: 0,
+              }}
+            >
+              {paragraphIcon(
+                <TrendingUpIcon sx={{ fontSize: 22 }} />
+              )}
+
+              <Typography
+                sx={{
+                  color: 'text.secondary',
+                  fontSize: { xs: 14, md: 16 },
+                  lineHeight: 1.8,
+                }}
+              >
+                {t.rich('paragraph4', {
+                  highlight1: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+
+                  highlight2: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+
+                  highlight3: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+
+                  highlight4: (chunks) => (
+                    <Box
+                      component="span"
+                      sx={{
+                        fontWeight: 700,
+                        color: 'text.primary',
+                      }}
+                    >
+                      {chunks}
+                    </Box>
+                  ),
+                })}
               </Typography>
             </Box>
           </Grid>
 
-          {/* ── Colonne images desktop ── */}
-          <Grid size={{ xs: 12, md: 6 }} sx={{ display: { xs: 'none', md: 'block' } }}>
-            <Box sx={{ position: 'relative', height: 560 }}>
+          {/* ================================================= */}
+          {/* IMAGES DESKTOP */}
+          {/* ================================================= */}
 
-              {/* Blob SVG décoratif */}
-              <Box sx={{ position: 'absolute', top: -60, right: -60, zIndex: 0, pointerEvents: 'none' }}>
-                <svg width='560' height='560' viewBox='0 0 1358 1089' fill='none'>
+          <Grid
+            size={{ xs: 12, md: 6 }}
+            sx={{
+              display: {
+                xs: 'none',
+                md: 'block',
+              },
+            }}
+          >
+            <Box
+              sx={{
+                position: 'relative',
+                height: 560,
+              }}
+            >
+              {/* BLOB */}
+
+              <Box
+                sx={{
+                  position: 'absolute',
+                  top: -60,
+                  right: -60,
+                  zIndex: 0,
+                  pointerEvents: 'none',
+                }}
+              >
+                <svg
+                  width="560"
+                  height="560"
+                  viewBox="0 0 1358 1089"
+                  fill="none"
+                >
                   <defs>
-                    <linearGradient id='figure_moving' x1='0%' x2='86.603%' y1='50%' y2='0%'>
+                    <linearGradient
+                      id="figure_moving"
+                      x1="0%"
+                      x2="86.603%"
+                      y1="50%"
+                      y2="0%"
+                    >
                       <stop
-                        offset='0%'
-                        stopColor={palette.mode === 'dark' ? '#171717' : BRAND.primarySoft}
-                        stopOpacity='1'
+                        offset="0%"
+                        stopColor={
+                          palette.mode === 'dark'
+                            ? '#171717'
+                            : BRAND.primarySoft
+                        }
+                        stopOpacity="1"
                       />
+
                       <stop
-                        offset='99%'
-                        stopColor={palette.mode === 'dark' ? '#171717' : BRAND.primaryLight}
-                        stopOpacity='0.6'
+                        offset="99%"
+                        stopColor={
+                          palette.mode === 'dark'
+                            ? '#171717'
+                            : BRAND.primaryLight
+                        }
+                        stopOpacity="0.6"
                       />
                     </linearGradient>
                   </defs>
+
                   <path
-                    d='M1357.57 464.94C1357.57 605.537 1180.32 1063.16 848.987 1088.34C505.565 1088.34 591.877 719.737 426.004 719.737C311.195 719.737 0 831.507 0 525.037C0 218.566 368.288 0.336304 674.758 0.336304C981.229 0.336304 1357.57 158.47 1357.57 464.94Z'
-                    fill='url(#figure_moving)'
+                    d="M1357.57 464.94C1357.57 605.537 1180.32 1063.16 848.987 1088.34C505.565 1088.34 591.877 719.737 426.004 719.737C311.195 719.737 0 831.507 0 525.037C0 218.566 368.288 0.336304 674.758 0.336304C981.229 0.336304 1357.57 158.47 1357.57 464.94Z"
+                    fill="url(#figure_moving)"
                   />
                 </svg>
               </Box>
 
-              {/* Photo principale — large, haut droite (équipe autour de la table) */}
+              {/* IMAGE 1 */}
+
               <Box
                 sx={{
                   position: 'absolute',
@@ -267,20 +569,26 @@ const HomeAbout = () => {
                   borderRadius: 4,
                   overflow: 'hidden',
                   zIndex: 2,
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+                  boxShadow:
+                    '0 20px 40px rgba(0,0,0,0.15)',
                 }}
               >
                 <Image
-                  src='/images/about-1.webp'
+                  src="/images/about-1.webp"
                   width={840}
                   height={680}
                   quality={100}
-                  alt='Équipe Nexsetia'
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  alt={t('imageAlt.team')}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
                 />
               </Box>
 
-              {/* Photo secondaire — verticale, bas gauche (réunion / whiteboard) */}
+              {/* IMAGE 2 */}
+
               <Box
                 sx={{
                   position: 'absolute',
@@ -291,20 +599,26 @@ const HomeAbout = () => {
                   borderRadius: 4,
                   overflow: 'hidden',
                   zIndex: 3,
-                  boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+                  boxShadow:
+                    '0 20px 40px rgba(0,0,0,0.15)',
                 }}
               >
                 <Image
-                  src='/images/about-2.webp'
+                  src="/images/about-2.webp"
                   width={600}
                   height={600}
                   quality={100}
-                  alt='Projet Nexsetia'
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                  alt={t('imageAlt.project')}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover',
+                  }}
                 />
               </Box>
 
-              {/* Badge logo "N" */}
+              {/* BADGE */}
+
               <Box
                 sx={{
                   position: 'absolute',
@@ -318,13 +632,23 @@ const HomeAbout = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 12px 24px rgba(181,55,122,0.35)',
+                  boxShadow:
+                    '0 12px 24px rgba(181,55,122,0.35)',
                 }}
               >
-                <Typography sx={{ color: '#fff', fontWeight: 800, fontSize: 24 }}>N</Typography>
+                <Typography
+                  sx={{
+                    color: '#fff',
+                    fontWeight: 800,
+                    fontSize: 24,
+                  }}
+                >
+                  N
+                </Typography>
               </Box>
 
-              {/* Carte citation */}
+              {/* QUOTE */}
+
               <Box
                 sx={{
                   position: 'absolute',
@@ -335,60 +659,129 @@ const HomeAbout = () => {
                   p: 2.5,
                   borderRadius: 3,
                   backgroundColor: 'background.paper',
-                  boxShadow: '0 16px 32px rgba(0,0,0,0.12)',
+                  boxShadow:
+                    '0 16px 32px rgba(0,0,0,0.12)',
                   display: 'flex',
                   gap: 1.5,
                   alignItems: 'flex-start',
                 }}
               >
-                <FormatQuoteIcon sx={{ color: BRAND.primary, fontSize: 28, flexShrink: 0 }} />
-                <Typography sx={{ fontSize: 14, fontWeight: 700, lineHeight: 1.5 }}>
-                  Nous transformons vos idées en{' '}
-                  <Box component='span' sx={{ color: BRAND.primary }}>résultats concrets</Box>.
+                <FormatQuoteIcon
+                  sx={{
+                    color: BRAND.primary,
+                    fontSize: 28,
+                    flexShrink: 0,
+                  }}
+                />
+
+                <Typography
+                  sx={{
+                    fontSize: 14,
+                    fontWeight: 700,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {t.rich('quote', {
+                    highlight: (chunks) => (
+                      <Box
+                        component="span"
+                        sx={{
+                          color: BRAND.primary,
+                        }}
+                      >
+                        {chunks}
+                      </Box>
+                    ),
+                  })}
                 </Typography>
               </Box>
             </Box>
           </Grid>
 
-          {/* ── Images mobile côte à côte ── */}
-          <Grid size={{ xs: 12 }} sx={{ display: { xs: 'flex', md: 'none' }, gap: 2 }}>
-            <Box sx={{ flex: 1, borderRadius: 3, overflow: 'hidden' }}>
+          {/* ================================================= */}
+          {/* IMAGES MOBILE */}
+          {/* ================================================= */}
+
+          <Grid
+            size={{ xs: 12 }}
+            sx={{
+              display: {
+                xs: 'flex',
+                md: 'none',
+              },
+              gap: 2,
+            }}
+          >
+            <Box
+              sx={{
+                flex: 1,
+                borderRadius: 3,
+                overflow: 'hidden',
+              }}
+            >
               <Image
-                src='/images/about-1.webp'
+                src="/images/about-1.webp"
                 width={350}
                 height={350}
                 quality={100}
-                alt='Équipe Nexsetia'
-                style={{ width: '100%', height: 'auto', display: 'block' }}
+                alt={t('imageAlt.team')}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                }}
               />
             </Box>
-            <Box sx={{ flex: 1, borderRadius: 3, overflow: 'hidden' }}>
+
+            <Box
+              sx={{
+                flex: 1,
+                borderRadius: 3,
+                overflow: 'hidden',
+              }}
+            >
               <Image
-                src='/images/about-2.webp'
+                src="/images/about-2.webp"
                 width={330}
                 height={330}
                 quality={100}
-                alt='Projet Nexsetia'
-                style={{ width: '100%', height: 'auto', display: 'block' }}
+                alt={t('imageAlt.project')}
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                }}
               />
             </Box>
           </Grid>
-
         </Grid>
 
-        {/* ── Rangée de features (pleine largeur) ── */}
+        {/* ================================================= */}
+        {/* FEATURES */}
+        {/* ================================================= */}
+
         <Box
           sx={{
             mt: { xs: 3, md: 4 },
             p: { xs: 3, md: 4 },
             borderRadius: 4,
             backgroundColor: 'background.default',
-            boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
+            boxShadow:
+              '0 10px 40px rgba(0,0,0,0.06)',
           }}
         >
-          <Grid container spacing={{ xs: 3, md: 2 }}>
+          <Grid
+            container
+            spacing={{ xs: 3, md: 2 }}
+          >
             {features.map((item, index) => (
-              <FeatureItem key={item.id} item={item} isLast={index === features.length - 1} />
+              <FeatureItem
+                key={item.id}
+                item={item}
+                isLast={
+                  index === features.length - 1
+                }
+              />
             ))}
           </Grid>
         </Box>

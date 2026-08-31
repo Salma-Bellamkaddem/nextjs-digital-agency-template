@@ -1,0 +1,603 @@
+{
+  "Home": {
+    "hero": {
+      "services": {
+        "digitalMarketing": "Digital Marketing",
+        "uiuxDesign": "UI/UX Design",
+        "webMobileDevelopment": "Web & Mobile Development",
+        "dataAnalytics": "Data & Analytics",
+        "ecommerce": "E-Commerce Solutions"
+      },
+
+      "title": {
+        "line1": "The brands",
+        "line2": "that",
+        "highlight": "get noticed"
+      },
+
+      "subtitle": {
+        "line1": "It’s our signature,",
+        "line2": "but above all, your vision."
+      },
+
+      "description": {
+        "part1": "At",
+        "part2": ", we believe that the best strategies are built on a deep understanding of your business."
+      },
+
+      "solution": {
+        "part1": "That’s how we create",
+        "highlight1": "tailor-made digital solutions",
+        "part2": ", designed exclusively to meet the",
+        "highlight2": "realities of your industry"
+      },
+
+      "buttons": {
+        "services": "Discover Our Services",
+        "contact": "Schedule a Free Consultation"
+      },
+
+      "features": {
+        "strategy": {
+          "line1": "Tailored",
+          "line2": "Strategy"
+        },
+        "solutions": {
+          "line1": "Innovative",
+          "line2": "Solutions"
+        },
+        "results": {
+          "line1": "Measurable",
+          "line2": "Results"
+        }
+      },
+
+      "scroll": "Scroll to discover more"
+    }
+  },
+    "HomePage": {
+      "title": "Welcome to Nexsetia",
+      "About": {
+        "sectionTitle": "WHO ARE WE?",
+        "heading": "Nexsetia, your digital growth partner",
+        "paragraph1": "Nexsetia is a 360° digital agency born from the desire of a team of passionate professionals with complementary backgrounds to combine their expertise, creativity and analytical mindset to support businesses in their digital development.",
+        "paragraph1Highlight": "Nexsetia",
+        "paragraph1Highlight2": "digital development",
+        "paragraph2": "Today, we work with businesses from a wide range of backgrounds, from young startups to well-established companies. Every project is different, as are the challenges that come with it.",
+        "paragraph2Highlight": "challenges",
+        "paragraph3": "Some of our clients come to us to design their entire digital strategy, while others are looking for a targeted boost, whether to optimize their organic search visibility (SEO), develop their digital communication, manage their Google Ads campaigns, strengthen their social media presence or rethink their marketing strategy.",
+        "paragraph3Highlight1": "digital strategy",
+        "paragraph3Highlight2": "organic search visibility (SEO)",
+        "paragraph3Highlight3": "digital communication",
+        "paragraph3Highlight4": "Google Ads",
+        "paragraph3Highlight5": "social media",
+        "paragraph3Highlight6": "marketing strategy",
+        "paragraph4": "Whatever stage your business is at, we integrate into your project to step in where we can make the greatest impact. Our goal is to implement the most suitable solutions to strengthen your digital footprint and maximize your visibility among your target audiences.",
+        "paragraph4Highlight1": "greatest impact",
+        "paragraph4Highlight2": "most suitable solutions",
+        "paragraph4Highlight3": "digital footprint",
+        "paragraph4Highlight4": "target audiences",
+        "quote": "We turn your ideas into tangible results.",
+        "quoteHighlight": "tangible results",
+        "features": {
+          "strategy": {
+            "title": "Tailored Strategy",
+            "description": "We analyze your challenges to create digital strategies aligned with your goals."
+          },
+          "creativity": {
+            "title": "Creativity & Innovation",
+            "description": "Original ideas and innovative solutions to help you stand out."
+          },
+          "results": {
+            "title": "Measurable Results",
+            "description": "We implement performance-driven actions designed to create lasting impact."
+          },
+          "support": {
+            "title": "Dedicated Support",
+            "description": "We support you at every stage of your digital development."
+          }
+        },
+        "imageAlt": {
+          "team": "Nexsetia team",
+          "project": "Nexsetia project"
+        }
+      }
+  }
+  ,
+    "Navigation": {
+      "company": {
+        "home": "Home",
+        "services": "Services",
+        "method": "Our method",
+        "vision": "Our vision",
+        "about": "About us",
+        "blog": "Blog"
+      },
+      "support": {
+        "helpCenter": "Help center",
+        "contact": "Contact us",
+        "terms": "Terms of use",
+        "privacy": "Privacy policy",
+        "liveChat": "Live chat"
+      },
+      "language": {
+        "label": "Language",
+        "fr": "French",
+        "ar": "Arabic",
+        "en": "English"
+      }
+    }
+,
+  "Services": {
+    "items": {
+      "marketResearch": {
+        "title": "Market Research & Consumer Behavior",
+        "description": "Gain deep insights into your market and customer expectations to guide your strategic decisions.",
+        "longDescription": "Our market research methodology combines advanced quantitative and qualitative frameworks. We create bespoke surveys distributed to targeted consumer panels to capture ground truth. Through semantic verbatim analysis and continuous competitive monitoring, we uncover the underlying drivers of your customers. You receive an actionable strategic blueprint revealing untapped growth vectors, market entry barriers, and refined customer segmentation.",
+        "ctaLabel": "Discover",
+        "sub1": "Online surveys & custom questionnaires",
+        "sub2": "Semantic & competitive intelligence",
+        "sub3": "Consumer behavior insights",
+        "sub4": "Market segmentation, trends & opportunities",
+        "sub5": "Customer needs & expectations analysis"
+      },
+      "dataAnalytics": {
+        "title": "Data Analytics & Performance Tracking",
+        "description": "Collect, centralize, and visualize key metrics to turn raw data into actionable business intelligence.",
+        "longDescription": "Data is only powerful when fully understood. We structure and unify your core business data pipelines across CRM, web traffic, sales, and advertising. By consolidating these metrics into automated BI dashboards, we provide complete, real-time performance clarity. Our analysts identify anomalies, mitigate conversion drops before they impact revenue, and translate raw numbers into actionable growth initiatives.",
+        "ctaLabel": "Learn More",
+        "sub1": "Data collection, unification & segmentation",
+        "sub2": "KPI tracking & deep-dive analysis",
+        "sub3": "Interactive Business Intelligence (BI) dashboards",
+        "sub4": "Trend forecasting & anomaly detection",
+        "sub5": "Actionable reporting for executive decisions"
+      },
+      "acquisition": {
+        "title": "Acquisition Strategy (SEO, GEO & SEA)",
+        "description": "Maximize your visibility across traditional and generative search engines to capture qualified prospects.",
+        "longDescription": "To grow today, your business must dominate the channels where customers search. Our acquisition engine pairs technical SEO, high-impact Google Ads (SEA) campaigns, and Generative Engine Optimization (GEO) for emerging AI-driven search models. We audit your ecosystem, restructure semantic architecture, and deploy ROI-focused ad campaigns that reliably generate high-intent inbound leads.",
+        "ctaLabel": "View Service",
+        "sub1": "Comprehensive SEO technical audit",
+        "sub2": "On-page & technical SEO optimization",
+        "sub3": "High-converting paid search (SEA) campaigns",
+        "sub4": "Generative Engine Optimization (GEO / AI Search)",
+        "sub5": "Conversion tracking & competitive intelligence"
+      },
+      "socialMedia": {
+        "title": "Social Media Management & Content Production",
+        "description": "Grow your community and engage your target audience with strong editorial strategies and high-impact visual content.",
+        "longDescription": "Turn your social presence into a steady engine for acquisition and brand loyalty. We create tailored content architectures for LinkedIn, Instagram, and TikTok. From art direction to scripting and video production, our team manages the entire creative lifecycle. Paired with active community management and data-driven engagement analysis, we turn passive followers into brand advocates.",
+        "ctaLabel": "Book a Call",
+        "sub1": "Social media channel management & growth",
+        "sub2": "High-impact visual & video production",
+        "sub3": "Editorial calendar planning & execution",
+        "sub4": "Active community management & outbound engagement",
+        "sub5": "Performance analytics & iterative optimization"
+      },
+      "branding": {
+        "title": "Branding & Visual Identity",
+        "description": "Build a distinctive, memorable, and consistent brand presence across all digital and physical touchpoints.",
+        "longDescription": "Your visual identity is the primary interface between your brand and your market: it must instantly convey authority, quality, and core values. We craft unified brand design systems. From core logotype design to exhaustive brand guidelines (typography, color palettes, responsive rules), we deliver all necessary assets: social media kits, luxury business cards, pitch decks, and commercial collateral.",
+        "ctaLabel": "Get a Quote",
+        "sub1": "Logotype creation & social media brand kits",
+        "sub2": "Comprehensive brand guideline systems",
+        "sub3": "Executive business cards & stationery",
+        "sub4": "Commercial sales decks & collateral"
+      },
+      "webDev": {
+        "title": "Websites & Custom Software Development",
+        "description": "Build modern, ultra-fast, and scalable digital solutions engineered to grow your bottom line.",
+        "longDescription": "We engineer high-performance web and mobile applications focused on UX excellence and conversion rate optimization. Whether launching a brand showcase, a high-volume e-commerce storefront, or custom SaaS architectures, we leverage modern, battle-tested software stacks. Every build includes responsive UI/UX, SEO-ready architectures, strict security standards, and comprehensive long-term maintenance.",
+        "ctaLabel": "Discuss Your Project",
+        "sub1": "Showcase websites & robust e-commerce platforms",
+        "sub2": "High-conversion landing pages",
+        "sub3": "Custom full-stack web applications",
+        "sub4": "Native & cross-platform mobile apps (iOS & Android)",
+        "sub5": "UX/UI design & mobile-first responsiveness",
+        "sub6": "Ongoing maintenance, speed optimization & SLA support"
+      },
+      "startupsMvp": {
+        "title": "Startups & MVPs",
+        "description": "You have an idea, a deck, and six months of runway. We compress the path from Figma to production until you have something paying users can actually break.",
+        "longDescription": "Speed to market defines startup survival. We design, architect, and ship your Minimum Viable Product (MVP) rapidly using agile sprint cycles. By cutting feature bloat and focusing on core value drivers, we convert design mockups into bulletproof, scalable applications ready for real customer onboarding, monetization, and investor evaluation.",
+        "ctaLabel": "Launch Your MVP",
+        "sub1": "Rapid prototyping & UX validation",
+        "sub2": "Scalable modern MVP architecture",
+        "sub3": "Payment integration & user onboarding",
+        "sub4": "CI/CD pipelines & rapid sprint iterations"
+      },
+      "aiAutomation": {
+        "title": "AI & Automation",
+        "description": "Chatbots that don't hallucinate your refund policy. Document parsers, smart search, and autonomous agents wired directly into your live business data.",
+        "longDescription": "Incorporate generative AI and automation into everyday business operations without risking hallucinations. We develop custom RAG (Retrieval-Augmented Generation) architectures, intelligent document processing pipelines, and AI agents tethered directly to your company knowledge base. From tier-1 support automation to complex operational parsing, we deliver reliable AI software your team actually uses.",
+        "ctaLabel": "Automate with AI",
+        "sub1": "Enterprise RAG conversational agents",
+        "sub2": "Automated document parsing & data extraction",
+        "sub3": "Semantic search & vector database systems",
+        "sub4": "End-to-end workflow automation pipelines"
+      },
+      "enterpriseApps": {
+        "title": "Enterprise Applications",
+        "description": "Internal tools your team actually opens. CRMs, operational dashboards, and the workflows that quietly run the back office built around your existing work.",
+        "longDescription": "Internal operations software should accelerate your workflow, not complicate it. We engineer bespoke internal applications—custom CRMs, logistics tools, inventory trackers, and executive command centers—tailored strictly around your established processes, avoiding the friction and licensing bloat of legacy off-the-shelf software.",
+        "ctaLabel": "Modernize Operations",
+        "sub1": "Bespoke CRMs & client service portals",
+        "sub2": "Real-time operations & logistics dashboards",
+        "sub3": "End-to-end business process digitization",
+        "sub4": "Custom API integrations & back-office synchronization"
+      }
+    }
+}
+,
+
+  "Homee": {
+    "services": {
+      "title": {
+        "part1": "Build",
+        "highlight": "sustainable growth",
+        "part2": ", powered by digital."
+      },
+      "description": "We offer a comprehensive range of services covering all aspects of digital marketing, tailored to precisely meet your business needs whatever your goals, ambitions, or stage of growth."
+    }
+  },
+
+    "Method": {
+      "badge": "OUR METHOD",
+      "title": {
+        "part1": "A clear method.",
+        "highlight": "Concrete results."
+      },
+      "description": "We follow a structured process to turn your business goals into high-performing, sustainable solutions.",
+      "steps": {
+        "step1": {
+          "title": "Understand",
+          "description": "We take the time to thoroughly understand your business, goals, and strategic challenges."
+        },
+        "step2": {
+          "title": "Analyze",
+          "description": "We analyze your target market, audience, and data to uncover key growth opportunities."
+        },
+        "step3": {
+          "title": "Design",
+          "description": "We architect tailored strategies and creative digital solutions aligned with your ambitions."
+        },
+        "step4": {
+          "title": "Develop",
+          "description": "We engineer and integrate scalable solutions with precision, quality, and performance."
+        },
+        "step5": {
+          "title": "Measure",
+          "description": "We track key metrics and KPIs to continuously measure real business impact."
+        },
+        "step6": {
+          "title": "Optimize",
+          "description": "We iteratively refine and optimize to maximize ROI and secure long-term growth."
+        }
+      },
+      "banner": {
+        "title": {
+          "part1": "Every step matters.",
+          "highlight": "Every detail makes the difference."
+        },
+        "text": "This framework empowers us to engineer impactful solutions tailored to your immediate needs and built to scale."
+      }
+    }
+  
+,
+
+  "Vision": {
+    "badge": "Our vision",
+    "title": {
+      "line1": "A vision built",
+      "line2": "for",
+      "highlight": "your reality"
+    },
+    "timeline": {
+      "item1": {
+        "part1": "At Nexsetia, our vision is built on a strong conviction: ",
+        "highlight": "every company operates within its own unique framework",
+        "part2": ", an ecosystem that shapes it as much as it shapes the ecosystem in return."
+      },
+      "item2": {
+        "part1": "This is why we always begin with an ",
+        "highlight": "in-depth analysis",
+        "part2": " of this context, turning it into the solid foundation for every initiative."
+      },
+      "item3": {
+        "part1": "We stay away from cookie-cutter formulas and copy-paste templates: a strategy is only valuable when it is ",
+        "highlight": "designed for the actual reality",
+        "part2": " of the business it serves."
+      },
+      "item4": {
+        "part1": "Because ultimately, one-size-fits-all solutions overlook what makes a business ",
+        "highlight1": "unique",
+        "part2": " and restrict its full ",
+        "highlight2": "potential",
+        "part3": "."
+      }
+    },
+    "stairs": {
+      "understand": {
+        "label": "Understand",
+        "sub": "the context"
+      },
+      "analyze": {
+        "label": "Analyze",
+        "sub": "opportunities"
+      },
+      "act": {
+        "label": "Act",
+        "sub": "with precision"
+      },
+      "generate": {
+        "label": "Generate",
+        "sub": "sustainable impact"
+      }
+    }
+  }
+,
+
+  "Recruitment": {
+    "badge": "Careers",
+    "title": "Want to join our journey?",
+    "description": "Share your contact details, your motivation, and your resume. We review every application carefully and get back to you promptly.",
+    "bulletResponse": "Response within a few business days",
+    "bulletFormat": "Resume in PDF, DOC, or DOCX format",
+    "success": {
+      "title": "Application submitted!",
+      "message": "Thank you for your interest. Our team will review your profile and reach out shortly.",
+      "button": "Submit another application"
+    },
+    "form": {
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Your first and last name",
+      "phone": "Phone Number",
+      "phonePlaceholder": "+212 6 00 00 00 00",
+      "email": "Email Address",
+      "emailPlaceholder": "you@example.com",
+      "position": "Target Position (optional)",
+      "positionPlaceholder": "E.g., Full-Stack Developer, Digital Marketer...",
+      "message": "Cover Letter / Motivation",
+      "messagePlaceholder": "Tell us about yourself, your skills, and what drives you to join us...",
+      "cvLabel": "Your Resume / CV",
+      "cvUpload": "Click to upload your resume",
+      "cvHint": "PDF, DOC, or DOCX — {maxSize} MB maximum",
+      "submit": "Submit Application",
+      "error": "An error occurred during submission. Please try again."
+    },
+    "validation": {
+      "fullNameRequired": "Full name is required",
+      "phoneRequired": "Phone number is required",
+      "emailRequired": "Email address is required",
+      "emailInvalid": "Invalid email address",
+      "messageRequired": "A motivation message is required",
+      "cvRequired": "Please attach your resume",
+      "cvAcceptedTypes": "Accepted formats: PDF, DOC, DOCX",
+      "cvMaxSize": "File must not exceed {maxSize} MB"
+    }
+  }
+,
+  "Faq": {
+    "badge": "FAQ",
+    "title": {
+      "part1": "Your questions,",
+      "highlight": "our answers"
+    },
+    "description": "Have questions? Here are clear answers to the most frequent inquiries about our digital marketing and engineering services.",
+    "ctaBox": {
+      "title": "Can't find what you're looking for?",
+      "description": "Our team is readily available to discuss your goals and advise you.",
+      "button": "Book a call"
+    },
+    "items": {
+      "delay": {
+        "question": "What is the average timeline for project delivery?",
+        "answer": "Timelines depend on scope: typically 2 to 3 weeks for visual branding or landing pages, 4 to 6 weeks for standard showcase/e-commerce websites, and 4 to 8 week agile sprints for custom MVPs and software. We establish a clear timeline with milestone reviews right from the kickoff."
+      },
+      "services": {
+        "question": "Do you work with businesses across Morocco and globally?",
+        "answer": "Yes, absolutely. We partner with companies across Morocco (Casablanca, Rabat, Marrakech, Tangier...) as well as international clients (France, Switzerland, Middle East). Through modern collaboration tools, project scoping, tracking, and sprints run seamlessly in person or remotely."
+      },
+      "pricing": {
+        "question": "How are your rates and quotes structured?",
+        "answer": "Every business has unique requirements. We provide tailored, transparent quotes following an initial audit of your goals. We offer fixed-price deliverables for web development and branding, as well as monthly retainer models for ongoing SEO, social media management, and paid acquisition campaigns."
+      },
+      "tracking": {
+        "question": "How do you track and measure the impact of your marketing efforts?",
+        "answer": "We believe in complete data transparency. Every campaign is wired into automated real-time dashboards (Google Looker Studio, GA4, CRM tracking). We focus on meaningful business KPIs (qualified leads, customer acquisition cost, conversion rates) and provide in-depth monthly strategy reviews."
+      },
+      "support": {
+        "question": "Do you provide technical support and maintenance after launch?",
+        "answer": "Yes. Launch day is only the beginning. We provide post-launch warranties, team handover training sessions, and continuous maintenance agreements covering security updates, bug fixes, and continuous growth optimizations."
+      }
+    }
+  }
+,"Cta": {
+    "badge": "Ready to take action",
+    "title": {
+      "line1": "Ready to scale",
+      "line2": "your business?"
+    },
+    "subtitle": "Let's build a tailored digital strategy together.",
+    "buttons": {
+      "consultation": "Book a free consultation",
+      "services": "Explore our services"
+    }
+  },
+  
+    "Team": {
+      "badge": "Our Leadership",
+      "title": {
+        "part1": "Two Expertises,",
+        "highlight": "One Vision"
+      },
+      "description": "Combining custom software engineering and data-driven marketing to scale your business.",
+      "members": {
+        "salma": {
+          "name": "Salma Bellamkaddem",
+          "role": "Co-Founder & Head of Tech Solutions",
+          "badge": "Digital Solutions",
+          "description": "Software engineer delivering high-performance applications, workflow automation, and actionable business intelligence.",
+          "skills": {
+            "s1": "Web & Mobile Development",
+            "s2": "Automation & Scalable Systems",
+            "s3": "Business Intelligence & Data"
+          },
+          "cta": "LinkedIn Profile"
+        },
+        "imane": {
+          "name": "Imane Elafati",
+          "role": "Co-Founder & Head of Digital Marketing",
+          "badge": "Digital Marketing",
+          "description": "Marketing strategist focused on brand positioning, audience acquisition, and high-converting communication campaigns.",
+          "skills": {
+            "s1": "Brand Strategy & Research",
+            "s2": "Visual Identity & Branding",
+            "s3": "Acquisition & Content Growth"
+          },
+          "cta": "LinkedIn Profile"
+        }
+      },
+      "stats": {
+        "bannerTitle": "Unified expertise,",
+        "bannerHighlight": "scalable growth.",
+        "bannerSub": "End-to-end support from planning to execution.",
+        "s1": "Dedicated Experts",
+        "s2": "ROI-Driven Vision",
+        "s3": "Proven Execution"
+      }
+    }
+  ,
+    "Footer": {
+      "tagline": {
+        "line1": "Brands that",
+        "line2": "stand out."
+      },
+      "description": "We engineer digital strategies, custom web platforms, and acquisition engines to sustainably accelerate your growth.",
+      "cta": "Book a consultation",
+      "columns": {
+        "services": "Services",
+        "company": "Company",
+        "contact": "Contact"
+      },
+      "contact": {
+        "location": "Available across Morocco",
+        "subLocation": "Remote & video conference"
+      },
+      "rights": "All rights reserved.",
+      "legal": {
+        "mentions": "Legal Notice",
+        "privacy": "Privacy Policy"
+      }
+    },
+  "ServiceDetail": {
+    "back": "Back to services",
+    "notFound": "Service not found",
+    "backHome": "Back to home",
+    "featuresTitle": "What we deliver in practice:",
+    "cta": "Discuss your project"
+  }
+  ,
+  "HomeBlog": {
+    "badge": "LATEST INSIGHTS",
+    "title": "Expert playbooks & digital growth tips",
+    "viewAll": "Explore all articles",
+    "readArticle": "Read article"
+  },
+
+    "Blog": {
+      "badge": "BLOG & INSIGHTS",
+    "title": "Your go-to guide for actionable digital marketing strategies",
+    "subtitle": "Stay ahead of the curve with the latest acquisition trends, best practices, and expert growth insights from our team.",
+      "publishedOn": "Published on",
+      "updatedOn": "Updated on",
+      "readingTime": "Reading Time",
+      "faqTitle": "Frequently Asked Questions",
+      "tags": {
+        "acquisition": "DIGITAL ACQUISITION",
+        "seo": "SEO & VISIBILITY",
+        "ads": "PAID ADVERTISING (ADS)",
+        "socialMedia": "SOCIAL MEDIA",
+        "inbound": "INBOUND MARKETING"
+      },
+      "midCta": {
+        "title": "Struggling to reach your customer acquisition targets?",
+        "description": "Our digital marketing and software engineering team builds tailored growth engines to attract, convert, and retain high-value clients.",
+        "button": "Get in touch with Nexsetia today!"
+      },
+      "posts": {
+        "acquisitionStrategies": {
+          "title": "Achieve Breakthrough Results in 2026: Core Digital Acquisition Strategies for Success",
+          "intro1": "Digital acquisition continues to rapidly evolve in 2026. As AI-powered discovery, changing customer expectations, and competitive markets reshape buyer journeys, businesses need practical, reliable, measurable, and scalable strategies.",
+          "intro2": "If you're looking to scale your business, a clear definition is essential. <strongText>What is multichannel acquisition?</strongText> It consists of promoting your solutions directly to qualified decision-makers.",
+          "intro3": "It encompasses highly targeted campaigns solving explicit pain points. This updated 2026 guide integrates breakthroughs in generative AI discovery, first-party data, and automated <adsLink>Ads campaigns</adsLink> paired with <seoLink>organic SEO</seoLink>.",
+          "section1Title": "High Expectations: What Prospective Clients Demand in 2026",
+          "section1P1": "In 2026, prospects expect marketing to directly align with their business reality. <customLink>Personalization</customLink> remains crucial, rooted in consent-driven data and transparent communication.",
+          "section1P2": "Social proof remains decisive. Case studies and verified customer testimonials establish credibility when delivered authentically.",
+          "section1P3": "The <customLink>buyer journey in 2026</customLink> is non-linear, transitioning across AI assistants, search engines, and multi-channel touchpoints.",
+          "section2Title": "Leveraging AI for Personalization and Workflow Automation",
+          "section2P1": "Artificial intelligence is embedded across modern marketing workflows. In 2026, companies rely on AI and automation to qualify inbound leads efficiently.",
+          "section2P2": "Integrating these systems into your CRM allows messages to adapt dynamically according to company industry, engagement, and funnel stage.",
+          "section2Example": "Example: Clustering prospects based on on-site behavioral signals forms the foundation of dynamic CRM segmentation.",
+          "schemaAlt": "Dynamic A/B prospect segmentation matrix",
+          "schemaCaption": "Source: Nexsetia Digital Framework 2026",
+          "section3P1": "Conversational agents guide visitors to relevant service solutions and facilitate instant calendar bookings 24/7.",
+          "section3Example": "Example: Implement conversational agents to automate qualification while providing a seamless handover to human advisors.",
+          "faq1Q": "What defines a modern acquisition strategy in 2026?",
+          "faq1A": "Modern acquisition unifies authoritative content, Generative Engine Optimization (GEO), precision paid advertising, and full-funnel analytics.",
+          "faq2Q": "What will define digital growth in 2026?",
+          "faq2A": "Growth will be driven by localized authenticity, AI-assisted personalization, first-party data governance, and high-performance mobile platforms.",
+          "faq3Q": "How is AI reshaping customer acquisition?",
+          "faq3A": "AI streamlines semantic research, prioritizes intent-qualified leads, automates bidding, and customizes copy at scale."
+        }
+      }
+    }
+    ,
+      "Locations": {
+        "badge": "100% Online • Nationwide across Morocco",
+        "deliveryMode": "Remote delivery, agile sprints & video consultations",
+        "ctaText": "Launch your project in",
+        "bookCall": "Book a strategic call",
+        "servicesTitle": "Tailored expertise to scale your business in",
+        "casablanca": {
+          "name": "Casablanca",
+          "region": "Greater Casablanca",
+          "metaTitle": "Digital Marketing & Web Development Agency for Casablanca | Nexsetia",
+          "metaDesc": "Tailored digital growth for businesses in Casablanca. Customer acquisition, SEO, web apps, and branding delivered 100% online.",
+          "heroTagline": "Scale your business visibility and profitability in Casablanca.",
+          "contextText": "We build high-converting acquisition funnels and custom web platforms for companies in Casablanca, offering the speed and flexibility of 100% remote collaboration."
+        },
+        "rabat": {
+          "name": "Rabat",
+          "region": "Rabat-Salé-Kénitra",
+          "metaTitle": "Web Engineering & Digital Marketing Agency in Rabat | Nexsetia",
+          "metaDesc": "Custom software development, market research, and acquisition strategies for businesses in Rabat. Remote support.",
+          "heroTagline": "Technical excellence and strategic digital solutions for businesses in Rabat.",
+          "contextText": "We engineer robust platforms and targeted acquisition engines to accelerate digital transformation for organizations in Rabat."
+        },
+        "marrakech": {
+          "name": "Marrakech",
+          "region": "Marrakech-Safi",
+          "metaTitle": "Digital Marketing & Branding Agency for Marrakech | Nexsetia",
+          "metaDesc": "Premium branding, social media growth, and paid acquisition for brands in Marrakech. 100% online project delivery.",
+          "heroTagline": "Elevate your brand presence and attract high-value clients in Marrakech.",
+          "contextText": "Stand out with distinctive branding and ROI-focused digital campaigns to capture local and international audiences in Marrakech."
+        }
+      }
+    ,"badge": "BLOG & INSIGHTS",
+    "title": "Your go-to guide for actionable digital marketing strategies",
+    "subtitle": "Stay ahead of the curve with the latest acquisition trends, best practices, and expert growth insights from our team."
+,
+      "Metadata": {
+        "root": {
+          "titleDefault": "Nexsetia | Digital Marketing & Web Development Agency in Morocco",
+          "ogTitle": "Nexsetia | Growth Marketing & Web Engineering Agency",
+          "description": "Nexsetia builds tailored digital growth engines: customer acquisition funnels, SEO, paid Ads, full-stack web platforms, and premium branding."
+        },
+        "notFound": {
+          "title": "Page Not Found (404)",
+          "description": "Sorry, the page you are looking for does not exist or has been moved. Explore our services and blog articles."
+        }
+      }
+    
+  }

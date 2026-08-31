@@ -1,0 +1,605 @@
+{
+  "Home": {
+    "hero": {
+      "services": {
+        "digitalMarketing": "Marketing Digital",
+        "uiuxDesign": "Design UI/UX",
+        "webMobileDevelopment": "Développement Web & Mobile",
+        "dataAnalytics": "Données & Analytique",
+        "ecommerce": "Solutions E-Commerce"
+      },
+
+      "title": {
+      "line1": "Agence Marketing Digital",
+        "line2": "& Solutions Web pour",
+        "highlight": "votre croissance"
+      },
+
+      "subtitle": {
+      "line1": "Les marques qu'on remarque :",
+        "line2": "C'est notre signature, mais surtout votre horizon."
+      }  ,
+
+      "description": {
+        "part1": "Chez",
+        "part2": ", nous sommes convaincus que les meilleures stratégies sont celles qui prennent racine dans une parfaite compréhension de votre activité."
+      },
+
+      "solution": {
+        "part1": "C’est ainsi que naissent des",
+        "highlight1": "solutions digitales sur mesure",
+        "part2": ", pensées exclusivement pour répondre aux",
+        "highlight2": "réalités de votre secteur"
+      },
+
+      "buttons": {
+        "services": "Découvrir nos services",
+        "contact": "Planifier un échange gratuit"
+      },
+
+      "features": {
+        "strategy": {
+          "line1": "Stratégie",
+          "line2": "sur mesure"
+        },
+        "solutions": {
+          "line1": "Solutions",
+          "line2": "innovantes"
+        },
+        "results": {
+          "line1": "Résultats",
+          "line2": "mesurables"
+        }
+      },
+
+      "scroll": "Défiler pour voir plus"
+    }
+  },
+
+    "HomePage": {
+      "title": "Bienvenue chez Nexsetia",
+      "About": {
+        "sectionTitle": "QUI SOMMES-NOUS ?",
+        "heading": "Nexsetia, votre partenaire de croissance digitale",
+        "paragraph1": "Nexsetia est une agence digitale 360°, née de la volonté d'une équipe de passionnés aux parcours complémentaires de mettre en commun leurs expertises, leur créativité et leur esprit d'analyse pour accompagner les entreprises dans leur développement digital.",
+        "paragraph1Highlight": "Nexsetia",
+        "paragraph1Highlight2": "développement digital",
+        "paragraph2": "Aujourd'hui, nous collaborons avec des entreprises issues d'horizons variés, des jeunes structures aux entreprises déjà bien établies. Chaque projet est différent, tout comme les défis qui l'accompagnent.",
+        "paragraph2Highlight": "défis",
+        "paragraph3": "Certaines de nos clientes nous sollicitent pour concevoir l'ensemble de leur stratégie digitale, tandis que d'autres recherchent un coup de boost ciblé, que ce soit pour optimiser leur référencement naturel (SEO), développer leur communication digitale, piloter leurs campagnes Google Ads, renforcer leur présence sur les réseaux sociaux ou repenser leur stratégie marketing.",
+        "paragraph3Highlight1": "stratégie digitale",
+        "paragraph3Highlight2": "référencement naturel (SEO)",
+        "paragraph3Highlight3": "communication digitale",
+        "paragraph3Highlight4": "Google Ads",
+        "paragraph3Highlight5": "réseaux sociaux",
+        "paragraph3Highlight6": "stratégie marketing",
+        "paragraph4": "Quelle que soit l'étape à laquelle se trouve votre entreprise, nous nous intégrons à votre projet pour intervenir là où nous pouvons avoir le plus d'impact. Notre objectif est de mettre en place les solutions les plus adaptées afin de pérenniser votre empreinte digitale et projeter votre visibilité, de manière optimale, au cœur de vos audiences cibles.",
+        "paragraph4Highlight1": "le plus d'impact",
+        "paragraph4Highlight2": "solutions les plus adaptées",
+        "paragraph4Highlight3": "votre empreinte digitale",
+        "paragraph4Highlight4": "audiences cibles",
+        "quote": "Nous transformons vos idées en résultats concrets.",
+        "quoteHighlight": "résultats concrets",
+        "features": {
+          "strategy": {
+            "title": "Stratégie sur mesure",
+            "description": "Nous analysons vos enjeux pour créer des stratégies digitales adaptées à vos objectifs."
+          },
+          "creativity": {
+            "title": "Créativité & Innovation",
+            "description": "Des idées originales et des solutions innovantes pour vous démarquer."
+          },
+          "results": {
+            "title": "Résultats mesurables",
+            "description": "Nous mettons en place des actions orientées performance pour un impact durable."
+          },
+          "support": {
+            "title": "Accompagnement",
+            "description": "Nous vous accompagnons à chaque étape de votre développement digital."
+          }
+        },
+        "imageAlt": {
+          "team": "Équipe Nexsetia",
+          "project": "Projet Nexsetia"
+        }
+      }
+    }
+,
+  "Navigation": {
+    "company": {
+      "home": "Accueil",
+      "services": "Services",
+      "method": "Notre méthode",
+      "vision": "Notre vision",
+      "about": "À propos",
+      "blog": "Blog"
+    },
+    "support": {
+      "helpCenter": "Centre d'aide",
+      "contact": "Contactez-nous",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité",
+      "liveChat": "Chat en direct"
+    },
+    "language": {
+      "label": "Langue",
+      "fr": "Français",
+      "ar": "العربية",
+      "en": "English"
+    }
+  }
+,
+    "Services": {
+      "items": {
+        "marketResearch": {
+          "title": "Études de marché & Analyse des comportements",
+          "description": "Comprenez en profondeur votre marché et les attentes de vos clients pour orienter vos décisions stratégiques.",
+          "longDescription": "Notre méthodologie d’étude de marché combine des approches quantitatives et qualitatives avancées. Nous concevons des questionnaires sur-mesure diffusés auprès de panels qualifiés pour capter la réalité du terrain. Grâce à l’analyse sémantique des verbatims clients et à une veille concurrentielle intransigeante, nous décodons les motivations profondes de vos consommateurs. Vous obtenez un rapport stratégique clé en main, mettant en lumière les opportunités de croissance inexploitées, les barrières à l’entrée et une segmentation précise de votre future clientèle.",
+          "ctaLabel": "Découvrir",
+          "sub1": "Enquêtes en ligne & questionnaires",
+          "sub2": "Analyses sémantiques & concurrentielles",
+          "sub3": "Comportements des consommateurs",
+          "sub4": "Segmentation, tendances & opportunités",
+          "sub5": "Analyse des besoins & attentes clients"
+        },
+        "dataAnalytics": {
+          "title": "Analyse des données & suivi des performances",
+          "description": "Collectez, centralisez et visualisez vos indicateurs clés pour transformer vos données en insights actionnables.",
+          "longDescription": "La donnée n’a de valeur que si elle est comprise. Nous intervenons pour structurer l’ensemble de vos flux de données business (CRM, site web, ventes, publicité). En centralisant ces informations dans des tableaux de bord interactifs et automatisés (Business Intelligence), nous vous offrons une visibilité en temps réel sur vos performances. Nos analystes traquent les anomalies, détectent les baisses de performance avant qu’elles ne deviennent critiques et traduisent les chiffres bruts en recommandations concrètes pour guider vos choix managériaux au quotidien.",
+          "ctaLabel": "En savoir plus",
+          "sub1": "Collecte, centralisation & segmentation",
+          "sub2": "Analyse des KPI",
+          "sub3": "Visualisation & croisement des données (BI)",
+          "sub4": "Détection de tendances & anomalies",
+          "sub5": "Insights actionnables & reporting décisionnel"
+        },
+        "acquisition": {
+          "title": "Stratégie d'acquisition (SEO, GEO & SEA)",
+          "description": "Maximisez votre visibilité sur les moteurs de recherche traditionnels et génératifs pour attirer des prospects qualifiés.",
+          "longDescription": "Pour exister aujourd’hui, votre entreprise doit être visible là où vos clients cherchent des réponses. Notre pôle acquisition combine le référencement naturel technique (SEO), la puissance immédiate des campagnes payantes Google Ads (SEA) et l’optimisation pour les nouveaux moteurs de recherche basés sur l’intelligence artificielle (GEO - Generative Engine Optimization). Nous réalisons un audit complet de votre écosystème, optimisons la structure sémantique de votre site et créons des campagnes publicitaires ultra-ciblées au ROI mesurable pour générer des prospects qualifiés en continu.",
+          "ctaLabel": "Voir le service",
+          "sub1": "Audit SEO",
+          "sub2": "Optimisation SEO (technique & éditoriale)",
+          "sub3": "Campagnes SEA performantes",
+          "sub4": "Optimisation sur les moteurs génératifs (GEO)",
+          "sub5": "Suivi des KPI & veille concurrentielle"
+        },
+        "socialMedia": {
+          "title": "Gestion des réseaux sociaux & Création de contenu",
+          "description": "Développez votre communauté et engagez votre audience grâce à un calendrier éditorial et des visuels impactants.",
+          "longDescription": "Faites de vos réseaux sociaux un puissant levier d’acquisition et de fidélisation. Nous concevons une stratégie éditoriale sur-mesure alignée avec les codes de chaque plateforme (LinkedIn, Instagram, TikTok). De la direction artistique à la rédaction des scripts et des légendes, notre équipe prend en charge la production de vos contenus visuels et vidéos. En combinant un community management actif (gestion des interactions, réponses aux messages) et une analyse rigoureuse des statistiques d’engagement, nous transformons votre audience passive en une communauté d’ambassadeurs engagés.",
+          "ctaLabel": "Réserver un appel",
+          "sub1": "Gestion & animation des réseaux sociaux",
+          "sub2": "Création de contenus visuels",
+          "sub3": "Calendrier éditorial & planification",
+          "sub4": "Community management",
+          "sub5": "Suivi des performances & ajustements"
+        },
+        "branding": {
+          "title": "Branding & Identité Visuelle",
+          "description": "Bâtissez une image de marque forte, cohérente et mémorable sur l’ensemble de vos supports de communication.",
+          "longDescription": "Votre identité visuelle est le premier point de contact avec votre public : elle se doit d’exprimer instantanément vos valeurs et votre professionnalisme. Nous créons des univers de marque uniques et pérennes. De la conception de votre logo phare à la définition d’une charte graphique complète (typographies, palettes de couleurs, règles d’usage), nous veillons à la cohérence de votre image. Nous déclinons cette identité sur tous vos supports essentiels : bannières de réseaux sociaux, cartes de visite premium, présentations commerciales et documents marketing.",
+          "ctaLabel": "Obtenir un devis",
+          "sub1": "Création de logo & bannières LinkedIn",
+          "sub2": "Charte graphique",
+          "sub3": "Cartes de visite",
+          "sub4": "Supports de communication/marketing"
+        },
+        "webDev": {
+          "title": "Sites Web & Développement",
+          "description": "Concevez des solutions digitales modernes, performantes et évolutives pour développer votre activité.",
+          "longDescription": "Nous développons des plateformes web et mobiles de haute performance, centrées sur l’expérience utilisateur (UX) et optimisées pour la conversion. Qu’il s’agisse d’un site vitrine élégant, d’une boutique e-commerce robuste ou d’une application web/mobile sur-mesure, nous utilisons les technologies les plus modernes et évolutives. Chaque projet bénéficie d’un design responsive soigné, d’un code optimisé pour le référencement et d’une sécurité maximale. Nous assurons également la maintenance et le support technique continu pour garantir la pérennité de votre outil digital.",
+          "ctaLabel": "Parlons de votre projet",
+          "sub1": "Sites vitrines & e-commerce",
+          "sub2": "Landing pages à fort taux de conversion",
+          "sub3": "Applications Web sur mesure",
+          "sub4": "Applications mobiles (Android & iOS)",
+          "sub5": "UX/UI Design & Responsive Design",
+          "sub6": "Maintenance, optimisation & support"
+        },
+        "startupsMvp": {
+          "title": "Startups & MVPs",
+          "description": "Vous avez une idée, un pitch deck et six mois de trésorerie. Nous réduisons le chemin de Figma à la production jusqu'à obtenir un produit testable par des clients payants.",
+          "longDescription": "Le délai de mise sur le marché est crucial pour les startups. Nous concevons et développons votre MVP (Produit Minimum Viable) avec une méthodologie agile et ultra-rapide. En nous concentrant sur les fonctionnalités à plus forte valeur ajoutée, nous transformons vos prototypes en applications robustes et scalables prêtes à encaisser les premiers paiements et à convaincre vos futurs investisseurs.",
+          "ctaLabel": "Lancer mon MVP",
+          "sub1": "Prototypage rapide & validation UX",
+          "sub2": "Architecture MVP scalable",
+          "sub3": "Intégration des paiements & onboarding",
+          "sub4": "Déploiement continu & itérations rapides"
+        },
+        "aiAutomation": {
+          "title": "IA & Automatisation",
+          "description": "Des chatbots qui n'inventent pas votre politique de remboursement. Analyseurs de documents, recherche intelligente et agents connectés à vos données réelles.",
+          "longDescription": "Intégrez l'intelligence artificielle au cœur de vos opérations sans risque d'hallucination. Nous développons des solutions d'IA générative et de RAG (Retrieval-Augmented Generation) directement connectées à vos bases de données d'entreprise. De l'automatisation du support client au traitement automatisé de documents complexes, nous créons la couche IA sur laquelle vos utilisateurs s'appuient réellement au quotidien.",
+          "ctaLabel": "Automatiser avec l'IA",
+          "sub1": "Chatbots & agents conversationnels RAG",
+          "sub2": "Extraction & analyse de documents par IA",
+          "sub3": "Recherche sémantique intelligente",
+          "sub4": "Pipelines d'automatisation des workflows"
+        },
+        "enterpriseApps": {
+          "title": "Applications Entreprise",
+          "description": "Des outils internes que vos équipes ouvrent avec plaisir. CRMs, tableaux de bord opérationnels et flux de travail qui font tourner votre back-office en toute fluidité.",
+          "longDescription": "Les logiciels d'entreprise n'ont pas besoin d'être austères ou rigides. Nous concevons des outils métier sur mesure (CRM, ERP légers, plateformes de gestion logistique et dashboards de suivi) parfaitement alignés sur vos processus internes existants, sans vous imposer les contraintes génériques d'un éditeur tiers.",
+          "ctaLabel": "Moderniser nos outils",
+          "sub1": "CRMs & portails clients sur-mesure",
+          "sub2": "Tableaux de bord opérationnels en temps réel",
+          "sub3": "Numérisation des processus métier",
+          "sub4": "Intégration d'APIs & synchronisation back-office"
+        }
+      }
+    }
+,
+
+  "Homee": {
+    "services": {
+      "title": {
+        "part1": "Bâtissez une",
+        "highlight": "croissance durable",
+        "part2": ", portée par le digital."
+      },
+      "description": "Nous vous offrons une large gamme de services couvrant les différentes facettes du marketing digital, afin de répondre avec justesse aux besoins de votre entreprise, quels que soient vos objectifs, vos ambitions ou votre stade de développement."
+    }
+  }
+  ,
+    "Method": {
+      "badge": "NOTRE MÉTHODE",
+      "title": {
+        "part1": "Une méthode claire.",
+        "highlight": "Des résultats concrets."
+      },
+      "description": "Nous suivons un processus structuré pour transformer vos objectifs en solutions performantes et durables.",
+      "steps": {
+        "step1": {
+          "title": "Comprendre",
+          "description": "Nous prenons le temps de comprendre votre activité, vos objectifs et vos enjeux."
+        },
+        "step2": {
+          "title": "Analyser",
+          "description": "Nous analysons votre marché, votre audience et vos données pour identifier les leviers de croissance."
+        },
+        "step3": {
+          "title": "Concevoir",
+          "description": "Nous concevons une stratégie sur mesure et des solutions créatives alignées avec vos objectifs."
+        },
+        "step4": {
+          "title": "Développer",
+          "description": "Nous développons et intégrons les solutions avec rigueur, qualité et performance."
+        },
+        "step5": {
+          "title": "Mesurer",
+          "description": "Nous mesurons les performances grâce à des indicateurs clés pour évaluer l'impact de nos actions."
+        },
+        "step6": {
+          "title": "Optimiser",
+          "description": "Nous optimisons en continu pour maximiser les résultats et assurer votre croissance durable."
+        }
+      },
+      "banner": {
+        "title": {
+          "part1": "Chaque étape compte.",
+          "highlight": "Chaque détail fait la différence."
+        },
+        "text": "Cette méthode nous permet de créer des solutions impactantes, adaptées à vos besoins et évolutives dans le temps."
+      }
+    }
+  
+    ,
+      "Vision": {
+        "badge": "Notre vision",
+        "title": {
+          "line1": "Une vision pensée",
+          "line2": "pour",
+          "highlight": "votre réalité"
+        },
+        "timeline": {
+          "item1": {
+            "part1": "Chez Nexsetia, notre vision repose sur une conviction forte : ",
+            "highlight": "chaque entreprise évolue dans un cadre qui lui est propre",
+            "part2": ", un écosystème qui l'influence autant qu'il est influencé par elle."
+          },
+          "item2": {
+            "part1": "C'est pourquoi nous commençons toujours par une ",
+            "highlight": "analyse approfondie",
+            "part2": " de ce contexte, afin d'en faire la base de chaque action mise en place."
+          },
+          "item3": {
+            "part1": "Nous sommes loin des recettes toutes faites et des modèles copiés-collés : une stratégie n'a de valeur que lorsqu'elle est ",
+            "highlight": "pensée pour la réalité",
+            "part2": " de l'entreprise qu'elle accompagne."
+          },
+          "item4": {
+            "part1": "Car au fond, les solutions standardisées ignorent ce qui fait la ",
+            "highlight1": "singularité",
+            "part2": " d'une entreprise et limitent son ",
+            "highlight2": "potentiel",
+            "part3": "."
+          }
+        },
+        "stairs": {
+          "understand": {
+            "label": "Comprendre",
+            "sub": "le contexte"
+          },
+          "analyze": {
+            "label": "Analyser",
+            "sub": "les opportunités"
+          },
+          "act": {
+            "label": "Agir",
+            "sub": "avec justesse"
+          },
+          "generate": {
+            "label": "Générer",
+            "sub": "un impact durable"
+          }
+        }
+      }
+    ,
+    
+      "Recruitment": {
+        "badge": "Recrutement",
+        "title": "Envie de rejoindre l'aventure ?",
+        "description": "Partagez-nous vos coordonnées, votre motivation et votre CV. Nous étudions chaque candidature avec attention et revenons vers vous rapidement.",
+        "bulletResponse": "Réponse sous quelques jours ouvrés",
+        "bulletFormat": "CV au format PDF, DOC ou DOCX",
+        "success": {
+          "title": "Candidature envoyée !",
+          "message": "Merci pour votre intérêt. Notre équipe va étudier votre profil et reviendra vers vous très prochainement.",
+          "button": "Envoyer une autre candidature"
+        },
+        "form": {
+          "fullName": "Nom complet",
+          "fullNamePlaceholder": "Votre nom et prénom",
+          "phone": "Téléphone",
+          "phonePlaceholder": "+212 6 00 00 00 00",
+          "email": "Email",
+          "emailPlaceholder": "vous@exemple.com",
+          "position": "Poste souhaité (optionnel)",
+          "positionPlaceholder": "Ex : Développeur, Chargé(e) marketing…",
+          "message": "Message de motivation",
+          "messagePlaceholder": "Parlez-nous de vous, de vos compétences et de ce qui vous motive à nous rejoindre…",
+          "cvLabel": "Votre CV",
+          "cvUpload": "Cliquez pour importer votre CV",
+          "cvHint": "PDF, DOC ou DOCX — {maxSize} Mo maximum",
+          "submit": "Envoyer ma candidature",
+          "error": "Une erreur est survenue lors de l'envoi. Merci de réessayer."
+        },
+        "validation": {
+          "fullNameRequired": "Le nom complet est requis",
+          "phoneRequired": "Le numéro de téléphone est requis",
+          "emailRequired": "L'email est requis",
+          "emailInvalid": "Email invalide",
+          "messageRequired": "Un message de motivation est requis",
+          "cvRequired": "Merci de joindre votre CV",
+          "cvAcceptedTypes": "Formats acceptés : PDF, DOC, DOCX",
+          "cvMaxSize": "Le fichier ne doit pas dépasser {maxSize} Mo"
+        }
+      }
+    ,
+    
+      "Faq": {
+        "badge": "FAQ",
+        "title": {
+          "part1": "Vos questions,",
+          "highlight": "nos réponses"
+        },
+        "description": "Vous avez des questions ? Voici les réponses aux interrogations les plus fréquentes sur nos services au Maroc et à l'international.",
+        "ctaBox": {
+          "title": "Vous ne trouvez pas votre réponse ?",
+          "description": "Notre équipe est disponible pour échanger sur vos objectifs et vous conseiller.",
+          "button": "Réserver un appel"
+        },
+        "items": {
+          "delay": {
+            "question": "Quels sont les délais moyens pour la réalisation d'un projet ?",
+            "answer": "Les délais dépendent de l'envergure du projet : comptez 2 à 3 semaines pour une identité visuelle ou une landing page, 4 à 6 semaines pour un site vitrine ou e-commerce complet, et des sprints agiles de 4 à 8 semaines pour un MVP ou une application sur-mesure. Dès le cadrage, nous fixons un calendrier précis avec des jalons de validation réguliers."
+          },
+          "services": {
+            "question": "Accompagnez-vous les entreprises partout au Maroc et à l'international ?",
+            "answer": "Oui, absolument. Nous collaborons avec des entreprises partout au Maroc (Casablanca, Rabat, Marrakech, Tanger...) ainsi qu'avec des clients internationaux (France, Suisse, pays du Golfe). Grâce à nos outils collaboratifs, l'ensemble du suivi de projet et des réunions de cadrage s'effectue de manière fluide en présentiel ou à distance."
+          },
+          "pricing": {
+            "question": "Comment sont calculés vos tarifs et devis ?",
+            "answer": "Chaque entreprise a des besoins uniques. Nos devis sont personnalisés et transparents, établis après un audit initial de vos objectifs. Nous proposons des forfaits au forfait pour les projets de développement/branding, ainsi que des abonnements mensuels sans mauvaise surprise pour la gestion des réseaux sociaux, le SEO et les campagnes d'acquisition."
+          },
+          "tracking": {
+            "question": "Comment mesurez-vous l'impact et les résultats de vos actions marketing ?",
+            "answer": "Nous croyons en la transparence par la donnée. Chaque campagne ou prestation est adossée à un tableau de bord en temps réel (Google Looker Studio, indicateurs CRM, Google Analytics 4). Nous suivons les KPI concrets (prospects générés, coût d'acquisition, chiffre d'affaires e-commerce, taux de conversion) et vous fournissons un compte-rendu mensuel détaillé avec des recommandations d'optimisation."
+          },
+          "support": {
+            "question": "Assurez-vous un support et une maintenance après la livraison du projet ?",
+            "answer": "Absolument. La livraison ne marque pas la fin de notre collaboration. Nous offrons une garantie technique post-lancement, des sessions de formation à vos équipes pour prendre en main vos outils, ainsi que des contrats de maintenance préventive, corrective et d'accompagnement marketing continu pour assurer votre croissance durable."
+          }
+        }
+      }
+    
+      ,
+        "Cta": {
+          "badge": "Prêt à passer à l'action",
+          "title": {
+            "line1": "Prêt à faire grandir",
+            "line2": "votre entreprise ?"
+          },
+          "subtitle": "Construisons ensemble une stratégie digitale sur mesure.",
+          "buttons": {
+            "consultation": "Réservez une consultation gratuite",
+            "services": "Voir nos services"
+          }
+        }
+  ,
+    "Team": {
+      "badge": "Notre équipe",
+      "title": {
+        "part1": "Deux expertises,",
+        "highlight": "une même vision"
+      },
+      "description": "L'alliance de l'ingénierie logicielle et du marketing stratégique pour propulser votre croissance.",
+      "members": {
+        "salma": {
+          "name": "Salma Bellamkaddem",
+          "role": "Co-fondatrice & Solutions Digitales",
+          "badge": "Solutions Digitales",
+          "description": "Ingénieure logicielle spécialisée dans le développement d'applications performantes, l'automatisation et l'analyse de données décisionnelle.",
+          "skills": {
+            "s1": "Applications Web & Mobile",
+            "s2": "Automatisation & Workflows",
+            "s3": "Business Intelligence & Data"
+          },
+          "cta": "Profil LinkedIn"
+        },
+        "imane": {
+          "name": "Imane Elafati",
+          "role": "Co-fondatrice & Marketing Digital",
+          "badge": "Marketing Digital",
+          "description": "Experte en stratégie de marque, acquisition et communication digitale axée sur la conversion et l'engagement d'audience.",
+          "skills": {
+            "s1": "Stratégie de Marque & Marché",
+            "s2": "Branding & Communication",
+            "s3": "Acquisition & Social Media"
+          },
+          "cta": "Profil LinkedIn"
+        }
+      },
+      "stats": {
+        "bannerTitle": "Notre complémentarité,",
+        "bannerHighlight": "votre avantage.",
+        "bannerSub": "Un accompagnement global, de la stratégie à l'exécution.",
+        "s1": "Expertes dédiées",
+        "s2": "Vision orientée ROI",
+        "s3": "Engagement & impact"
+      }
+    }
+    ,
+      "Footer": {
+        "tagline": {
+          "line1": "Les marques",
+          "line2": "qu'on remarque."
+        },
+        "description": "Nous créons des stratégies digitales, des plateformes web et des solutions d'acquisition qui accélèrent durablement votre croissance.",
+        "cta": "Réserver une consultation",
+        "columns": {
+          "services": "Services",
+          "company": "Entreprise",
+          "contact": "Contact"
+        },
+        "contact": {
+          "location": "Disponible partout au Maroc",
+          "subLocation": "À distance & en visioconférence"
+        },
+        "rights": "Tous droits réservés.",
+        "legal": {
+          "mentions": "Mentions légales",
+          "privacy": "Politique de confidentialité"
+        }
+      }
+    ,
+    "ServiceDetail": {
+    "back": "Retour aux services",
+    "notFound": "Service introuvable",
+    "backHome": "Retour à l'accueil",
+    "featuresTitle": "Ce que nous faisons concrètement :",
+    "cta": "Discuter de votre projet"
+  },
+  
+"HomeBlog": {
+    "badge": "ACTUALITÉS & MÉTHODES",
+    "title": "Conseils d'experts & décryptages digitaux",
+    "viewAll": "Explorer tous nos articles",
+    "readArticle": "Lire l'article"
+  },
+  
+    "Blog": {
+      
+        "badge": "BLOG & ACTUALITÉS",
+    "title": "Votre guide de référence pour les astuces en marketing digital",
+    "subtitle": "Gardez une longueur d'avance en découvrant les dernières tendances en matière d'acquisition, les meilleures pratiques et les conseils d'experts de notre équipe.",
+      "publishedOn": "Publié le",
+      "updatedOn": "Mis à jour le",
+      "readingTime": "Reading Time",
+      "faqTitle": "Foire aux questions",
+      "tags": {
+        "acquisition": "ACQUISITION DIGITALE",
+        "seo": "SEO & VISIBILITÉ",
+        "ads": "PUBLICITÉ EN LIGNE (ADS)",
+        "socialMedia": "MÉDIAS SOCIAUX",
+        "inbound": "MARKETING ENTRANT"
+      },
+      "midCta": {
+        "title": "Vous avez de la difficulté à atteindre vos objectifs d'acquisition ?",
+        "description": "Nos experts en marketing digital et développement conçoivent des stratégies sur-mesure pour attirer, convertir et fidéliser vos clients cibles.",
+        "button": "Communiquez avec Nexsetia dès aujourd'hui !"
+      },
+      "posts": {
+        "acquisitionStrategies": {
+          "title": "Obtenez des résultats en 2026 : les stratégies clés de l'acquisition digitale pour réussir",
+          "intro1": "L'acquisition digitale continue d'évoluer rapidement en 2026. Alors que la découverte alimentée par l'IA, l'évolution des attentes des clients et la concurrence accrue transforment le parcours d'achat, les entreprises ont besoin de stratégies utiles, fiables, mesurables et faciles à adapter.",
+          "intro2": "Si vous débutez dans le marketing digital ou la croissance d'entreprise, une définition pratique du sujet que nous abordons pourrait vous être utile. <strongText>Qu'est-ce que l'acquisition multicanale ?</strongText> Elle consiste à promouvoir vos services et produits auprès de prospects qualifiés, de leurs équipes et de leurs décideurs.",
+          "intro3": "Elle comprend la création de campagnes ciblées qui répondent aux besoins et aux défis propres aux prospects. Ce guide mis à jour pour 2026 intègre les développements récents liés à la recherche par IA, aux données de première partie, à l'automatisation et à la publicité ciblée via <adsLink>les campagnes Ads</adsLink> et <seoLink>le référencement naturel SEO</seoLink>.",
+          "section1Title": "De grandes attentes : ce que recherchent les clients potentiels en 2026",
+          "section1P1": "En 2026, les prospects s'attendent à ce que les initiatives marketing tiennent compte de leurs objectifs et de leur situation. La <customLink>personnalisation</customLink> demeure importante, mais elle doit reposer sur des données pertinentes recueillies avec consentement et s'accompagner d'une communication transparente sur les offres.",
+          "section1P2": "La preuve sociale demeure influente. Les avis, les études de cas et le contenu généré renforcent la confiance lorsque le message est authentique et représentatif.",
+          "section1P3": "Le <customLink>parcours client en 2026</customLink> est de plus en plus non linéaire. Avant de soumettre une demande, les prospects naviguent entre assistants d'IA, moteurs de recherche et réseaux sociaux.",
+          "section2Title": "Exploiter l'IA pour la personnalisation et l'automatisation",
+          "section2P1": "L'intelligence artificielle est désormais intégrée à de nombreux aspects du marketing. En 2026, les entreprises utilisent l'IA générative et les flux automatisés pour qualifier les leads et répondre aux interrogations courantes.",
+          "section2P2": "Les flux de travail connectés à votre CRM permettent d'adapter les messages selon le secteur d'activité, le niveau d'engagement et l'étape dans l'entonnoir de conversion.",
+          "section2Example": "Exemple : Le regroupement des prospects en fonction de leur activité sur le site web constitue la première étape d'une segmentation dynamique dans votre CRM.",
+          "schemaAlt": "Schéma de segmentation dynamique de prospects A/B",
+          "schemaCaption": "Source : Nexsetia Digital Framework 2026",
+          "section3P1": "Les assistants conversationnels et agents d'IA peuvent orienter les visiteurs vers les pages de services pertinentes et faciliter la prise de rendez-vous en tout temps.",
+          "section3Example": "Exemple : Utilisez les agents conversationnels de façon intentionnelle pour qualifier le besoin en amont tout en préservant un accès direct à un conseiller humain.",
+          "faq1Q": "Qu'est-ce qu'une stratégie d'acquisition moderne en 2026 ?",
+          "faq1A": "L'acquisition moderne combine du contenu hautement qualifié, un référencement adapté aux moteurs d'IA (GEO), des campagnes publicitaires ciblées et un suivi analytique complet sur l'ensemble du cycle de conversion.",
+          "faq2Q": "À quoi ressemblera le marketing digital au Maroc en 2026 ?",
+          "faq2A": "Il combinera l'authenticité locale, la personnalisation assistée par IA, les données first-party conformes et des plateformes web ultra-rapides conçues pour convertir sur mobile.",
+          "faq3Q": "Comment l'IA transforme-t-elle l'acquisition de prospects ?",
+          "faq3A": "L'IA accélère la recherche sémantique, priorise les leads selon leur score d'intention, optimise les enchères publicitaires et personnalise les messages à grande échelle."
+        }
+      }
+    },
+    
+      "Locations": {
+        "badge": "100% En ligne • Partout au Maroc",
+        "deliveryMode": "Accompagnement à distance, sprints agiles & visioconférence",
+        "ctaText": "Lancer votre projet à",
+        "bookCall": "Réserver un appel stratégique",
+        "servicesTitle": "Nos expertises pour développer votre activité à",
+        "casablanca": {
+          "name": "Casablanca",
+          "region": "Grand Casablanca",
+          "metaTitle": "Agence Marketing Digital & Développement Web à Casablanca | Nexsetia",
+          "metaDesc": "Accompagnement digital sur-mesure pour les entreprises et startups à Casablanca. Acquisition, SEO, développement web & branding 100% à distance.",
+          "heroTagline": "Développez la visibilité et la rentabilité de votre entreprise à Casablanca.",
+          "contextText": "Pour performer sur le marché casablancais, Nexsetia conçoit des stratégies d'acquisition et des solutions web performantes, avec la flexibilité et la réactivité d'un accompagnement 100% en ligne."
+        },
+        "rabat": {
+          "name": "Rabat",
+          "region": "Rabat-Salé-Kénitra",
+          "metaTitle": "Agence Digitale & Ingénierie Web pour entreprises à Rabat | Nexsetia",
+          "metaDesc": "Développement d'applications métiers, études de marché et marketing digital pour les acteurs économiques de Rabat. Intervention à distance.",
+          "heroTagline": "L'excellence technique et stratégique pour les acteurs économiques de Rabat.",
+          "contextText": "Nous concevons des plateformes robustes et des stratégies d'acquisition ciblées pour accompagner la transformation digitale des organisations et PME de Rabat."
+        },
+        "marrakech": {
+          "name": "Marrakech",
+          "region": "Marrakech-Safi",
+          "metaTitle": "Agence Marketing Digital & Image de Marque à Marrakech | Nexsetia",
+          "metaDesc": "Branding premium, création de contenu et campagnes d'acquisition pour les marques à Marrakech. Gestion de projet 100% digitale.",
+          "heroTagline": "Sublimez votre présence de marque et attirez des clients cibles à Marrakech.",
+          "contextText": "Affirmez votre identité avec un branding distinctif et des campagnes d'acquisition orientées ROI pour capter une clientèle locale et internationale à Marrakech."
+        }
+      }
+  ,
+        "Metadata": {
+          "root": {
+            "titleDefault": "Nexsetia | Agence Marketing Digital & Développement Web au Maroc",
+            "ogTitle": "Nexsetia | Agence Marketing Digital & Solutions Web",
+            "description": "Nexsetia conçoit des stratégies digitales sur-mesure : acquisition de clients, SEO, campagnes Ads, création de sites/applications web et branding au Maroc."
+          },
+          "notFound": {
+            "title": "Page Introuvable (404)",
+            "description": "Désolé, la page demandée n'existe pas ou a été déplacée. Découvrez nos services digitaux et articles de blog."
+          }
+        }
+    
+  }

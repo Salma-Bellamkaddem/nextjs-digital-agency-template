@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
+import { useTranslations, useLocale } from 'next-intl'
 
 import Box from '@mui/material/Box'
 import Stack from '@mui/material/Stack'
@@ -9,15 +10,13 @@ import Collapse from '@mui/material/Collapse'
 import ButtonBase from '@mui/material/ButtonBase'
 import { FAQ_ITEMS, FaqIconKey } from '@/constants/home-faq.data'
 
-
-
 const BRAND = {
   primary: '#B5377A',
   primaryDark: '#570D3F',
   primaryLight: '#FAC8EB',
 }
 
-const PHONE_NUMBER = '+212600000000' // ⚠️ à remplacer par le vrai numéro
+const PHONE_NUMBER = '+212600000000' // Votre numéro WhatsApp / Téléphone
 
 // ── Icônes inline ──
 const RocketIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -78,8 +77,17 @@ const CalendarIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-const ArrowRightIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" {...props}>
+const ArrowRightIcon = ({ isRtl, ...props }: React.SVGProps<SVGSVGElement> & { isRtl?: boolean }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    style={{ transform: isRtl ? 'rotate(180deg)' : 'none' }}
+    {...props}
+  >
     <path d="M5 12h14" />
     <path d="m12 5 7 7-7 7" />
   </svg>
@@ -94,6 +102,10 @@ const FAQ_ICONS: Record<FaqIconKey, (props: React.SVGProps<SVGSVGElement>) => Re
 }
 
 const HomeFaq = () => {
+  const t = useTranslations('Faq')
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
+
   const [openId, setOpenId] = useState<string | null>(FAQ_ITEMS[0]?.id ?? null)
 
   const handleToggle = (id: string) => {
@@ -115,8 +127,16 @@ const HomeFaq = () => {
     >
       {/* ── En-tête ── */}
       <Stack alignItems="center" textAlign="center" sx={{ mb: { xs: 6, md: 8 } }}>
-        <Typography sx={{ color: BRAND.primary, fontWeight: 800, letterSpacing: 2, fontSize: 13, mb: 1 }}>
-          FAQ
+        <Typography
+          sx={{
+            color: BRAND.primary,
+            fontWeight: 800,
+            letterSpacing: isRtl ? 1 : 2,
+            fontSize: 13,
+            mb: 1,
+          }}
+        >
+          {t('badge')}
         </Typography>
         <Box sx={{ width: 32, height: 3, borderRadius: 999, backgroundColor: BRAND.primary, mb: 3 }} />
         <Typography
@@ -124,26 +144,25 @@ const HomeFaq = () => {
           sx={(theme) => ({
             fontSize: { xs: 26, sm: 32, md: 42 },
             fontWeight: 800,
-            lineHeight: 1.2,
+            lineHeight: isRtl ? 1.4 : 1.2,
             color: theme.palette.text.primary,
             mb: 2,
           })}
         >
-          Vos questions,{' '}
+          {t('title.part1')}{' '}
           <Box component="span" sx={{ color: BRAND.primary }}>
-            nos réponses
+            {t('title.highlight')}
           </Box>
         </Typography>
         <Typography
           sx={(theme) => ({
             color: theme.palette.text.secondary,
             fontSize: { xs: 15, md: 17 },
-            maxWidth: 560,
-            lineHeight: 1.6,
+            maxWidth: 580,
+            lineHeight: isRtl ? 1.8 : 1.6,
           })}
         >
-          Vous avez des questions ? Voici les réponses aux interrogations les plus fréquentes de
-          nos clients.
+          {t('description')}
         </Typography>
       </Stack>
 
@@ -156,10 +175,11 @@ const HomeFaq = () => {
             borderRadius: 4,
             p: 4,
             backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,0.04)' : 'rgba(181,55,122,0.05)',
+            textAlign: isRtl ? 'right' : 'left',
           })}
         >
           {/* Illustration bulles de discussion */}
-          <Box sx={{ position: 'relative', height: 190, mb: 3 }}>
+          <Box sx={{ position: 'relative', height: 190, mb: 3, direction: 'ltr' }}>
             <Box
               sx={{
                 position: 'absolute',
@@ -222,25 +242,34 @@ const HomeFaq = () => {
             sx={(theme) => ({
               fontSize: { xs: 20, md: 22 },
               fontWeight: 800,
-              lineHeight: 1.3,
+              lineHeight: isRtl ? 1.45 : 1.3,
               color: theme.palette.text.primary,
               mb: 1.5,
             })}
           >
-            Vous ne trouvez pas votre réponse ?
+            {t('ctaBox.title')}
           </Typography>
 
-          <Box sx={{ width: 32, height: 3, borderRadius: 999, backgroundColor: BRAND.primary, mb: 2 }} />
+          <Box
+            sx={{
+              width: 32,
+              height: 3,
+              borderRadius: 999,
+              backgroundColor: BRAND.primary,
+              mb: 2,
+              marginInlineEnd: 'auto',
+            }}
+          />
 
           <Typography
             sx={(theme) => ({
               fontSize: 14.5,
-              lineHeight: 1.7,
+              lineHeight: isRtl ? 1.8 : 1.7,
               color: theme.palette.text.secondary,
               mb: 3,
             })}
           >
-            Notre équipe est disponible pour répondre à toutes vos questions.
+            {t('ctaBox.description')}
           </Typography>
 
           <ButtonBase
@@ -264,9 +293,9 @@ const HomeFaq = () => {
           >
             <Stack direction="row" spacing={1.2} alignItems="center">
               <CalendarIcon width={18} height={18} />
-              <span>Réserver un appel</span>
+              <span>{t('ctaBox.button')}</span>
             </Stack>
-            <ArrowRightIcon width={16} height={16} />
+            <ArrowRightIcon width={16} height={16} isRtl={isRtl} />
           </ButtonBase>
         </Box>
 
@@ -299,7 +328,7 @@ const HomeFaq = () => {
                     justifyContent: 'space-between',
                     px: { xs: 2.5, md: 3 },
                     py: 2.5,
-                    textAlign: 'left',
+                    textAlign: isRtl ? 'right' : 'left',
                   }}
                 >
                   <Stack direction="row" spacing={2} alignItems="center">
@@ -322,10 +351,11 @@ const HomeFaq = () => {
                       sx={(theme) => ({
                         fontSize: { xs: 15.5, md: 17 },
                         fontWeight: 700,
+                        lineHeight: isRtl ? 1.45 : 1.3,
                         color: theme.palette.text.primary,
                       })}
                     >
-                      {item.question}
+                      {t(`items.${item.key}.question`)}
                     </Typography>
                   </Stack>
 
@@ -335,6 +365,7 @@ const HomeFaq = () => {
                       color: BRAND.primary,
                       transform: isOpen ? 'rotate(180deg)' : 'none',
                       transition: 'transform 0.2s ease',
+                      marginInlineStart: 1.5,
                     }}
                   >
                     <ChevronIcon width={18} height={18} />
@@ -342,15 +373,22 @@ const HomeFaq = () => {
                 </ButtonBase>
 
                 <Collapse in={isOpen} timeout={200}>
-                  <Box sx={{ px: { xs: 2.5, md: 3 }, pb: 2.75, pl: { xs: '4.5rem', md: '5rem' } }}>
+                  <Box
+                    sx={{
+                      px: { xs: 2.5, md: 3 },
+                      pb: 2.75,
+                      paddingInlineStart: { xs: '4.5rem', md: '5rem' },
+                      textAlign: isRtl ? 'right' : 'left',
+                    }}
+                  >
                     <Typography
                       sx={(theme) => ({
                         fontSize: 14.5,
-                        lineHeight: 1.75,
+                        lineHeight: isRtl ? 1.85 : 1.75,
                         color: theme.palette.text.secondary,
                       })}
                     >
-                      {item.answer}
+                      {t(`items.${item.key}.answer`)}
                     </Typography>
                   </Box>
                 </Collapse>

@@ -2,10 +2,13 @@ import { ReactElement } from 'react'
 
 declare global {
   interface IMenu {
-    label: string
+    labelKey: string
+
     path: string
+  
     sectionId?: string | null
-    icon?: ReactElement
+  
+    icon: React.ReactNode
   }
 }
 
