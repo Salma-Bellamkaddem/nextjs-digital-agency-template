@@ -132,7 +132,7 @@ const HomeContact = () => {
               <Grid size={{ xs: 12, md: 5 }}>
                 <Box
                   component='a'
-                  href='tel:+212600000000'
+                  href='tel:+212655760065'
                   sx={{ fontWeight: 500, textDecoration: 'none', color: 'text.primary', ':hover': { color: BRAND.primary } }}
                 >
                   <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', md: 'flex-start' } }}>

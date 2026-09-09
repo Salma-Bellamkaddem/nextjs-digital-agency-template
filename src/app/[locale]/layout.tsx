@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Plus_Jakarta_Sans } from 'next/font/google'
+import { Plus_Jakarta_Sans, Poppins, IBM_Plex_Sans_Arabic } from 'next/font/google'
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter'
 import { NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
@@ -15,11 +15,29 @@ import AppBar from '@/components/appbar/app-bar'
 import Footer from '@/components/footer/footer'
 import FloatingWhatsApp from '../_components/floating-whatsapp'
 import FloatingLanguageSwitcher from '../_components/floating-language-switcher'
+import { LayoutProps } from '../../../.next/types/app/[locale]/layout'
 
+// Police principale latine
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '700', '800'],
+  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-plus-jakarta-sans',
+  display: 'swap',
+})
+
+// Police Poppins (titres H1 et sections d'impact)
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800'],
+  variable: '--font-poppins',
+  display: 'swap',
+})
+
+// Police principale arabe moderne
+const ibmPlexArabic = IBM_Plex_Sans_Arabic({
+  subsets: ['arabic'],
+  weight: ['400', '500', '600', '700'],
+  variable: '--font-arabic',
   display: 'swap',
 })
 
@@ -27,11 +45,6 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   themeColor: '#B5377A',
-}
-
-interface LayoutProps {
-  children: React.ReactNode
-  params: Promise<{ locale: string }>
 }
 
 // ── Métadonnées dynamiques multilingues (FR / AR / EN) ──
@@ -98,12 +111,11 @@ export async function generateMetadata({
     },
     icons: {
       icon: [
-        { url: '/favicon.ico' },
-        { url: '/favicon.svg', type: 'image/svg+xml' },
-        { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+        { url: '/apple-touch-icon.png?v=2', type: 'image/png' },
+        { url: '/favicon-96x96.png?v=2', sizes: '96x96', type: 'image/png' },
       ],
-      apple: [{ url: '/apple-touch-icon.png' }],
-      shortcut: '/favicon.ico',
+      apple: [{ url: '/apple-touch-icon.png?v=2' }],
+      shortcut: '/apple-touch-icon.png?v=2',
     },
     manifest: '/site.webmanifest',
   }
@@ -138,12 +150,17 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   return (
     <html lang={locale} dir={direction} suppressHydrationWarning>
       <body
-        className={plusJakartaSans.variable}
+        className={`${plusJakartaSans.variable} ${poppins.variable} ${ibmPlexArabic.variable}`}
         style={{
           overflowX: 'hidden',
           width: '100%',
           maxWidth: '100vw',
+          fontFamily:
+            locale === 'ar'
+              ? 'var(--font-arabic), "IBM Plex Sans Arabic", sans-serif'
+              : 'var(--font-plus-jakarta-sans), sans-serif',
         }}
+        suppressHydrationWarning
       >
         <NextIntlClientProvider locale={locale} messages={messages}>
           <AppRouterCacheProvider options={{ key: 'css' }}>
@@ -157,7 +174,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
               </MuiThemeProvider>
             </AppContextProvider>
           </AppRouterCacheProvider>
-          <OrganizationSchema />
+          <OrganizationSchema locale={locale} />
         </NextIntlClientProvider>
       </body>
     </html>

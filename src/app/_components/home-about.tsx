@@ -4,11 +4,11 @@ import React, { ReactNode } from 'react'
 import Image from 'next/image'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import Stack from '@mui/material/Stack'
 import Grid from '@mui/material/Grid2'
 import Container from '@mui/material/Container'
-import { SectionTitle } from '@/components/core'
 import { useTheme } from '@mui/material/styles'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 
 import TrackChangesIcon from '@mui/icons-material/TrackChanges'
 import DesignServicesIcon from '@mui/icons-material/DesignServices'
@@ -41,7 +41,7 @@ const paragraphIcon = (icon: ReactNode) => (
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: BRAND.primarySoft,
+      backgroundColor: `${BRAND.primaryLight}40`,
       color: BRAND.primary,
     }}
   >
@@ -81,7 +81,7 @@ const FeatureItem = ({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: BRAND.primarySoft,
+          backgroundColor: `${BRAND.primaryLight}40`,
           color: BRAND.primary,
         }}
       >
@@ -115,14 +115,10 @@ const FeatureItem = ({
 
 const HomeAbout = () => {
   const { palette } = useTheme()
-
+  const locale = useLocale()
+  const isRtl = locale === 'ar'
   const t = useTranslations('HomePage.About')
 
-  /*
-   * IMPORTANT :
-   * Les features doivent être créées ici,
-   * car t() ne doit pas être appelé hors du composant.
-   */
   const features: FeatureData[] = [
     {
       id: 1,
@@ -155,14 +151,14 @@ const HomeAbout = () => {
       id="home-about"
       sx={{
         width: '100%',
-        py: { xs: 7, md: 14, lg: 18 },
-        backgroundColor: 'background.paper',
+        py: { xs: 8, md: 12 },
+        px: { xs: 2.5, md: 6, lg: 10 },
+        backgroundColor: palette.mode === 'dark' ? palette.background.default : '#FDFAFC',
         overflow: 'hidden',
-        fontFamily:
-          "'Poppins', 'Plus Jakarta Sans', sans-serif",
+        direction: isRtl ? 'rtl' : 'ltr',
       }}
     >
-      <Container>
+      <Container maxWidth="lg" disableGutters>
         <Grid
           container
           spacing={{ xs: 5, md: 6 }}
@@ -173,51 +169,51 @@ const HomeAbout = () => {
           {/* ================================================= */}
 
           <Grid size={{ xs: 12, md: 6 }}>
-            <SectionTitle
-              sx={{
-                color: BRAND.primary,
-                backgroundColor: BRAND.primarySoft,
-              }}
+            {/* ── En-tête au style de HomeFaq ── */}
+            <Stack
+              alignItems={{ xs: 'center', md: isRtl ? 'flex-end' : 'flex-start' }}
+              textAlign={{ xs: 'center', md: isRtl ? 'right' : 'left' }}
+              sx={{ mb: 3 }}
             >
-              {t('sectionTitle')}
-            </SectionTitle>
+              {/* Badge */}
+              <Typography
+                sx={{
+                  color: BRAND.primary,
+                  fontWeight: 800,
+                  letterSpacing: isRtl ? 1 : 2,
+                  fontSize: 13,
+                  textTransform: 'uppercase',
+                  mb: 1,
+                }}
+              >
+                {t('sectionTitle')}
+              </Typography>
 
-            {/* TITLE */}
+              {/* Ligne pleine 32x3 */}
+              <Box
+                sx={{
+                  width: 32,
+                  height: 3,
+                  borderRadius: 999,
+                  backgroundColor: BRAND.primary,
+                  mb: 2.5,
+                }}
+              />
 
-            <Typography
-              component="h2"
-              sx={{
-                fontFamily: "'Poppins', sans-serif",
-                fontSize: {
-                  xs: 26,
-                  sm: 32,
-                  md: 36,
-                  lg: 40,
-                },
-                fontWeight: 800,
-                lineHeight: 1.2,
-                mb: 2.5,
-                mt: 1.5,
-              }}
-            >
-              {t('heading')}
-            </Typography>
-
-            {/* LINE */}
-
-            <Box
-              sx={{
-                width: 90,
-                height: 5,
-                borderRadius: 3,
-                mb: 3,
-                background: `linear-gradient(
-                  90deg,
-                  ${BRAND.primary} 0%,
-                  ${BRAND.primaryLight} 100%
-                )`,
-              }}
-            />
+              {/* Titre Principal H2 */}
+              <Typography
+                component="h2"
+                sx={{
+                  fontSize: { xs: 26, sm: 32, md: 42 },
+                  fontWeight: 800,
+                  lineHeight: isRtl ? 1.4 : 1.2,
+                  color: palette.text.primary,
+                  mb: 1,
+                }}
+              >
+                {t('heading')}
+              </Typography>
+            </Stack>
 
             {/* ================================================= */}
             {/* PARAGRAPHE 1 */}
@@ -504,12 +500,12 @@ const HomeAbout = () => {
               }}
             >
               {/* BLOB */}
-
               <Box
                 sx={{
                   position: 'absolute',
                   top: -60,
-                  right: -60,
+                  right: isRtl ? 'auto' : -60,
+                  left: isRtl ? -60 : 'auto',
                   zIndex: 0,
                   pointerEvents: 'none',
                 }}
@@ -558,19 +554,22 @@ const HomeAbout = () => {
               </Box>
 
               {/* IMAGE 1 */}
-
               <Box
                 sx={{
                   position: 'absolute',
                   top: 0,
-                  right: 0,
+                  right: isRtl ? 'auto' : 0,
+                  left: isRtl ? 0 : 'auto',
                   width: 420,
                   height: 340,
                   borderRadius: 4,
                   overflow: 'hidden',
                   zIndex: 2,
                   boxShadow:
-                    '0 20px 40px rgba(0,0,0,0.15)',
+                    palette.mode === 'dark'
+                      ? 'none'
+                      : '0 20px 40px rgba(0,0,0,0.15)',
+                  border: palette.mode === 'dark' ? '1px solid rgba(255,255,255,0.08)' : 'none',
                 }}
               >
                 <Image
@@ -588,19 +587,22 @@ const HomeAbout = () => {
               </Box>
 
               {/* IMAGE 2 */}
-
               <Box
                 sx={{
                   position: 'absolute',
                   top: 250,
-                  left: -20,
+                  left: isRtl ? 'auto' : -20,
+                  right: isRtl ? -20 : 'auto',
                   width: 300,
                   height: 300,
                   borderRadius: 4,
                   overflow: 'hidden',
                   zIndex: 3,
                   boxShadow:
-                    '0 20px 40px rgba(0,0,0,0.15)',
+                    palette.mode === 'dark'
+                      ? 'none'
+                      : '0 20px 40px rgba(0,0,0,0.15)',
+                  border: palette.mode === 'dark' ? '1px solid rgba(255,255,255,0.08)' : 'none',
                 }}
               >
                 <Image
@@ -617,13 +619,13 @@ const HomeAbout = () => {
                 />
               </Box>
 
-              {/* BADGE */}
-
+              {/* BADGE N */}
               <Box
                 sx={{
                   position: 'absolute',
                   top: 220,
-                  left: -20,
+                  left: isRtl ? 'auto' : -20,
+                  right: isRtl ? -20 : 'auto',
                   zIndex: 4,
                   width: 64,
                   height: 64,
@@ -632,8 +634,7 @@ const HomeAbout = () => {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow:
-                    '0 12px 24px rgba(181,55,122,0.35)',
+                  boxShadow: '0 12px 24px rgba(181,55,122,0.35)',
                 }}
               >
                 <Typography
@@ -648,19 +649,19 @@ const HomeAbout = () => {
               </Box>
 
               {/* QUOTE */}
-
               <Box
                 sx={{
                   position: 'absolute',
                   bottom: -10,
-                  right: 0,
+                  right: isRtl ? 'auto' : 0,
+                  left: isRtl ? 0 : 'auto',
                   zIndex: 4,
                   width: 250,
                   p: 2.5,
                   borderRadius: 3,
-                  backgroundColor: 'background.paper',
-                  boxShadow:
-                    '0 16px 32px rgba(0,0,0,0.12)',
+                  backgroundColor: palette.mode === 'dark' ? 'rgba(255,255,255,0.06)' : 'background.paper',
+                  boxShadow: '0 16px 32px rgba(0,0,0,0.12)',
+                  border: palette.mode === 'dark' ? '1px solid rgba(255,255,255,0.08)' : 'none',
                   display: 'flex',
                   gap: 1.5,
                   alignItems: 'flex-start',
@@ -762,12 +763,12 @@ const HomeAbout = () => {
 
         <Box
           sx={{
-            mt: { xs: 3, md: 4 },
+            mt: { xs: 5, md: 7 },
             p: { xs: 3, md: 4 },
-            borderRadius: 4,
-            backgroundColor: 'background.default',
-            boxShadow:
-              '0 10px 40px rgba(0,0,0,0.06)',
+            borderRadius: 3,
+            backgroundColor: palette.mode === 'dark' ? 'rgba(255,255,255,0.04)' : '#FFFFFF',
+            boxShadow: palette.mode === 'dark' ? 'none' : '0 4px 18px rgba(87,13,63,0.06)',
+            border: palette.mode === 'dark' ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(181,55,122,0.1)',
           }}
         >
           <Grid

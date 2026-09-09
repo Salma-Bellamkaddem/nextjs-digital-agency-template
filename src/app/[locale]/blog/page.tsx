@@ -1,8 +1,9 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
 import RouterLink from 'next/link'
-import { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
+import { useLocale, useTranslations } from 'next-intl'
 
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -27,44 +28,96 @@ const BRAND = {
   primaryAlt: '#B73B7B',
   primaryLight: '#FAC8EB',
   primarySoft: '#FEDDF6',
-  heroGradient: 'linear-gradient(135deg, #570D3F 0%, #561244 50%, #B5377A 100%)',
+  accentGold: '#D4A574',
+  heroGradient: 'linear-gradient(135deg, #570D3F 0%, #561244 45%, #B5377A 85%, #8A2A5E 100%)',
 }
 
-interface PageProps {
-  params: Promise<{ locale: string }>
-}
-
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { locale } = await params
-  const t = await getTranslations({ locale, namespace: 'Blog' })
-  const siteUrl = 'https://www.nexsetia.com'
-
-  return {
-    title: `${t('title')} | Nexsetia`,
-    description: t('subtitle'),
-    alternates: {
-      canonical: `${siteUrl}/${locale}/blog`,
-      languages: {
-        fr: `${siteUrl}/fr/blog`,
-        ar: `${siteUrl}/ar/blog`,
-        en: `${siteUrl}/en/blog`,
-        'x-default': `${siteUrl}/fr/blog`,
-      },
-    },
-    openGraph: {
-      title: `${t('title')} | Nexsetia`,
-      description: t('subtitle'),
-      url: `${siteUrl}/${locale}/blog`,
-      type: 'website',
-    },
+// ── Boutons de partage interactifs ──
+function ShareButtons({ url, title }: { url: string; title: string }) {
+  const handleFacebook = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const targetUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`
+    window.open(targetUrl, '_blank', 'noopener,noreferrer,width=600,height=500')
   }
+
+  const handleLinkedIn = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const targetUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`
+    window.open(targetUrl, '_blank', 'noopener,noreferrer,width=600,height=600')
+  }
+
+  const handleShare = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (typeof navigator !== 'undefined' && navigator.share) {
+      try {
+        await navigator.share({ title, url })
+      } catch {
+        // Annulation utilisateur ignorée
+      }
+    } else {
+      await navigator.clipboard.writeText(url)
+      alert('Lien copié dans le presse-papier !')
+    }
+  }
+
+  return (
+    <Stack direction="row" spacing={0.5}>
+      <IconButton
+        size="small"
+        aria-label="Share on Facebook"
+        onClick={handleFacebook}
+        sx={{
+          bgcolor: '#F3F4F6',
+          color: BRAND.primaryDark,
+          '&:hover': { bgcolor: BRAND.primarySoft, color: BRAND.primary },
+        }}
+      >
+        <FacebookIcon sx={{ fontSize: 16 }} />
+      </IconButton>
+
+      <IconButton
+        size="small"
+        aria-label="Share on LinkedIn"
+        onClick={handleLinkedIn}
+        sx={{
+          bgcolor: '#F3F4F6',
+          color: BRAND.primaryDark,
+          '&:hover': { bgcolor: BRAND.primarySoft, color: BRAND.primary },
+        }}
+      >
+        <LinkedInIcon sx={{ fontSize: 16 }} />
+      </IconButton>
+
+      <IconButton
+        size="small"
+        aria-label="Share"
+        onClick={handleShare}
+        sx={{
+          bgcolor: '#F3F4F6',
+          color: BRAND.primaryDark,
+          '&:hover': { bgcolor: BRAND.primarySoft, color: BRAND.primary },
+        }}
+      >
+        <ShareOutlinedIcon sx={{ fontSize: 16 }} />
+      </IconButton>
+    </Stack>
+  )
 }
 
-export default async function BlogIndexPage({ params }: PageProps) {
-  const { locale } = await params
-  const tBlog = await getTranslations({ locale, namespace: 'Blog' })
-  const tGlobal = await getTranslations({ locale })
+export default function BlogIndexPage() {
+  const locale = useLocale()
+  const tBlog = useTranslations('Blog')
+  const tGlobal = useTranslations()
   const isRtl = locale === 'ar'
+
+  const badgeText = tBlog.has('badge') ? tBlog('badge') : 'Insights & Stratégie'
+  const titleText = tBlog.has('title') ? tBlog('title') : 'Le Blog Nexsetia'
+  const subtitleText = tBlog.has('subtitle')
+    ? tBlog('subtitle')
+    : 'Décryptages, méthodes et analyses digitales pour développer votre entreprise.'
 
   return (
     <Box
@@ -79,77 +132,178 @@ export default async function BlogIndexPage({ params }: PageProps) {
       {/* ── 1. HERO SECTION ── */}
       <Box
         sx={{
+          position: 'relative',
           background: BRAND.heroGradient,
           color: '#FFFFFF',
-          pt: { xs: 12, sm: 15, md: 18 },
-          pb: { xs: 8, sm: 12, md: 16 },
-          position: 'relative',
+          pt: { xs: 13, sm: 16, md: 19 },
+          pb: { xs: 10, sm: 13, md: 16 },
+          overflow: 'hidden',
           clipPath: {
             xs: 'none',
-            md: 'polygon(0 0, 100% 0, 100% 92%, 0 100%)',
+            md: 'polygon(0 0, 100% 0, 100% 93%, 0 100%)',
           },
         }}
       >
-        <Container maxWidth="lg">
+        {/* Texture grain premium */}
+        <Box
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            opacity: 0.35,
+            mixBlendMode: 'overlay',
+            pointerEvents: 'none',
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          }}
+        />
+
+        {/* Halo doré accent premium */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '-10%',
+            left: isRtl ? 'auto' : '35%',
+            right: isRtl ? '35%' : 'auto',
+            width: { xs: 260, md: 420 },
+            height: { xs: 260, md: 420 },
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${BRAND.accentGold}30 0%, transparent 70%)`,
+            filter: 'blur(90px)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        {/* Halos d'ambiance existants */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: '-15%',
+            left: isRtl ? 'auto' : '-5%',
+            right: isRtl ? '-5%' : 'auto',
+            width: { xs: 280, md: 480 },
+            height: { xs: 280, md: 480 },
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${BRAND.primary}55 0%, transparent 70%)`,
+            filter: 'blur(80px)',
+            pointerEvents: 'none',
+          }}
+        />
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: '5%',
+            right: isRtl ? 'auto' : '10%',
+            left: isRtl ? '10%' : 'auto',
+            width: { xs: 240, md: 380 },
+            height: { xs: 240, md: 380 },
+            borderRadius: '50%',
+            background: `radial-gradient(circle, ${BRAND.primaryLight}25 0%, transparent 70%)`,
+            filter: 'blur(70px)',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2 }}>
           <Box
             sx={{
               display: 'flex',
               flexDirection: { xs: 'column', md: isRtl ? 'row-reverse' : 'row' },
               alignItems: 'center',
               justifyContent: 'space-between',
-              gap: { xs: 4, sm: 5, md: 6 },
+              gap: { xs: 4, sm: 5, md: 7 },
             }}
           >
-            {/* Texte gauche */}
+            {/* Colonne gauche */}
             <Box
               sx={{
-                flex: { md: '1 1 58%' },
+                flex: { md: '1 1 55%' },
                 textAlign: isRtl ? 'right' : 'left',
               }}
             >
-              <Typography
+              {/* Badge */}
+              <Box
                 sx={{
-                  color: BRAND.primaryLight,
-                  fontWeight: 800,
-                  fontSize: { xs: 11, sm: 12 },
-                  letterSpacing: { xs: 1, sm: 1.5 },
-                  textTransform: 'uppercase',
-                  mb: 1.5,
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 1,
+                  px: 2,
+                  py: 0.65,
+                  borderRadius: '2rem',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  backdropFilter: 'blur(10px)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  mb: 3,
                 }}
               >
-                {tBlog('badge')}
-              </Typography>
+                <Box
+                  sx={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: '50%',
+                    bgcolor: BRAND.primaryLight,
+                    boxShadow: `0 0 10px ${BRAND.primaryLight}`,
+                  }}
+                />
+                <Typography
+                  sx={{
+                    fontFamily: 'var(--font-plus-jakarta-sans), sans-serif',
+                    color: BRAND.primaryLight,
+                    fontWeight: 800,
+                    fontSize: { xs: '0.72rem', sm: '0.78rem' },
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  {badgeText}
+                </Typography>
+              </Box>
+{/* Titre Principal H1 - Police Poppins comme dans HomeAbout */}
+<Typography
+  component="h1"
+  sx={{
+    fontFamily: "'Poppins', 'Plus Jakarta Sans', sans-serif",
+    fontSize: {
+      xs: '2rem',       // Mobile
+      sm: '2.6rem',     // Tablette
+      md: '3.2rem',     // Desktop
+      lg: '3.6rem',     // Grand écran
+    },
+    fontWeight: 800,
+    lineHeight: {
+      xs: 1.2,
+      sm: 1.18,
+      md: 1.15,
+    },
+    letterSpacing: '-0.02em',
+    color: '#FFFFFF',
+    mb: { xs: 2.5, md: 3 },
+    wordBreak: 'break-word',
+    textWrap: 'balance',
+  }}
+>
+{titleText}
+</Typography>
+              {/* Titre H1 - Serif premium, plus d'impact */}
+          
 
-              <Typography
-                component="h1"
-                sx={{
-                  fontSize: { xs: '1.65rem', sm: '2.2rem', md: '2.8rem' },
-                  fontWeight: 900,
-                  lineHeight: { xs: 1.35, sm: 1.25, md: 1.2 },
-                  color: '#FFFFFF',
-                  mb: 2.5,
-                  wordBreak: 'break-word',
-                }}
-              >
-                {tBlog('title')}
-              </Typography>
-
+              {/* Sous-titre */}
               <Typography
                 sx={{
-                  fontSize: { xs: '0.95rem', sm: '1.05rem', md: '1.1rem' },
-                  color: 'rgba(255, 255, 255, 0.88)',
+                  fontFamily: 'var(--font-plus-jakarta-sans), sans-serif',
+                  fontSize: { xs: '0.98rem', sm: '1.05rem', md: '1.12rem' },
+                  color: 'rgba(255, 255, 255, 0.85)',
+                  fontWeight: 400,
                   lineHeight: 1.75,
-                  maxWidth: 620,
+                  maxWidth: 560,
                 }}
               >
-                {tBlog('subtitle')}
+                {subtitleText}
               </Typography>
             </Box>
 
-            {/* Illustration Mockup Laptop */}
+            {/* Colonne droite : Mockup */}
             <Box
               sx={{
-                flex: { md: '1 1 42%' },
+                flex: { md: '1 1 45%' },
                 width: '100%',
                 display: 'flex',
                 justifyContent: 'center',
@@ -160,43 +314,49 @@ export default async function BlogIndexPage({ params }: PageProps) {
                 sx={{
                   position: 'relative',
                   width: '100%',
-                  maxWidth: { xs: 340, sm: 420, md: 460 },
-                  height: { xs: 200, sm: 250, md: 270 },
-                  borderRadius: '12px 12px 0 0',
-                  bgcolor: '#1E293B',
-                  p: '10px 10px 0 10px',
-                  boxShadow: `0 24px 50px ${BRAND.primaryDark}80`,
-                  border: '2px solid rgba(255,255,255,0.15)',
-                  '&::after': {
-                    content: '""',
-                    position: 'absolute',
-                    bottom: -10,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '112%',
-                    height: 10,
-                    bgcolor: '#94A3B8',
-                    borderRadius: '0 0 8px 8px',
-                    boxShadow: '0 8px 20px rgba(0,0,0,0.3)',
+                  maxWidth: { xs: 350, sm: 440, md: 490 },
+                  borderRadius: 4,
+                  background: 'rgba(255, 255, 255, 0.08)',
+                  backdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(255, 255, 255, 0.22)',
+                  p: '10px',
+                  boxShadow: `0 25px 60px -15px ${BRAND.primaryDark}`,
+                  transition: 'transform 0.3s ease',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
                   },
                 }}
               >
                 <Box
                   sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 0.8,
+                    px: 1.2,
+                    pb: 1,
+                  }}
+                >
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.3)' }} />
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.2)' }} />
+                  <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.2)' }} />
+                </Box>
+
+                <Box
+                  sx={{
                     position: 'relative',
                     width: '100%',
-                    height: '100%',
+                    height: { xs: 210, sm: 260, md: 290 },
                     overflow: 'hidden',
-                    borderRadius: '6px 6px 0 0',
-                    bgcolor: '#FFFFFF',
+                    borderRadius: 3,
+                    bgcolor: '#0F172A',
                   }}
                 >
                   <Image
                     src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80"
-                    alt={tBlog('title')}
+                    alt={titleText}
                     fill
                     priority
-                    sizes="(max-width: 600px) 100vw, 460px"
+                    sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 490px"
                     style={{ objectFit: 'cover' }}
                   />
                 </Box>
@@ -207,13 +367,22 @@ export default async function BlogIndexPage({ params }: PageProps) {
       </Box>
 
       {/* ── 2. GRILLE D'ARTICLES ── */}
-      <Container maxWidth="lg" sx={{ mt: { xs: 5, sm: 7, md: 8 }, px: { xs: 2, sm: 3 } }}>
+      <Container maxWidth="lg" sx={{ mt: { xs: 5, sm: 7, md: 8 }, px: { xs: 2.5, sm: 3 } }}>
         <Grid container spacing={{ xs: 3, sm: 4 }}>
           {blogPosts.map((post) => {
-            const postTitle = tGlobal(post.titleKey)
-            const postExcerpt = post.sections?.[0]?.paragraphsKeys?.[0]
-              ? tGlobal(post.sections[0].paragraphsKeys[0])
-              : postTitle
+            const postTitle = tGlobal.has(post.titleKey) ? tGlobal(post.titleKey) : post.titleKey
+            const readingTimeLabel = tBlog.has('readingTime') ? tBlog('readingTime') : (isRtl ? 'مدة القراءة' : 'Temps de lecture')
+
+            let postExcerpt = postTitle
+            if (post.sections?.[0]?.paragraphsKeys?.[0]) {
+              const firstKey = post.sections[0].paragraphsKeys[0]
+              if (tGlobal.has(firstKey)) {
+                postExcerpt = tGlobal(firstKey).replace(/<[^>]*>/g, '')
+              }
+            }
+
+            const targetHref = `/${locale}/blog/${post.slug}`
+            const fullArticleUrl = `https://www.nexsetia.com/${locale}/blog/${post.slug}`
 
             return (
               <Grid size={{ xs: 12, sm: 6, md: 4 }} key={post.id}>
@@ -235,10 +404,9 @@ export default async function BlogIndexPage({ params }: PageProps) {
                     },
                   }}
                 >
-                  {/* Image */}
                   <Box
                     component={RouterLink}
-                    href={`/${locale}/blog/${post.slug}`}
+                    href={targetHref}
                     sx={{
                       position: 'relative',
                       width: '100%',
@@ -256,7 +424,6 @@ export default async function BlogIndexPage({ params }: PageProps) {
                     />
                   </Box>
 
-                  {/* Contenu */}
                   <CardContent
                     sx={{
                       p: { xs: 2.5, sm: 3 },
@@ -270,11 +437,13 @@ export default async function BlogIndexPage({ params }: PageProps) {
                     <Box>
                       <Typography
                         component={RouterLink}
-                        href={`/${locale}/blog/${post.slug}`}
+                        href={targetHref}
                         sx={{
+                          fontFamily: 'var(--font-plus-jakarta-sans), sans-serif',
                           fontSize: { xs: '1.05rem', sm: '1.15rem' },
-                          fontWeight: 900,
+                          fontWeight: 800,
                           lineHeight: 1.35,
+                          letterSpacing: '-0.02em',
                           color: BRAND.primaryDark,
                           textDecoration: 'none',
                           mb: 1.5,
@@ -292,17 +461,19 @@ export default async function BlogIndexPage({ params }: PageProps) {
 
                       <Typography
                         sx={{
+                          fontFamily: 'var(--font-plus-jakarta-sans), sans-serif',
                           fontSize: '0.8rem',
                           fontWeight: 700,
                           color: BRAND.primary,
                           mb: 1,
                         }}
                       >
-                        {tBlog('readingTime') || 'Reading Time'}: {post.readingTime}
+                        {readingTimeLabel}: {post.readingTime}
                       </Typography>
 
                       <Typography
                         sx={{
+                          fontFamily: 'var(--font-plus-jakarta-sans), sans-serif',
                           fontSize: '0.875rem',
                           color: '#4B5563',
                           lineHeight: 1.65,
@@ -317,7 +488,6 @@ export default async function BlogIndexPage({ params }: PageProps) {
                       </Typography>
                     </Box>
 
-                    {/* Actions bas de carte */}
                     <Stack
                       direction="row"
                       alignItems="center"
@@ -328,7 +498,7 @@ export default async function BlogIndexPage({ params }: PageProps) {
                     >
                       <Button
                         component={RouterLink}
-                        href={`/${locale}/blog/${post.slug}`}
+                        href={targetHref}
                         endIcon={
                           <ArrowForwardIcon
                             sx={{
@@ -338,6 +508,7 @@ export default async function BlogIndexPage({ params }: PageProps) {
                           />
                         }
                         sx={{
+                          fontFamily: 'var(--font-plus-jakarta-sans), sans-serif',
                           backgroundColor: BRAND.primary,
                           color: '#FFFFFF',
                           fontWeight: 800,
@@ -358,43 +529,7 @@ export default async function BlogIndexPage({ params }: PageProps) {
                         {isRtl ? 'اقرأ المزيد' : 'En savoir plus'}
                       </Button>
 
-                      <Stack direction="row" spacing={0.5}>
-                        <IconButton
-                          size="small"
-                          aria-label="Share on Facebook"
-                          sx={{
-                            bgcolor: '#F3F4F6',
-                            color: BRAND.primaryDark,
-                            '&:hover': { bgcolor: BRAND.primarySoft, color: BRAND.primary },
-                          }}
-                        >
-                          <FacebookIcon sx={{ fontSize: 16 }} />
-                        </IconButton>
-
-                        <IconButton
-                          size="small"
-                          aria-label="Share on LinkedIn"
-                          sx={{
-                            bgcolor: '#F3F4F6',
-                            color: BRAND.primaryDark,
-                            '&:hover': { bgcolor: BRAND.primarySoft, color: BRAND.primary },
-                          }}
-                        >
-                          <LinkedInIcon sx={{ fontSize: 16 }} />
-                        </IconButton>
-
-                        <IconButton
-                          size="small"
-                          aria-label="Share"
-                          sx={{
-                            bgcolor: '#F3F4F6',
-                            color: BRAND.primaryDark,
-                            '&:hover': { bgcolor: BRAND.primarySoft, color: BRAND.primary },
-                          }}
-                        >
-                          <ShareOutlinedIcon sx={{ fontSize: 16 }} />
-                        </IconButton>
-                      </Stack>
+                      <ShareButtons url={fullArticleUrl} title={postTitle} />
                     </Stack>
                   </CardContent>
                 </Card>

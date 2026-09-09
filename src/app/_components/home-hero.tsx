@@ -1,7 +1,6 @@
 import Box from '@mui/material/Box'
 
 import HomeHeroContent from './home-hero/home-hero-content'
-import HomeHeroDecoration from './home-hero/home-hero-decoration'
 
 const HomeHero = () => {
   return (
@@ -16,7 +15,6 @@ const HomeHero = () => {
       }}
     >
       <HomeHeroContent />
-      <HomeHeroDecoration />
     </Box>
   )
 }

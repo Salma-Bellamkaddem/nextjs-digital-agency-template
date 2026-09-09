@@ -81,7 +81,7 @@ const Footer: FC = () => {
 
   const [contactOpen, setContactOpen] = useState(false)
   const currentYear = new Date().getFullYear()
-  const displayedServices = services.slice(0, 6)
+  const displayedServices = Array.isArray(services) ? services.slice(0, 6) : []
 
   return (
     <Box
@@ -142,7 +142,8 @@ const Footer: FC = () => {
                 color: BRAND.primaryLight,
               }}
             >
-              {t('tagline.line1')} <br /> {t('tagline.line2')}
+              {t.has('tagline.line1') ? t('tagline.line1') : ''} <br />
+              {t.has('tagline.line2') ? t('tagline.line2') : ''}
             </Typography>
 
             <Typography
@@ -155,7 +156,7 @@ const Footer: FC = () => {
                 mx: { xs: 'auto', md: 0 },
               }}
             >
-              {t('description')}
+              {t.has('description') ? t('description') : ''}
             </Typography>
 
             <Box>
@@ -179,12 +180,12 @@ const Footer: FC = () => {
                   },
                 }}
               >
-                {t('cta')}
+                {t.has('cta') ? t('cta') : 'Contactez-nous'}
               </Button>
             </Box>
           </Grid>
 
-          {/* Colonne 2 : Services */}
+          {/* Colonne 2 : Services (Sécurisé avec vérification de clé) */}
           <Grid item xs={6} sm={4} md={2.5}>
             <Typography
               sx={{
@@ -196,14 +197,15 @@ const Footer: FC = () => {
                 mb: 2,
               }}
             >
-              {t('columns.services')}
+              {t.has('columns.services') ? t('columns.services') : 'Services'}
             </Typography>
 
             <Stack spacing={1.2}>
               {displayedServices.map((item) => {
-                const serviceTitle = item.titleKey
-                  ? tGlobal(item.titleKey)
-                  : (item as any).title || ''
+                const serviceTitle =
+                  item.titleKey && tGlobal.has(item.titleKey)
+                    ? tGlobal(item.titleKey)
+                    : (item as any).title || ''
 
                 return (
                   <RouterLink
@@ -246,35 +248,40 @@ const Footer: FC = () => {
                 mb: 2,
               }}
             >
-              {t('columns.company')}
+              {t.has('columns.company') ? t('columns.company') : 'Entreprise'}
             </Typography>
 
             <Stack spacing={1.2}>
-              {companyMenus.map((item, idx) => (
-                <RouterLink
-                  key={idx}
-                  href={`/${locale}${item.path.replace(/^\/(fr|ar|en)/, '')}`}
-                  style={{
-                    fontSize: '13.5px',
-                    color: 'rgba(255, 255, 255, 0.72)',
-                    textDecoration: 'none',
-                    transition: 'color 0.2s ease',
-                    display: 'block',
-                  }}
-                >
-                  <Box
-                    component="span"
-                    sx={{
-                      '&:hover': {
-                        color: BRAND.primaryLight,
-                        textDecoration: 'underline',
-                      },
+              {companyMenus.map((item, idx) => {
+                const navKey = item.labelKey.replace('Navigation.', '')
+                const navLabel = tNav.has(navKey) ? tNav(navKey) : navKey
+
+                return (
+                  <RouterLink
+                    key={idx}
+                    href={`/${locale}${item.path.replace(/^\/(fr|ar|en)/, '')}`}
+                    style={{
+                      fontSize: '13.5px',
+                      color: 'rgba(255, 255, 255, 0.72)',
+                      textDecoration: 'none',
+                      transition: 'color 0.2s ease',
+                      display: 'block',
                     }}
                   >
-                    {tNav(item.labelKey.replace('Navigation.', ''))}
-                  </Box>
-                </RouterLink>
-              ))}
+                    <Box
+                      component="span"
+                      sx={{
+                        '&:hover': {
+                          color: BRAND.primaryLight,
+                          textDecoration: 'underline',
+                        },
+                      }}
+                    >
+                      {navLabel}
+                    </Box>
+                  </RouterLink>
+                )
+              })}
             </Stack>
           </Grid>
 
@@ -290,7 +297,7 @@ const Footer: FC = () => {
                 mb: 2,
               }}
             >
-              {t('columns.contact')}
+              {t.has('columns.contact') ? t('columns.contact') : 'Contact'}
             </Typography>
 
             <Stack spacing={1.5}>
@@ -315,7 +322,7 @@ const Footer: FC = () => {
                 <PhoneOutlinedIcon sx={{ fontSize: 18, color: BRAND.primaryLight, flexShrink: 0 }} />
                 <Box
                   component="a"
-                  href="tel:+212600000000"
+                  href="tel:+212655760065"
                   sx={{
                     fontSize: 13.5,
                     color: 'rgba(255, 255, 255, 0.75)',
@@ -324,7 +331,7 @@ const Footer: FC = () => {
                     '&:hover': { color: BRAND.primaryLight },
                   }}
                 >
-                  +212 6 00 00 00 00
+                  +212 6 55 76 00 65
                 </Box>
               </Stack>
 
@@ -334,10 +341,10 @@ const Footer: FC = () => {
                 />
                 <Box>
                   <Typography sx={{ fontSize: 13.5, color: 'rgba(255, 255, 255, 0.75)' }}>
-                    {t('contact.location')}
+                    {t.has('contact.location') ? t('contact.location') : 'Partout au Maroc'}
                   </Typography>
                   <Typography sx={{ fontSize: 12, color: 'rgba(255, 255, 255, 0.5)' }}>
-                    {t('contact.subLocation')}
+                    {t.has('contact.subLocation') ? t('contact.subLocation') : 'À distance'}
                   </Typography>
                 </Box>
               </Stack>
@@ -357,27 +364,31 @@ const Footer: FC = () => {
             justifyContent: isRtl ? 'flex-start' : 'flex-start',
           }}
         >
-          {TARGET_CITIES.map((city) => (
-            <RouterLink
-              key={city.slug}
-              href={`/${locale}/agence-marketing-digital-${city.slug}`}
-              style={{
-                fontSize: '12px',
-                color: 'rgba(255, 255, 255, 0.65)',
-                textDecoration: 'none',
-              }}
-            >
-              <Box
-                component="span"
-                sx={{
-                  transition: 'color 0.2s ease',
-                  '&:hover': { color: BRAND.primaryLight, textDecoration: 'underline' },
+          {TARGET_CITIES.map((city) => {
+            const cityName = tGlobal.has(city.nameKey) ? tGlobal(city.nameKey) : city.slug
+
+            return (
+              <RouterLink
+                key={city.slug}
+                href={`/${locale}/agence-marketing-digital-${city.slug}`}
+                style={{
+                  fontSize: '12px',
+                  color: 'rgba(255, 255, 255, 0.65)',
+                  textDecoration: 'none',
                 }}
               >
-                Nexsetia {tGlobal(city.nameKey)}
-              </Box>
-            </RouterLink>
-          ))}
+                <Box
+                  component="span"
+                  sx={{
+                    transition: 'color 0.2s ease',
+                    '&:hover': { color: BRAND.primaryLight, textDecoration: 'underline' },
+                  }}
+                >
+                  Nexsetia {cityName}
+                </Box>
+              </RouterLink>
+            )
+          })}
         </Stack>
 
         {/* Ligne de séparation */}
@@ -403,7 +414,7 @@ const Footer: FC = () => {
             alignItems="center"
           >
             <Typography sx={{ fontSize: 12.5, color: 'rgba(255, 255, 255, 0.5)' }}>
-              © {currentYear} Nexsetia. {t('rights')}
+              © {currentYear} Nexsetia. {t.has('rights') ? t('rights') : 'Tous droits réservés.'}
             </Typography>
 
             <Box
@@ -416,7 +427,7 @@ const Footer: FC = () => {
                 '&:hover': { color: BRAND.primaryLight },
               }}
             >
-              {t('legal.mentions')}
+              {t.has('legal.mentions') ? t('legal.mentions') : 'Mentions légales'}
             </Box>
 
             <Box
@@ -429,7 +440,7 @@ const Footer: FC = () => {
                 '&:hover': { color: BRAND.primaryLight },
               }}
             >
-              {t('legal.privacy')}
+              {t.has('legal.privacy') ? t('legal.privacy') : 'Politique de confidentialité'}
             </Box>
           </Stack>
 

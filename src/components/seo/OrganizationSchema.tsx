@@ -1,23 +1,60 @@
-export default function OrganizationSchema() {
+interface OrganizationSchemaProps {
+  locale?: string
+}
+
+export default function OrganizationSchema({ locale = 'fr' }: OrganizationSchemaProps) {
+  const siteUrl = 'https://www.nexsetia.com'
+  const phoneNumber = '+212655760065'
+
+  // Descriptions localisées (FR / AR / EN) avec "Nexsetia" en alphabet latin
+  const descriptions: Record<string, string> = {
+    fr: 'Nexsetia est une agence marketing digital 360° au Maroc spécialisée en SEO, SEA, branding, développement web et acquisition digitale.',
+    ar: 'Nexsetia هي وكالة تسويق رقمي 360° في المغرب متخصصة في تحسين محركات البحث، الإعلانات الممولة، الهوية البصرية، وتطوير الويب.',
+    en: 'Nexsetia is a 360° digital marketing agency in Morocco specializing in SEO, SEA, branding, web development, and digital acquisition.',
+  }
+
+  const currentDescription = descriptions[locale] || descriptions.fr
+
   const schema = {
     '@context': 'https://schema.org',
     '@type': ['ProfessionalService', 'Organization'],
+    '@id': `${siteUrl}/#organization`,
     name: 'Nexsetia',
     legalName: 'Nexsetia',
-    url: 'https://www.nexsetia.com',
-    logo: 'https://www.nexsetia.com/logo.webp',
-    image: 'https://www.nexsetia.com/logo.webp',
-    description:
-      'Nexsetia est une agence marketing digital 360° au Maroc spécialisée en SEO, SEA, branding, développement web et acquisition digitale.',
+    url: `${siteUrl}/${locale}`,
+    telephone: phoneNumber,
     email: 'nexsetia@gmail.com',
+    priceRange: '$$',
+    logo: {
+      '@type': 'ImageObject',
+      url: `${siteUrl}/logo.webp`,
+      caption: 'Nexsetia Digital Agency',
+    },
+    image: `${siteUrl}/logo.webp`,
+    description: currentDescription,
+    knowsLanguage: ['fr', 'ar', 'en'],
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Casablanca',
       addressCountry: 'MA',
     },
-    areaServed: {
-      '@type': 'Country',
-      name: 'Morocco',
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: '33.5731',
+      longitude: '-7.5898',
+    },
+    areaServed: [
+      {
+        '@type': 'Country',
+        name: 'Morocco',
+      },
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer service',
+      telephone: phoneNumber,
+      email: 'nexsetia@gmail.com',
+      availableLanguage: ['French', 'Arabic', 'English'],
     },
     sameAs: [
       'https://www.linkedin.com/company/nexsetia',
@@ -27,15 +64,14 @@ export default function OrganizationSchema() {
     ],
     knowsAbout: [
       'Marketing Digital',
-      'SEO',
-      'GEO',
-      'SEA',
-      'Google Ads',
-      'Facebook Ads',
-      'Branding',
+      'SEO (Search Engine Optimization)',
+      'GEO (Generative Engine Optimization)',
+      'SEA (Google Ads)',
+      'Social Media Ads (Facebook & Instagram Ads)',
+      'Branding & Identité visuelle',
       'Développement Web',
       'Développement Mobile',
-      'UI UX Design',
+      'UI/UX Design',
       'Création de contenu',
       'Automatisation IA',
     ],

@@ -32,69 +32,69 @@ export interface IBlogPost {
 export const blogPosts: IBlogPost[] = [
   {
     id: '1',
-    slug: 'strategies-cles-acquisition-digitale-maroc',
-    titleKey: 'Blog.posts.acquisitionStrategies.title',
+    slug: 'quand-vaseline-devient-baseline-buzz-marketing',
+    titleKey: 'Blog.posts.baselineBuzz.title',
     tagsKeys: [
-      'Blog.tags.acquisition',
-      'Blog.tags.seo',
-      'Blog.tags.ads',
       'Blog.tags.socialMedia',
       'Blog.tags.inbound',
     ],
-    publishedAt: '14 juillet 2026',
-    updatedAt: '23 juillet 2026',
-    readingTime: '12 minutes',
-    heroImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80',
+    publishedAt: '8 septembre 2026',
+    updatedAt: '8 septembre 2026',
+    readingTime: '4 minutes',
+    heroImage: '/blog/baseline/Baseline.jpeg',
     sections: [
       {
         paragraphsKeys: [
-          'Blog.posts.acquisitionStrategies.intro1',
-          'Blog.posts.acquisitionStrategies.intro2',
-          'Blog.posts.acquisitionStrategies.intro3',
+          'Blog.posts.baselineBuzz.p1',
         ],
-        showMidArticleCta: true,
-      },
-      {
-        headingKey: 'Blog.posts.acquisitionStrategies.section1Title',
-        paragraphsKeys: [
-          'Blog.posts.acquisitionStrategies.section1P1',
-          'Blog.posts.acquisitionStrategies.section1P2',
-          'Blog.posts.acquisitionStrategies.section1P3',
-        ],
-      },
-      {
-        headingKey: 'Blog.posts.acquisitionStrategies.section2Title',
-        paragraphsKeys: [
-          'Blog.posts.acquisitionStrategies.section2P1',
-          'Blog.posts.acquisitionStrategies.section2P2',
-        ],
-        exampleKey: 'Blog.posts.acquisitionStrategies.section2Example',
         image: {
-          src: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
-          altKey: 'Blog.posts.acquisitionStrategies.schemaAlt',
-          captionKey: 'Blog.posts.acquisitionStrategies.schemaCaption',
+          src: '/blog/baseline/Baseline1.jpeg',
+          altKey: 'Blog.posts.baselineBuzz.img1Alt',
+          captionKey: 'Blog.posts.baselineBuzz.img1Caption',
         },
       },
       {
         paragraphsKeys: [
-          'Blog.posts.acquisitionStrategies.section3P1',
+          'Blog.posts.baselineBuzz.p2',
         ],
-        exampleKey: 'Blog.posts.acquisitionStrategies.section3Example',
+        image: {
+          src: '/blog/baseline/baseline3-1.jpg',
+          altKey: 'Blog.posts.baselineBuzz.img2Alt',
+          captionKey: 'Blog.posts.baselineBuzz.img2Caption',
+        },
         showMidArticleCta: true,
+      },
+      {
+        paragraphsKeys: [
+          'Blog.posts.baselineBuzz.p3',
+        ],
+      },
+      {
+        paragraphsKeys: [
+          'Blog.posts.baselineBuzz.p4',
+        ],
+        image: {
+          src: '/blog/baseline/statement.jpeg',
+          altKey: 'Blog.posts.baselineBuzz.img4Alt',
+          captionKey: 'Blog.posts.baselineBuzz.img4Caption',
+        },
+      },
+      {
+        paragraphsKeys: [
+          'Blog.posts.baselineBuzz.p5',
+          'Blog.posts.baselineBuzz.p6',
+          'Blog.posts.baselineBuzz.p7',
+        ],
       },
     ],
     faq: [
       {
-        questionKey: 'Blog.posts.acquisitionStrategies.faq1Q',
-        answerKey: 'Blog.posts.acquisitionStrategies.faq1A',
+        questionKey: 'Blog.posts.baselineBuzz.faq1Q',
+        answerKey: 'Blog.posts.baselineBuzz.faq1A',
       },
       {
-        questionKey: 'Blog.posts.acquisitionStrategies.faq2Q',
-        answerKey: 'Blog.posts.acquisitionStrategies.faq2A',
-      },
-      {
-        questionKey: 'Blog.posts.acquisitionStrategies.faq3Q',
-        answerKey: 'Blog.posts.acquisitionStrategies.faq3A',
+        questionKey: 'Blog.posts.baselineBuzz.faq2Q',
+        answerKey: 'Blog.posts.baselineBuzz.faq2A',
       },
     ],
   },

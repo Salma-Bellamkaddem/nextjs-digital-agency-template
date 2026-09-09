@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton'
 import Tooltip from '@mui/material/Tooltip'
 import { useLocale } from 'next-intl'
 
-const WHATSAPP_NUMBER = '212600000000' // Votre numéro sans le '+'
+const WHATSAPP_NUMBER = '212655760065' // Votre numéro sans le '+'
 const DEFAULT_MESSAGE = 'Bonjour, je souhaite obtenir un devis.'
 
 export default function FloatingWhatsApp() {

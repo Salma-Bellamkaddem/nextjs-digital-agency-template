@@ -4,6 +4,7 @@ import React, { FC } from 'react'
 import Image from 'next/image'
 import RouterLink from 'next/link'
 import { useTranslations, useLocale } from 'next-intl'
+import { useTheme } from '@mui/material/styles'
 
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
@@ -26,12 +27,30 @@ const BRAND = {
 }
 
 const HomeBlogSection: FC = () => {
-  const t = useTranslations('HomeBlog')
+  const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
   const tGlobal = useTranslations()
   const locale = useLocale()
   const isRtl = locale === 'ar'
 
-  // Afficher les 3 derniers articles
+  const badgeText = tGlobal.has('HomeBlog.badge')
+    ? tGlobal('HomeBlog.badge')
+    : isRtl
+    ? 'المقالات والأفكار'
+    : 'BLOG & ACTUALITÉS'
+
+  const viewAllText = tGlobal.has('HomeBlog.viewAll')
+    ? tGlobal('HomeBlog.viewAll')
+    : isRtl
+    ? 'عرض كل المقالات'
+    : 'Voir tous les articles'
+
+  const readArticleText = tGlobal.has('HomeBlog.readArticle')
+    ? tGlobal('HomeBlog.readArticle')
+    : isRtl
+    ? 'اقرأ المقال'
+    : "Lire l'article"
+
   const latestPosts = blogPosts.slice(0, 3)
 
   return (
@@ -40,84 +59,88 @@ const HomeBlogSection: FC = () => {
       id="home-blog"
       sx={{
         py: { xs: 8, md: 12 },
-        bgcolor: '#FFFFFF',
+        px: { xs: 2.5, md: 6, lg: 10 },
+        backgroundColor: isDark ? theme.palette.background.default : '#FDFAFC',
         direction: isRtl ? 'rtl' : 'ltr',
       }}
     >
-      <Container maxWidth="lg">
-        {/* ── En-tête de section ── */}
-        <Stack
-          direction={{ xs: 'column', sm: 'row' }}
-          alignItems={{ xs: 'flex-start', sm: 'flex-end' }}
-          justifyContent="space-between"
-          spacing={2}
-          sx={{ mb: { xs: 5, md: 7 }, textAlign: isRtl ? 'right' : 'left' }}
-        >
-          <Box sx={{ maxWidth: 600 }}>
-            <Typography
-              sx={{
-                color: BRAND.primary,
-                fontWeight: 800,
-                fontSize: 12,
-                letterSpacing: 1.5,
-                textTransform: 'uppercase',
-                mb: 1.5,
-              }}
-            >
-              {t('badge')}
-            </Typography>
-
-            <Typography
-              component="h2"
-              sx={{
-                fontSize: { xs: 26, sm: 34, md: 40 },
-                fontWeight: 900,
-                color: BRAND.primaryDark,
-                lineHeight: isRtl ? 1.35 : 1.2,
-              }}
-            >
-              {t('title')}
-            </Typography>
-          </Box>
-
-          <Button
-            component={RouterLink}
-            href={`/${locale}/blog`}
-            endIcon={
-              <ArrowForwardIcon
-                sx={{
-                  transform: isRtl ? 'rotate(180deg)' : 'none',
-                  transition: 'transform 0.2s ease',
-                }}
-              />
-            }
+      <Container maxWidth="lg" disableGutters>
+        {/* ── En-tête (Exactement la même structure et les mêmes styles que HomeFaq) ── */}
+        <Stack alignItems="center" textAlign="center" sx={{ mb: { xs: 6, md: 8 } }}>
+          {/* Badge */}
+          <Typography
             sx={{
               color: BRAND.primary,
               fontWeight: 800,
-              fontSize: '0.9rem',
-              textTransform: 'none',
-              px: 0,
-              '&:hover': {
-                bgcolor: 'transparent',
-                color: BRAND.primaryDark,
-                '& .MuiButton-endIcon': {
-                  transform: isRtl ? 'translateX(-4px) rotate(180deg)' : 'translateX(4px)',
-                },
-              },
+              letterSpacing: isRtl ? 1 : 2,
+              fontSize: 13,
+              textTransform: 'uppercase',
+              mb: 1,
             }}
           >
-            {t('viewAll')}
-          </Button>
+            {badgeText}
+          </Typography>
+
+          {/* Ligne d'accent */}
+          <Box
+            sx={{
+              width: 32,
+              height: 3,
+              borderRadius: 999,
+              backgroundColor: BRAND.primary,
+              mb: 3,
+            }}
+          />
+
+          {/* Titre Principal H2 */}
+          <Typography
+            component="h2"
+            sx={{
+              fontSize: { xs: 26, sm: 32, md: 42 },
+              fontWeight: 800,
+              lineHeight: isRtl ? 1.4 : 1.2,
+              color: theme.palette.text.primary,
+              mb: 2,
+            }}
+          >
+            {isRtl ? 'آخر مقالاتنا و' : 'Conseils d’experts &'}{' '}
+            <Box component="span" sx={{ color: BRAND.primary }}>
+              {isRtl ? 'توجيهاتنا الرقمية' : 'décryptages digitaux'}
+            </Box>
+          </Typography>
+
+          {/* Description */}
+          <Typography
+            sx={{
+              color: theme.palette.text.secondary,
+              fontSize: { xs: 15, md: 17 },
+              maxWidth: 580,
+              lineHeight: isRtl ? 1.8 : 1.6,
+            }}
+          >
+            {isRtl
+              ? 'استكشف أحدث الاتجاهات والاستراتيجيات الرقمية لتسريع نمو علامتك التجارية.'
+              : 'Explorez nos méthodes concrètes, retours d’expérience et analyses pour faire grandir votre marque.'}
+          </Typography>
         </Stack>
 
-        {/* ── Grille des articles résumés ── */}
-        <Grid container spacing={{ xs: 3, md: 4 }}>
+        {/* ── Grille des articles ── */}
+        <Grid container spacing={{ xs: 3, md: 4 }} alignItems="stretch">
           {latestPosts.map((post) => {
-            const title = tGlobal(post.titleKey)
-            const excerpt = post.sections?.[0]?.paragraphsKeys?.[0]
-              ? tGlobal(post.sections[0].paragraphsKeys[0])
-              : title
-            const tag = post.tagsKeys?.[0] ? tGlobal(post.tagsKeys[0]) : ''
+            const title = tGlobal.has(post.titleKey) ? tGlobal(post.titleKey) : post.titleKey
+            const tag = post.tagsKeys?.[0]
+              ? tGlobal.has(post.tagsKeys[0])
+                ? tGlobal(post.tagsKeys[0])
+                : post.tagsKeys[0]
+              : ''
+
+            let excerpt = title
+            if (post.sections?.[0]?.paragraphsKeys?.[0]) {
+              const firstPKey = post.sections[0].paragraphsKeys[0]
+              if (tGlobal.has(firstPKey)) {
+                excerpt = tGlobal(firstPKey).replace(/<[^>]*>/g, '')
+              }
+            }
 
             return (
               <Grid size={{ xs: 12, sm: 6, md: 4 }} key={post.id}>
@@ -125,20 +148,23 @@ const HomeBlogSection: FC = () => {
                   component={RouterLink}
                   href={`/${locale}/blog/${post.slug}`}
                   sx={{
+                    height: '100%',
                     display: 'flex',
                     flexDirection: 'column',
-                    height: '100%',
-                    borderRadius: 3.5,
-                    textDecoration: 'none',
-                    bgcolor: '#FDFAFC',
-                    border: '1px solid',
-                    borderColor: 'rgba(181, 55, 122, 0.12)',
+                    justifyContent: 'space-between',
+                    borderRadius: 3,
                     overflow: 'hidden',
+                    textDecoration: 'none',
+                    backgroundColor: isDark ? 'rgba(255,255,255,0.04)' : '#FFFFFF',
+                    boxShadow: isDark ? 'none' : '0 4px 18px rgba(87,13,63,0.06)',
+                    border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(181,55,122,0.1)',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     '&:hover': {
-                      transform: 'translateY(-6px)',
-                      borderColor: BRAND.primaryLight,
-                      boxShadow: '0 16px 36px rgba(181, 55, 122, 0.12)',
+                      transform: 'translateY(-4px)',
+                      boxShadow: isDark
+                        ? '0 12px 30px rgba(0,0,0,0.45)'
+                        : '0 12px 30px rgba(181,55,122,0.14)',
+                      borderColor: BRAND.primary,
                       '& .blog-card-image': {
                         transform: 'scale(1.05)',
                       },
@@ -148,13 +174,14 @@ const HomeBlogSection: FC = () => {
                     },
                   }}
                 >
-                  {/* Miniature Image */}
+                  {/* Image */}
                   <Box
                     sx={{
                       position: 'relative',
                       width: '100%',
-                      height: 200,
+                      height: 210,
                       overflow: 'hidden',
+                      backgroundColor: isDark ? 'rgba(255,255,255,0.02)' : `${BRAND.primaryLight}30`,
                     }}
                   >
                     <Image
@@ -170,10 +197,10 @@ const HomeBlogSection: FC = () => {
                     />
                   </Box>
 
-                  {/* Contenu textuel */}
+                  {/* Contenu */}
                   <CardContent
                     sx={{
-                      p: 3,
+                      p: { xs: 2.5, sm: 3 },
                       flexGrow: 1,
                       display: 'flex',
                       flexDirection: 'column',
@@ -189,21 +216,37 @@ const HomeBlogSection: FC = () => {
                         justifyContent="space-between"
                         sx={{ mb: 1.5 }}
                       >
-                        <Typography
+                        <Box
                           sx={{
-                            fontSize: 11,
-                            fontWeight: 800,
-                            color: BRAND.primary,
-                            textTransform: 'uppercase',
-                            letterSpacing: 0.5,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            px: 1.4,
+                            py: 0.3,
+                            borderRadius: '2rem',
+                            backgroundColor: `${BRAND.primaryLight}35`,
                           }}
                         >
-                          {tag}
-                        </Typography>
+                          <Typography
+                            sx={{
+                              fontSize: 11,
+                              fontWeight: 700,
+                              color: BRAND.primary,
+                              letterSpacing: 0.5,
+                              textTransform: 'uppercase',
+                            }}
+                          >
+                            {tag}
+                          </Typography>
+                        </Box>
 
-                        <Stack direction="row" spacing={0.5} alignItems="center" sx={{ color: '#6B7280' }}>
-                          <AccessTimeIcon sx={{ fontSize: 13 }} />
-                          <Typography sx={{ fontSize: 11.5, fontWeight: 500 }}>
+                        <Stack
+                          direction="row"
+                          spacing={0.6}
+                          alignItems="center"
+                          sx={{ color: theme.palette.text.secondary }}
+                        >
+                          <AccessTimeIcon sx={{ fontSize: 14, color: BRAND.primary }} />
+                          <Typography sx={{ fontSize: 11.5, fontWeight: 600 }}>
                             {post.readingTime}
                           </Typography>
                         </Stack>
@@ -212,12 +255,13 @@ const HomeBlogSection: FC = () => {
                       {/* Titre */}
                       <Typography
                         className="blog-card-title"
+                        component="h3"
                         sx={{
-                          fontSize: '1.05rem',
-                          fontWeight: 800,
-                          lineHeight: isRtl ? 1.45 : 1.35,
-                          color: BRAND.primaryDark,
-                          mb: 1.5,
+                          fontWeight: 700,
+                          fontSize: { xs: 16.5, sm: 18 },
+                          color: theme.palette.text.primary,
+                          lineHeight: 1.35,
+                          mb: 1.25,
                           display: '-webkit-box',
                           WebkitLineClamp: 2,
                           WebkitBoxOrient: 'vertical',
@@ -228,14 +272,14 @@ const HomeBlogSection: FC = () => {
                         {title}
                       </Typography>
 
-                      {/* Résumé court */}
+                      {/* Extrait */}
                       <Typography
                         sx={{
-                          fontSize: '0.85rem',
-                          color: '#4B5563',
-                          lineHeight: 1.6,
+                          color: theme.palette.text.secondary,
+                          fontSize: 13.5,
+                          lineHeight: isRtl ? 1.75 : 1.6,
                           display: '-webkit-box',
-                          WebkitLineClamp: 2,
+                          WebkitLineClamp: 3,
                           WebkitBoxOrient: 'vertical',
                           overflow: 'hidden',
                         }}
@@ -244,21 +288,22 @@ const HomeBlogSection: FC = () => {
                       </Typography>
                     </Box>
 
-                    {/* Lien "Lire l'article" */}
+                    {/* Footer / Bouton d'action */}
                     <Box
                       sx={{
-                        pt: 2.5,
-                        mt: 2,
-                        borderTop: '1px solid rgba(181, 55, 122, 0.08)',
-                        display: 'flex',
+                        pt: 2,
+                        mt: 2.5,
+                        borderTop: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(181,55,122,0.08)',
+                        display: 'inline-flex',
                         alignItems: 'center',
                         gap: 1,
-                        color: BRAND.primary,
+                        fontSize: 13,
                         fontWeight: 700,
-                        fontSize: '0.8125rem',
+                        color: BRAND.primary,
+                        transition: 'opacity 0.2s ease',
                       }}
                     >
-                      {t('readArticle')}
+                      <span>{readArticleText}</span>
                       <ArrowForwardIcon
                         sx={{
                           fontSize: 14,
@@ -272,6 +317,48 @@ const HomeBlogSection: FC = () => {
             )
           })}
         </Grid>
+
+        {/* ── Bouton "Voir tous les articles" centré ── */}
+        <Box sx={{ textAlign: 'center', mt: { xs: 5, md: 7 } }}>
+          <Button
+            component={RouterLink}
+            href={`/${locale}/blog`}
+            endIcon={
+              <ArrowForwardIcon
+                sx={{
+                  transform: isRtl ? 'rotate(180deg)' : 'none',
+                  transition: 'transform 0.2s ease',
+                }}
+              />
+            }
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              color: BRAND.primary,
+              fontWeight: 700,
+              fontSize: '0.95rem',
+              textTransform: 'none',
+              px: 3,
+              py: 1.1,
+              borderRadius: 3,
+              backgroundColor: isDark ? 'rgba(255,255,255,0.04)' : '#fff',
+              boxShadow: isDark ? 'none' : '0 4px 14px rgba(87,13,63,0.08)',
+              border: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(181,55,122,0.15)',
+              transition: 'all 0.2s ease',
+              '&:hover': {
+                backgroundColor: BRAND.primary,
+                color: '#FFFFFF',
+                borderColor: BRAND.primary,
+                transform: 'translateY(-2px)',
+                '& .MuiButton-endIcon': {
+                  transform: isRtl ? 'translateX(-4px) rotate(180deg)' : 'translateX(4px)',
+                },
+              },
+            }}
+          >
+            {viewAllText}
+          </Button>
+        </Box>
       </Container>
     </Box>
   )

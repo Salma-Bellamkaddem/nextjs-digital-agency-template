@@ -2,106 +2,94 @@ import { Theme } from '@emotion/react'
 import { SxProps } from '@mui/material'
 import { TargetAndTransition, Transition, VariantLabels } from 'framer-motion'
 
-export type AnimateDecoration = {
-  sxRoot: (isRtl: boolean) => SxProps<Theme>
-  sxImgContainer: SxProps<Theme>
-  initial: (isRtl: boolean) => TargetAndTransition | VariantLabels | boolean
-  animate: (isRtl: boolean) => TargetAndTransition | VariantLabels | boolean
-  transition: Transition
-  image: {
-    imageUrl: string
-    width: number
-    height: number
-  }
+// ─────────────────────────────────────────────
+// Brand tokens (kept in sync with home-hero-content.tsx)
+// ─────────────────────────────────────────────
+export const BRAND = {
+  primary: '#B5377A',
+  primaryDark: '#570D3F',
+  primaryLight: '#FAC8EB',
+  growth: '#1F8A5C',
 }
 
-export const animatedDecorations: Array<AnimateDecoration> = [
+export type DecorationCardType = 'website' | 'social' | 'seo' | 'analytics'
+
+export type AnimatedCard = {
+  type: DecorationCardType
+  sxRoot: () => SxProps<Theme>
+  width: { xs: number; lg: number; xl: number }
+  initial: (isRtl: boolean) => TargetAndTransition | VariantLabels | boolean
+  animate: (isRtl: boolean) => TargetAndTransition | VariantLabels | boolean
+  entranceTransition: Transition
+  floatAnimate: TargetAndTransition
+  floatTransition: Transition
+}
+
+// Ordered so the flow line drawn behind them reads Website → Social → SEO → Analytics,
+// i.e. "we build the site, drive the traffic, get you found, prove the results."
+export const animatedCards: Array<AnimatedCard> = [
   {
-    // Stylo
-    sxRoot: (isRtl) => ({
-      top: 540,
-      [isRtl ? 'left' : 'right']: { lg: 380, xl: 420 },
+    // Mini browser mockup - Haut extérieur
+    type: 'website',
+    sxRoot: () => ({
+      top: { lg: 100, xl: 110 },
+      insetInlineEnd: { lg: '2%', xl: '5%' },
+      zIndex: 2,
+      display: { xs: 'none', lg: 'block' },
+    }),
+    width: { xs: 260, lg: 310, xl: 340 },
+    initial: (isRtl) => ({ opacity: 0, y: -20, x: isRtl ? -30 : 30 }),
+    animate: () => ({ opacity: 1, y: 0, x: 0 }),
+    entranceTransition: { delay: 0.3, duration: 0.7, ease: 'easeOut' },
+    floatAnimate: { y: [0, -8, 0] },
+    floatTransition: { delay: 1.0, duration: 5, repeat: Infinity, ease: 'easeInOut' },
+  },
+  {
+    // Google SEO card - Haut intérieur (vers le centre)
+    type: 'seo',
+    sxRoot: () => ({
+      top: { lg: 90, xl: 100 },
+      insetInlineEnd: { lg: '24%', xl: '26%' },
+      zIndex: 1,
+      display: { xs: 'none', lg: 'block' },
+    }),
+    width: { xs: 210, lg: 250, xl: 270 },
+    initial: (isRtl) => ({ opacity: 0, y: -20, x: isRtl ? -20 : 20 }),
+    animate: () => ({ opacity: 1, y: 0, x: 0 }),
+    entranceTransition: { delay: 0.5, duration: 0.7, ease: 'easeOut' },
+    floatAnimate: { y: [0, -6, 0] },
+    floatTransition: { delay: 1.2, duration: 4.5, repeat: Infinity, ease: 'easeInOut' },
+  },
+  {
+    // Analytics card - Milieu
+    type: 'analytics',
+    sxRoot: () => ({
+      top: { lg: 300, xl: 320 },
+      insetInlineEnd: { lg: '18%', xl: '20%' },
+      zIndex: 4,
+      display: { xs: 'none', lg: 'block' },
+    }),
+    width: { xs: 220, lg: 260, xl: 280 },
+    initial: (isRtl) => ({ opacity: 0, y: 20, scale: 0.95 }),
+    animate: () => ({ opacity: 1, y: 0, scale: 1 }),
+    entranceTransition: { delay: 0.7, duration: 0.7, ease: 'easeOut' },
+    floatAnimate: { y: [0, -7, 0] },
+    floatTransition: { delay: 1.4, duration: 5.5, repeat: Infinity, ease: 'easeInOut' },
+  },
+  {
+    // Social media card - Bas extérieur
+    type: 'social',
+    sxRoot: () => ({
+      top: { lg: 410, xl: 430 },
+      insetInlineEnd: { lg: '3%', xl: '6%' },
       zIndex: 3,
-      transform: isRtl ? 'scaleX(-1) rotate(-22deg)' : 'rotate(22deg)',
       display: { xs: 'none', lg: 'block' },
     }),
-    sxImgContainer: { width: 220 },
-    initial: (isRtl) => ({
-      rotate: isRtl ? 25 : -25,
-      opacity: 0,
-      y: 100,
-    }),
-    animate: (isRtl) => ({
-      rotate: isRtl ? -22 : 22,
-      opacity: 1,
-      y: 0,
-    }),
-    transition: { delay: 0.5, duration: 0.8 },
-    image: {
-      imageUrl: '/images/hero/edding.webp',
-      width: 217,
-      height: 320,
-    },
-  },
-  {
-    // Smartphone
-    sxRoot: (isRtl) => ({
-      bottom: -180,
-      [isRtl ? 'left' : 'right']: -100,
-      zIndex: 1,
-      display: { xs: 'none', lg: 'block' },
-      pointerEvents: 'none',
-      transform: isRtl ? 'scaleX(-1)' : 'none',
-    }),
-    sxImgContainer: { width: 620 },
-    initial: (isRtl) => ({
-      rotate: isRtl ? -22 : 22,
-      opacity: 0,
-      scale: 1.1,
-      x: isRtl ? -100 : 100,
-      y: 150,
-    }),
-    animate: (isRtl) => ({
-      rotate: isRtl ? -18 : 18,
-      opacity: 1,
-      scale: 1,
-      x: 0,
-      y: 0,
-    }),
-    transition: { delay: 0.8, duration: 1.0 },
-    image: {
-      imageUrl: '/images/hero/smartphone.webp',
-      width: 820,
-      height: 820,
-    },
-  },
-  {
-    // Camera
-    sxRoot: (isRtl) => ({
-      top: -20,
-      [isRtl ? 'left' : 'right']: 40,
-      zIndex: 1,
-      display: { xs: 'none', lg: 'block' },
-    }),
-    sxImgContainer: { width: 400 },
-    initial: (isRtl) => ({
-      rotate: isRtl ? 12 : -12,
-      opacity: 0,
-      x: isRtl ? -100 : 100,
-      y: -40,
-    }),
-    animate: (isRtl) => ({
-      rotate: isRtl ? 8 : -8,
-      opacity: 1,
-      scale: 1,
-      x: 0,
-      y: 0,
-    }),
-    transition: { delay: 1.0, duration: 0.8 },
-    image: {
-      imageUrl: '/images/hero/camera.webp',
-      width: 458,
-      height: 309,
-    },
+    width: { xs: 190, lg: 240, xl: 260 },
+    initial: (isRtl) => ({ opacity: 0, y: 20, x: isRtl ? -30 : 30 }),
+    animate: () => ({ opacity: 1, y: 0, x: 0 }),
+    entranceTransition: { delay: 0.9, duration: 0.7, ease: 'easeOut' },
+    floatAnimate: { y: [0, 8, 0] },
+    floatTransition: { delay: 1.6, duration: 6, repeat: Infinity, ease: 'easeInOut' },
   },
 ]

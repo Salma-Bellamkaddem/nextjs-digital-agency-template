@@ -74,88 +74,69 @@ const HomeOurMotivation = () => {
         width: '100%',
         py: { xs: 8, md: 12 },
         position: 'relative',
-        backgroundColor: isDark ? '#0F030E' : '#FDF7FB',
+        backgroundColor: isDark ? palette.background.default : '#FDFAFC',
+        direction: isRtl ? 'rtl' : 'ltr',
       }}
     >
       <Container maxWidth="lg">
-        {/* ── En-tête ── */}
-        <Box
-          sx={{
-            textAlign: 'center',
-            maxWidth: 620,
-            mx: 'auto',
-            mb: { xs: 6, md: 8 },
-          }}
-        >
-          <Box
+        {/* ── En-tête identique à HomeFaq ── */}
+        <Stack alignItems="center" textAlign="center" sx={{ mb: { xs: 6, md: 8 } }}>
+          {/* Badge */}
+          <Typography
             sx={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 1,
-              px: 2,
-              py: 0.6,
-              mb: 2,
-              borderRadius: '2rem',
-              backgroundColor: alpha(BRAND.primary, 0.1),
-              border: `1px solid ${alpha(BRAND.primary, 0.25)}`,
+              color: BRAND.primary,
+              fontWeight: 800,
+              letterSpacing: isRtl ? 1 : 2,
+              fontSize: 13,
+              textTransform: 'uppercase',
+              mb: 1,
             }}
           >
-            <Box
-              sx={{
-                width: 6,
-                height: 6,
-                borderRadius: '50%',
-                backgroundColor: BRAND.primary,
-              }}
-            />
-            <Typography
-              sx={{
-                fontSize: 11.5,
-                letterSpacing: isRtl ? 0.5 : 1.5,
-                textTransform: 'uppercase',
-                fontWeight: 700,
-                color: BRAND.primary,
-              }}
-            >
-              {t('badge')}
-            </Typography>
-          </Box>
+            {t('badge')}
+          </Typography>
 
+          {/* Ligne pleine 32x3 */}
+          <Box
+            sx={{
+              width: 32,
+              height: 3,
+              borderRadius: 999,
+              backgroundColor: BRAND.primary,
+              mb: 3,
+            }}
+          />
+
+          {/* Titre Principal H2 */}
           <Typography
             component="h2"
             sx={{
+              fontSize: { xs: 26, sm: 32, md: 42 },
               fontWeight: 800,
-              fontSize: { xs: 26, sm: 34, md: 40 },
-              lineHeight: isRtl ? 1.35 : 1.2,
-              color: textMain,
-              mb: 1.5,
+              lineHeight: isRtl ? 1.4 : 1.2,
+              color: palette.text.primary,
+              mb: 2,
             }}
           >
             {t('title.part1')}{' '}
-            <Box
-              component="span"
-              sx={{
-                background: `linear-gradient(135deg, ${BRAND.primary} 0%, #D84E97 100%)`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
+            <Box component="span" sx={{ color: BRAND.primary }}>
               {t('title.highlight')}
             </Box>
           </Typography>
 
+          {/* Description */}
           <Typography
             sx={{
-              color: textMuted,
-              fontSize: { xs: 14.5, md: 16 },
+              color: palette.text.secondary,
+              fontSize: { xs: 15, md: 17 },
+              maxWidth: 580,
               lineHeight: isRtl ? 1.8 : 1.6,
             }}
           >
             {t('description')}
           </Typography>
-        </Box>
+        </Stack>
 
-        {/* ── Cartes Membres (2 colonnes élégantes) ── */}
+        {/* ── Cartes Membres (2 colonnes) ── */}
         <Grid container spacing={{ xs: 3, md: 4 }} alignItems="stretch">
           {MEMBERS.map((member) => {
             const BadgeIcon = member.badgeIcon
@@ -171,13 +152,15 @@ const HomeOurMotivation = () => {
                     backgroundColor: cardBg,
                     border: `1px solid ${cardBorder}`,
                     boxShadow: isDark
-                      ? '0 12px 35px rgba(0,0,0,0.5)'
-                      : '0 12px 35px rgba(181,55,122,0.06)',
+                      ? 'none'
+                      : '0 4px 18px rgba(87,13,63,0.06)',
                     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     '&:hover': {
                       transform: 'translateY(-4px)',
-                      boxShadow: `0 18px 45px ${alpha(BRAND.primary, 0.16)}`,
-                      borderColor: alpha(BRAND.primary, 0.35),
+                      boxShadow: isDark
+                        ? '0 12px 30px rgba(0,0,0,0.45)'
+                        : '0 12px 30px rgba(181,55,122,0.14)',
+                      borderColor: BRAND.primary,
                     },
                   }}
                 >
@@ -203,7 +186,7 @@ const HomeOurMotivation = () => {
                   {/* Détails */}
                   <Box
                     sx={{
-                      p: { xs: 3, sm: 3.5 },
+                      p: { xs: 2.5, sm: 3 },
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'space-between',
@@ -222,7 +205,7 @@ const HomeOurMotivation = () => {
                           py: 0.4,
                           mb: 1.5,
                           borderRadius: '2rem',
-                          backgroundColor: alpha(BRAND.primary, 0.1),
+                          backgroundColor: `${BRAND.primaryLight}35`,
                         }}
                       >
                         <BadgeIcon sx={{ fontSize: 13, color: BRAND.primary }} />
@@ -232,6 +215,7 @@ const HomeOurMotivation = () => {
                             fontWeight: 700,
                             color: BRAND.primary,
                             letterSpacing: 0.5,
+                            textTransform: 'uppercase',
                           }}
                         >
                           {t(`members.${member.key}.badge`)}
@@ -311,7 +295,7 @@ const HomeOurMotivation = () => {
                       </Stack>
                     </Box>
 
-                    {/* Lien LinkedIn minimaliste */}
+                    {/* Lien LinkedIn */}
                     <Box
                       component="a"
                       href={member.linkedin}

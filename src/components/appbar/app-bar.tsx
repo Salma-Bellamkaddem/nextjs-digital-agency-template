@@ -1,6 +1,6 @@
 'use client'
 
-import React, { FC, Fragment, useCallback, useMemo, useState } from 'react'
+import React, { FC, Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import {
   Box,
   Container,
@@ -16,7 +16,7 @@ import {
 } from '@mui/material'
 import { useTheme, alpha } from '@mui/material/styles'
 import { usePathname, useRouter } from 'next/navigation'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { useWindowScroll } from 'react-use'
 
 // components
@@ -97,11 +97,15 @@ const DevisButton: FC<{
 }
 
 // ─────────────────────────────────────────────────────────────
-// BRAND LOGO
+// BRAND LOGO (Hydration-Safe SVG wrapper)
 // ─────────────────────────────────────────────────────────────
+
 const BrandLogo: FC<{
   floating: boolean
 }> = ({ floating }) => {
+  const theme = useTheme()
+  const isDark = theme.palette.mode === 'dark'
+
   return (
     <Box
       sx={{
@@ -116,7 +120,6 @@ const BrandLogo: FC<{
       }}
     >
       <Box
-        component={Logo}
         sx={{
           height: {
             xs: 26,
@@ -124,15 +127,20 @@ const BrandLogo: FC<{
             md: floating ? 32 : 36,
             lg: floating ? 36 : 42,
           },
-          width: 'auto',
+          display: 'flex',
+          alignItems: 'center',
           flexShrink: 0,
-          transition: (theme: Theme) =>
-            theme.transitions.create(['height'], {
-              duration: theme.transitions.duration.shorter,
-            }),
           filter: `drop-shadow(0 2px 8px ${alpha(BRAND.primary, 0.25)})`,
         }}
-      />
+      >
+        <Logo
+          style={{
+            height: '100%',
+            width: 'auto',
+            display: 'block',
+          }}
+        />
+      </Box>
 
       <Box
         sx={{
@@ -156,8 +164,7 @@ const BrandLogo: FC<{
         <Box
           component="span"
           sx={{
-            color: (theme: Theme) =>
-              theme.palette.mode === 'dark' ? '#FCE8F5' : '#420830',
+            color: isDark ? '#FCE8F5' : '#420830',
             fontWeight: 600,
           }}
         >
@@ -184,7 +191,7 @@ const BrandLogo: FC<{
 const DesktopNav: FC = () => {
   const pathname = usePathname()
   const goTo = useScrollOrNavigate()
-  const t = useTranslations('Navigation')
+  const t = useTranslations()
 
   return (
     <Box
@@ -202,7 +209,13 @@ const DesktopNav: FC = () => {
           pathname?.replace(/^\/(fr|ar|en)(?=\/|$)/, '') || '/'
         const normalizedMenuPath =
           item.path.replace(/^\/(fr|ar|en)(?=\/|$)/, '') || '/'
-        const isActive = normalizedPath === normalizedMenuPath
+        const isActive =
+          normalizedPath === normalizedMenuPath ||
+          (item.path === '/blog' && normalizedPath.startsWith('/blog'))
+
+        const displayLabel = t.has(item.labelKey)
+          ? t(item.labelKey)
+          : item.labelKey.replace('Navigation.company.', '').replace('Navigation.', '')
 
         return (
           <Box
@@ -227,7 +240,7 @@ const DesktopNav: FC = () => {
               transition: (theme: Theme) =>
                 theme.transitions.create(
                   ['background-color', 'color', 'transform'],
-                  { duration: theme.transitions.duration.shorter },
+                  { duration: theme.transitions.duration.shorter }
                 ),
               '&:hover': {
                 backgroundColor: isActive
@@ -237,7 +250,7 @@ const DesktopNav: FC = () => {
               },
             }}
           >
-            {t(item.labelKey.replace('Navigation.', ''))}
+            {displayLabel}
           </Box>
         )
       })}
@@ -320,8 +333,9 @@ const MobileDrawer: FC<{
   onOpenContact: () => void
 }> = ({ open, onClose, onOpenContact }) => {
   const pathname = usePathname()
+  const locale = useLocale()
   const goTo = useScrollOrNavigate()
-  const t = useTranslations('Navigation')
+  const t = useTranslations()
 
   return (
     <Drawer
@@ -361,11 +375,10 @@ const MobileDrawer: FC<{
         >
           <Box
             component="span"
-            sx={{
-              color: (theme: Theme) =>
-                theme.palette.mode === 'dark' ? '#FCE8F5' : '#420830',
+            sx={(theme: Theme) => ({
+              color: theme.palette.mode === 'dark' ? '#FCE8F5' : '#420830',
               fontWeight: 600,
-            }}
+            })}
           >
             NEXSE
           </Box>
@@ -406,7 +419,13 @@ const MobileDrawer: FC<{
             pathname?.replace(/^\/(fr|ar|en)(?=\/|$)/, '') || '/'
           const normalizedMenuPath =
             item.path.replace(/^\/(fr|ar|en)(?=\/|$)/, '') || '/'
-          const isActive = normalizedPath === normalizedMenuPath
+          const isActive =
+            normalizedPath === normalizedMenuPath ||
+            (item.path === '/blog' && normalizedPath.startsWith('/blog'))
+
+          const displayLabel = t.has(item.labelKey)
+            ? t(item.labelKey)
+            : item.labelKey.replace('Navigation.company.', '').replace('Navigation.', '')
 
           return (
             <ListItem key={`${item.labelKey}-${index}`} disablePadding sx={{ mb: 0.5 }}>
@@ -434,7 +453,7 @@ const MobileDrawer: FC<{
                 }}
               >
                 <ListItemText
-                  primary={t(item.labelKey.replace('Navigation.', ''))}
+                  primary={displayLabel}
                   primaryTypographyProps={{
                     fontSize: '0.95rem',
                     fontWeight: isActive ? 700 : 500,
@@ -474,7 +493,7 @@ const MobileDrawer: FC<{
             },
           }}
         >
-          Demander un devis gratuit
+          {locale === 'ar' ? 'طلب عرض سعر مجاني' : 'Demander un devis gratuit'}
         </Box>
       </Box>
 
@@ -495,7 +514,9 @@ const MobileDrawer: FC<{
           }}
         >
           <Box sx={{ fontSize: '0.85rem', color: 'text.secondary', fontWeight: 500 }}>
-            {t('language.label')}
+            {t.has('Navigation.language.label')
+              ? t('Navigation.language.label')
+              : 'Langue'}
           </Box>
           <LanguageSwitcher />
         </Box>
@@ -509,7 +530,7 @@ const MobileDrawer: FC<{
           }}
         >
           <Box sx={{ fontSize: '0.85rem', color: 'text.secondary', fontWeight: 500 }}>
-            Mode sombre
+            {locale === 'ar' ? 'الوضع الداكن' : 'Mode sombre'}
           </Box>
           <AppBarSwitchDarkMode />
         </Box>
@@ -528,11 +549,17 @@ const AppBar: FC = () => {
   const pathname = usePathname()
   const { y: scrollY } = useWindowScroll()
 
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   const mobileMatches = useMediaQuery(theme.breakpoints.down('md'))
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [contactOpen, setContactOpen] = useState(false)
 
-  const isScrolled = useMemo(() => scrollY > 40, [scrollY])
+  const isScrolled = useMemo(() => (mounted ? scrollY > 40 : false), [scrollY, mounted])
+  const isMobile = mounted ? mobileMatches : false
 
   const onClickLogo = useCallback(() => {
     if (typeof window === 'undefined') return
@@ -605,18 +632,13 @@ const AppBar: FC = () => {
               boxShadow: isScrolled
                 ? `0 10px 30px -5px ${alpha(
                     theme.palette.mode === 'dark' ? '#000000' : BRAND.primary,
-                    theme.palette.mode === 'dark' ? 0.5 : 0.12,
+                    theme.palette.mode === 'dark' ? 0.5 : 0.12
                   )}`
                 : `0 4px 20px -2px ${alpha(BRAND.primary, 0.05)}`,
-              transition: (theme: Theme) =>
-                theme.transitions.create(
-                  [
-                    'background-color',
-                    'border-color',
-                    'box-shadow',
-                    'padding',
-                  ],
-                  { duration: theme.transitions.duration.standard },
+              transition: (t: Theme) =>
+                t.transitions.create(
+                  ['background-color', 'border-color', 'box-shadow', 'padding'],
+                  { duration: t.transitions.duration.standard }
                 ),
             }}
           >
@@ -634,7 +656,7 @@ const AppBar: FC = () => {
             </Box>
 
             {/* Desktop Navigation & Actions */}
-            {!mobileMatches ? (
+            {!isMobile ? (
               <Box
                 sx={{
                   display: 'flex',
@@ -675,10 +697,7 @@ const AppBar: FC = () => {
       />
 
       {/* Contact Modal */}
-      <ContactModal
-        open={contactOpen}
-        onClose={() => setContactOpen(false)}
-      />
+      <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
     </Fragment>
   )
 }

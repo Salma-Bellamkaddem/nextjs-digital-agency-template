@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 
-// icons
+// Icons
 import WorkOutlinedIcon from '@/assets/icons/material-symbols--work-outline.svg'
 import HomeOutlinedIcon from '@/assets/icons/fluent--home-32-regular.svg'
 import LayersOutlinedIcon from '@/assets/icons/fluent--layer-24-regular.svg'
@@ -21,76 +21,40 @@ export interface IMenu {
 
 export const companyMenus: IMenu[] = [
   {
-    labelKey: 'company.home',
+    labelKey: 'Navigation.company.home',
     path: '/',
     sectionId: null,
-    icon: (
-      <Box
-        component={HomeOutlinedIcon}
-        sx={{ width: 18, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={HomeOutlinedIcon} sx={{ width: 18, height: 'auto' }} />,
   },
-
   {
-    labelKey: 'company.services',
+    labelKey: 'Navigation.company.services',
     path: '/#home-services',
     sectionId: 'home-services',
-    icon: (
-      <Box
-        component={LayersOutlinedIcon}
-        sx={{ width: 20, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={LayersOutlinedIcon} sx={{ width: 20, height: 'auto' }} />,
   },
-
   {
-    labelKey: 'company.method',
+    labelKey: 'Navigation.company.method',
     path: '/#home-method',
     sectionId: 'home-method',
-    icon: (
-      <Box
-        component={WorkOutlinedIcon}
-        sx={{ width: 18, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={WorkOutlinedIcon} sx={{ width: 18, height: 'auto' }} />,
   },
-
   {
-    labelKey: 'company.vision',
+    labelKey: 'Navigation.company.vision',
     path: '/#home-vision',
     sectionId: 'home-vision',
-    icon: (
-      <Box
-        component={InfoOutlinedIcon}
-        sx={{ width: 18, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={InfoOutlinedIcon} sx={{ width: 18, height: 'auto' }} />,
   },
-
   {
-    labelKey: 'company.about',
-    path: '/#home-team',
-    sectionId: 'home-team',
-    icon: (
-      <Box
-        component={InfoOutlinedIcon}
-        sx={{ width: 18, height: 'auto' }}
-      />
-    ),
+    labelKey: 'Navigation.company.about',
+    path: '/#home-about',
+    sectionId: 'home-about',
+    icon: <Box component={InfoOutlinedIcon} sx={{ width: 18, height: 'auto' }} />,
   },
-
-  // ── Ajout de la page Blog ──
   {
-    labelKey: 'company.blog',
+    labelKey: 'Navigation.company.blog',
     path: '/blog',
     sectionId: null,
-    icon: (
-      <Box
-        component={PaperOutlinedIcon}
-        sx={{ width: 18, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={PaperOutlinedIcon} sx={{ width: 18, height: 'auto' }} />,
   },
 ]
 
@@ -98,55 +62,26 @@ export const supportLinks: IMenu[] = [
   {
     labelKey: 'Navigation.support.helpCenter',
     path: '/help-center',
-    icon: (
-      <Box
-        component={ContactSupportOutlinedIcon}
-        sx={{ width: 22, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={ContactSupportOutlinedIcon} sx={{ width: 22, height: 'auto' }} />,
   },
-
   {
     labelKey: 'Navigation.support.contact',
     path: '/contact-us',
-    icon: (
-      <Box
-        component={EmailOutlinedIcon}
-        sx={{ width: 18, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={EmailOutlinedIcon} sx={{ width: 18, height: 'auto' }} />,
   },
-
   {
     labelKey: 'Navigation.support.terms',
     path: '/terms-of-services',
-    icon: (
-      <Box
-        component={PaperOutlinedIcon}
-        sx={{ width: 18, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={PaperOutlinedIcon} sx={{ width: 18, height: 'auto' }} />,
   },
-
   {
     labelKey: 'Navigation.support.privacy',
     path: '/privacy-policy',
-    icon: (
-      <Box
-        component={ShieldOutlinedIcon}
-        sx={{ width: 18, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={ShieldOutlinedIcon} sx={{ width: 18, height: 'auto' }} />,
   },
-
   {
     labelKey: 'Navigation.support.liveChat',
     path: '/live-chat',
-    icon: (
-      <Box
-        component={ConversationOutlinedIcon}
-        sx={{ width: 18, height: 'auto' }}
-      />
-    ),
+    icon: <Box component={ConversationOutlinedIcon} sx={{ width: 18, height: 'auto' }} />,
   },
 ]

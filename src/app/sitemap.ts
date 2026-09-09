@@ -8,16 +8,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ['fr', 'ar', 'en']
   const now = new Date()
 
-  // Helper pour générer les balises hreflang alternatives
+  // Génère les entrées hreflang pour FR, AR, EN + la balise par défaut x-default
   const buildAlternates = (path: string) => ({
-    languages: Object.fromEntries(
-      locales.map((loc) => [loc, `${baseUrl}/${loc}${path}`])
-    ),
+    languages: {
+      ...Object.fromEntries(
+        locales.map((loc) => [loc, `${baseUrl}/${loc}${path}`])
+      ),
+      'x-default': `${baseUrl}/fr${path}`,
+    },
   })
 
   const sitemapEntries: MetadataRoute.Sitemap = []
 
-  // 1. Pages statiques principales (Accueil, Recrutement, Blog index)
+  // 1. Pages statiques principales (Accueil, Blog, Recrutement)
   const corePaths = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
     { path: '/blog', priority: 0.9, changeFrequency: 'daily' as const },
@@ -43,35 +46,38 @@ export default function sitemap(): MetadataRoute.Sitemap {
       sitemapEntries.push({
         url: `${baseUrl}/${locale}${path}`,
         lastModified: now,
-        changeFrequency: 'monthly',
+        changeFrequency: 'monthly' as const,
         priority: 0.9,
         alternates: buildAlternates(path),
       })
     })
   })
 
-  // 3. Articles de Blog dynamiques
+  // 3. Articles de Blog dynamiques (FR, AR, EN avec date réelle de publication)
   blogPosts.forEach((post) => {
     const path = `/blog/${post.slug}`
-    sitemapEntries.push(
-      ...locales.map((locale) => ({
+    const postDate = post.publishedAt ? new Date(post.publishedAt) : now
+    const validDate = isNaN(postDate.getTime()) ? now : postDate
+
+    locales.forEach((locale) => {
+      sitemapEntries.push({
         url: `${baseUrl}/${locale}${path}`,
-        lastModified: now,
+        lastModified: validDate,
         changeFrequency: 'weekly' as const,
         priority: 0.8,
         alternates: buildAlternates(path),
-      }))
-    )
+      })
+    })
   })
 
-  // 4. Pages SEO Locales (Casablanca, Rabat, Marrakech)
+  // 4. Pages SEO Locales (Villes cibles)
   TARGET_CITIES.forEach((city) => {
     const path = `/agence-marketing-digital-${city.slug}`
     locales.forEach((locale) => {
       sitemapEntries.push({
         url: `${baseUrl}/${locale}${path}`,
         lastModified: now,
-        changeFrequency: 'weekly',
+        changeFrequency: 'weekly' as const,
         priority: 0.85,
         alternates: buildAlternates(path),
       })

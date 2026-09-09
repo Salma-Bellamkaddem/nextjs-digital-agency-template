@@ -28,12 +28,12 @@ const BRAND = {
 interface LocationProps {
   params: Promise<{
     locale: string
-    city: string
+    city?: string
   }>
 }
 
-// Extraction du slug propre (ex: "agence-marketing-digital-casablanca" -> "casablanca")
-function parseCitySlug(rawParam: string) {
+function parseCitySlug(rawParam?: string): string {
+  if (!rawParam || typeof rawParam !== 'string') return ''
   const prefix = 'agence-marketing-digital-'
   if (rawParam.startsWith(prefix)) {
     return rawParam.replace(prefix, '')
@@ -57,10 +57,13 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: LocationProps): Promise<Metadata> {
-  const { locale, city: rawCity } = await params
-  const citySlug = parseCitySlug(rawCity)
-  const cityData = TARGET_CITIES.find((c) => c.slug === citySlug)
+  const resolvedParams = await params
+  const locale = resolvedParams?.locale || 'fr'
+  const citySlug = parseCitySlug(resolvedParams?.city)
 
+  if (!citySlug) return {}
+
+  const cityData = TARGET_CITIES.find((c) => c.slug === citySlug)
   if (!cityData) return {}
 
   const t = await getTranslations({ locale })
@@ -68,8 +71,8 @@ export async function generateMetadata({ params }: LocationProps): Promise<Metad
   const currentPath = `/${locale}/agence-marketing-digital-${citySlug}`
 
   return {
-    title: t(cityData.metaTitleKey),
-    description: t(cityData.metaDescKey),
+    title: t.has(cityData.metaTitleKey) ? t(cityData.metaTitleKey) : 'Agence Digitale',
+    description: t.has(cityData.metaDescKey) ? t(cityData.metaDescKey) : '',
     alternates: {
       canonical: `${siteUrl}${currentPath}`,
       languages: {
@@ -80,8 +83,8 @@ export async function generateMetadata({ params }: LocationProps): Promise<Metad
       },
     },
     openGraph: {
-      title: t(cityData.metaTitleKey),
-      description: t(cityData.metaDescKey),
+      title: t.has(cityData.metaTitleKey) ? t(cityData.metaTitleKey) : 'Agence Digitale',
+      description: t.has(cityData.metaDescKey) ? t(cityData.metaDescKey) : '',
       url: `${siteUrl}${currentPath}`,
       type: 'website',
     },
@@ -89,18 +92,21 @@ export async function generateMetadata({ params }: LocationProps): Promise<Metad
 }
 
 export default async function LocationCityPage({ params }: LocationProps) {
-  const { locale, city: rawCity } = await params
-  const citySlug = parseCitySlug(rawCity)
+  const resolvedParams = await params
+  const locale = resolvedParams?.locale || 'fr'
+  const rawCityParam = resolvedParams?.city || ''
+
+  // Si l'URL demandée n'est pas une page ville, on renvoie notFound
+  const citySlug = parseCitySlug(rawCityParam)
   const cityData = TARGET_CITIES.find((c) => c.slug === citySlug)
 
-  // Si l'URL ne correspond à aucune de vos villes configurées -> 404 propre
   if (!cityData) {
     notFound()
   }
 
   const t = await getTranslations({ locale })
   const isRtl = locale === 'ar'
-  const cityName = t(cityData.nameKey)
+  const cityName = t.has(cityData.nameKey) ? t(cityData.nameKey) : citySlug
 
   const serviceAreaSchema = {
     '@context': 'https://schema.org',
@@ -115,7 +121,7 @@ export default async function LocationCityPage({ params }: LocationProps) {
     ],
     serviceArea: {
       '@type': 'AdministrativeArea',
-      name: t(cityData.regionKey),
+      name: t.has(cityData.regionKey) ? t(cityData.regionKey) : '',
     },
   }
 
@@ -164,7 +170,7 @@ export default async function LocationCityPage({ params }: LocationProps) {
                   textTransform: 'uppercase',
                 }}
               >
-                {t('Locations.badge')}
+                {t.has('Locations.badge') ? t('Locations.badge') : 'Présence Locale'}
               </Typography>
             </Box>
 
@@ -176,11 +182,11 @@ export default async function LocationCityPage({ params }: LocationProps) {
                 lineHeight: isRtl ? 1.35 : 1.2,
               }}
             >
-              {t(cityData.heroTaglineKey)}
+              {t.has(cityData.heroTaglineKey) ? t(cityData.heroTaglineKey) : `Agence Digitale à ${cityName}`}
             </Typography>
 
             <Typography sx={{ fontSize: 16, lineHeight: 1.8, color: 'rgba(255,255,255,0.85)' }}>
-              {t(cityData.contextTextKey)}
+              {t.has(cityData.contextTextKey) ? t(cityData.contextTextKey) : ''}
             </Typography>
 
             <Stack
@@ -204,7 +210,7 @@ export default async function LocationCityPage({ params }: LocationProps) {
                   '&:hover': { backgroundColor: BRAND.primaryDeep },
                 }}
               >
-                {t('Locations.ctaText')} {cityName}
+                {t.has('Locations.ctaText') ? t('Locations.ctaText') : 'Demander un devis pour'} {cityName}
               </Button>
 
               <Button
@@ -222,14 +228,14 @@ export default async function LocationCityPage({ params }: LocationProps) {
                   '&:hover': { backgroundColor: 'rgba(255,255,255,0.1)' },
                 }}
               >
-                {t('Locations.deliveryMode')}
+                {t.has('Locations.deliveryMode') ? t('Locations.deliveryMode') : 'Découvrir nos services'}
               </Button>
             </Stack>
           </Stack>
         </Container>
       </Box>
 
-      {/* Services Clés */}
+      {/* Services Prioritaires */}
       <Container maxWidth="lg" sx={{ mt: { xs: 6, md: 10 } }}>
         <Box sx={{ mb: 6, textAlign: isRtl ? 'right' : 'left' }}>
           <Typography
@@ -241,7 +247,7 @@ export default async function LocationCityPage({ params }: LocationProps) {
               mb: 1.5,
             }}
           >
-            {t('Locations.servicesTitle')} {cityName}
+            {t.has('Locations.servicesTitle') ? t('Locations.servicesTitle') : 'Services Stratégiques à'} {cityName}
           </Typography>
         </Box>
 
@@ -272,15 +278,15 @@ export default async function LocationCityPage({ params }: LocationProps) {
               >
                 <Box>
                   <Typography sx={{ fontSize: 17, fontWeight: 800, color: BRAND.primaryDark, mb: 1 }}>
-                    {t(service.titleKey)}
+                    {t.has(service.titleKey) ? t(service.titleKey) : service.slug}
                   </Typography>
                   <Typography sx={{ fontSize: 13.5, color: '#4B5563', lineHeight: 1.6 }}>
-                    {t(service.descriptionKey)}
+                    {t.has(service.descriptionKey) ? t(service.descriptionKey) : ''}
                   </Typography>
                 </Box>
                 <Box sx={{ mt: 3, display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Typography sx={{ fontSize: 13, fontWeight: 700, color: BRAND.primary }}>
-                    {t(service.ctaLabelKey)} →
+                    {t.has(service.ctaLabelKey) ? t(service.ctaLabelKey) : 'En savoir plus'} →
                   </Typography>
                 </Box>
               </Card>
