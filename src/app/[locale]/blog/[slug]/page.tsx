@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: ArticleProps): Promise<Metada
   // 1. Détection de la clé de base de l'article (ex: "Blog.posts.baselineBuzz")
   const basePostKey = post.titleKey ? post.titleKey.replace(/\.title$/, '') : ''
 
-  // 2. Récupération prioritaire de metaTitle (ou fallback sur post.titleKey)
+  // 2. Récupération prioritaire de metaTitle
   const metaTitleKey = `${basePostKey}.metaTitle`
   const metaTitle = t.has(metaTitleKey)
     ? t(metaTitleKey)
@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: ArticleProps): Promise<Metada
     ? `${t(post.titleKey)} | Nexsetia`
     : 'Article Blog | Nexsetia'
 
-  // 3. Récupération prioritaire de metaDescription (ou fallback sur le 1er paragraphe)
+  // 3. Récupération prioritaire de metaDescription
   const metaDescKey = `${basePostKey}.metaDescription`
   let metaDescription = ''
 
@@ -81,9 +81,12 @@ export async function generateMetadata({ params }: ArticleProps): Promise<Metada
     }
   }
 
-  const imageUrl = post.heroImage.startsWith('http')
+  // 4. URL absolue et sécurisée pour le scraper de WhatsApp
+  const rawImageUrl = post.heroImage.startsWith('http')
     ? post.heroImage
     : `${siteUrl}${post.heroImage}`
+  
+  const imageUrl = rawImageUrl.replace(/\.webp$/i, '.jpeg')
 
   return {
     title: metaTitle,
@@ -101,13 +104,17 @@ export async function generateMetadata({ params }: ArticleProps): Promise<Metada
       title: metaTitle,
       description: metaDescription,
       url: `${siteUrl}/${locale}/blog/${slug}`,
+      siteName: 'Nexsetia',
+      locale: locale === 'ar' ? 'ar_AR' : locale === 'en' ? 'en_US' : 'fr_FR',
       type: 'article',
       publishedTime: post.publishedAt,
       images: [
         {
           url: imageUrl,
+          secureUrl: imageUrl,
           width: 1200,
           height: 630,
+          type: 'image/jpeg',
           alt: metaTitle,
         },
       ],
@@ -151,7 +158,9 @@ export default async function BlogPostPage({ params }: ArticleProps) {
     },
     headline: postTitle,
     description: postExcerpt,
-    image: post.heroImage.startsWith('http') ? post.heroImage : `${siteUrl}${post.heroImage}`,
+    image: post.heroImage.startsWith('http')
+      ? post.heroImage
+      : `${siteUrl}${post.heroImage}`,
     datePublished: post.publishedAt,
     dateModified: post.publishedAt,
     inLanguage: locale,
