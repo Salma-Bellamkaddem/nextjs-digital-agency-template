@@ -23,10 +23,13 @@ const FooterServicesLink = () => {
       <FooterSectionTitle title={tFooter('services')} />
       <Stack spacing={1.2} sx={{ alignItems: isRtl ? 'flex-end' : 'flex-start' }}>
         {displayedServices.map((item) => {
-          const serviceTitle = item.titleKey
+          
+          
+            const serviceTitle = item.titleKey && tGlobal.has(item.titleKey)
             ? tGlobal(item.titleKey)
-            : (item as any).title || ''
-
+            : 'title' in item
+            ? String((item as { title?: unknown }).title ?? '')
+            : ''
           return (
             <RouterLink
               key={item.slug}

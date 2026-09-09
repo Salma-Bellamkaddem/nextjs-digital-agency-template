@@ -88,8 +88,10 @@ const FooterSupportLinks: FC = () => {
         {supportLinks.map((item, index) => {
           const label = item.labelKey
             ? tNav(item.labelKey.replace('Navigation.', ''))
-            : (item as any).label || ''
-
+            : 'title' in item
+            ? String((item as { title?: unknown }).title ?? '')
+            : ''
+          
           return (
             <LinkItem
               key={`${item.labelKey || index}-${index}`}

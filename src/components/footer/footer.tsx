@@ -202,10 +202,12 @@ const Footer: FC = () => {
 
             <Stack spacing={1.2}>
               {displayedServices.map((item) => {
-                const serviceTitle =
-                  item.titleKey && tGlobal.has(item.titleKey)
-                    ? tGlobal(item.titleKey)
-                    : (item as any).title || ''
+              const serviceTitle =
+              item.titleKey && tGlobal.has(item.titleKey)
+                ? tGlobal(item.titleKey)
+                : 'title' in item
+                ? String((item as { title?: unknown }).title ?? '')
+                : ''
 
                 return (
                   <RouterLink
