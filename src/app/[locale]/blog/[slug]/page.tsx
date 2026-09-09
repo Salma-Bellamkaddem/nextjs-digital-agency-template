@@ -56,14 +56,28 @@ export async function generateMetadata({ params }: ArticleProps): Promise<Metada
 
   const t = await getTranslations({ locale })
   const siteUrl = 'https://www.nexsetia.com'
-  const title = t.has(post.titleKey) ? t(post.titleKey) : 'Article Blog'
 
-  // Récupération dynamique du premier paragraphe pour créer une meta-description pertinente
-  let excerpt = title
-  if (post.sections?.[0]?.paragraphsKeys?.[0]) {
+  // 1. Détection de la clé de base de l'article (ex: "Blog.posts.baselineBuzz")
+  const basePostKey = post.titleKey ? post.titleKey.replace(/\.title$/, '') : ''
+
+  // 2. Récupération prioritaire de metaTitle (ou fallback sur post.titleKey)
+  const metaTitleKey = `${basePostKey}.metaTitle`
+  const metaTitle = t.has(metaTitleKey)
+    ? t(metaTitleKey)
+    : t.has(post.titleKey)
+    ? `${t(post.titleKey)} | Nexsetia`
+    : 'Article Blog | Nexsetia'
+
+  // 3. Récupération prioritaire de metaDescription (ou fallback sur le 1er paragraphe)
+  const metaDescKey = `${basePostKey}.metaDescription`
+  let metaDescription = ''
+
+  if (t.has(metaDescKey)) {
+    metaDescription = t(metaDescKey)
+  } else if (post.sections?.[0]?.paragraphsKeys?.[0]) {
     const firstPKey = post.sections[0].paragraphsKeys[0]
     if (t.has(firstPKey)) {
-      excerpt = t(firstPKey).replace(/<[^>]*>/g, '').slice(0, 160)
+      metaDescription = t(firstPKey).replace(/<[^>]*>/g, '').slice(0, 160)
     }
   }
 
@@ -72,19 +86,20 @@ export async function generateMetadata({ params }: ArticleProps): Promise<Metada
     : `${siteUrl}${post.heroImage}`
 
   return {
-    title: `${title} | Nexsetia`,
-    description: excerpt,
+    title: metaTitle,
+    description: metaDescription,
     alternates: {
       canonical: `${siteUrl}/${locale}/blog/${slug}`,
       languages: {
         fr: `${siteUrl}/fr/blog/${slug}`,
         ar: `${siteUrl}/ar/blog/${slug}`,
         en: `${siteUrl}/en/blog/${slug}`,
+        'x-default': `${siteUrl}/fr/blog/${slug}`,
       },
     },
     openGraph: {
-      title,
-      description: excerpt,
+      title: metaTitle,
+      description: metaDescription,
       url: `${siteUrl}/${locale}/blog/${slug}`,
       type: 'article',
       publishedTime: post.publishedAt,
@@ -93,14 +108,14 @@ export async function generateMetadata({ params }: ArticleProps): Promise<Metada
           url: imageUrl,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: metaTitle,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description: excerpt,
+      title: metaTitle,
+      description: metaDescription,
       images: [imageUrl],
     },
   }

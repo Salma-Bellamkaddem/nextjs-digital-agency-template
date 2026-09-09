@@ -214,67 +214,18 @@
         "sub3": "Commercial decks & corporate stationery",
         "sub4": "Art direction & digital design system"
       },
-    "webMobile": {
-  "heroTag": "WEB & MOBILE APP DEVELOPMENT",
-  "heroTitle": "Websites and applications designed to grow your business",
-  "heroSubtitle": "We design custom websites, e-commerce stores, landing pages and mobile applications that deliver a seamless user experience, strengthen your online visibility and turn visitors into customers.",
-
-  "overview": {
-    "problemTitle": "The Challenge: A digital presence that fails to meet customer expectations",
-    "problemDesc": "A slow website, poor mobile experience or unclear structure can cost you visitors, leads and business opportunities. Your digital presence should be clear, fast, accessible and aligned with your business goals.",
-    "solutionTitle": "Our Approach: Building high-performing digital experiences",
-    "solutionDesc": "We create custom web and mobile solutions that combine user experience, performance, search engine optimization, security and your business objectives."
-  },
-
-  "process": {
-    "s1Title": "Analysis & UX/UI Design",
-    "s1Desc": "We analyze your goals, target audience and customer journey to create a clear, intuitive interface adapted to every screen.",
-    
-    "s2Title": "Custom Development",
-    "s2Desc": "We turn the design into a reliable, scalable web or mobile solution tailored to your business needs.",
-    
-    "s3Title": "Performance, SEO & Testing",
-    "s3Desc": "We optimize your website structure, content, images and performance to improve user experience and support better search engine visibility.",
-    
-    "s4Title": "Launch & Support",
-    "s4Desc": "We handle the launch, technical configuration and final checks, then provide the support you need to manage your digital solution effectively."
-  },
-
-  "main1Title": "Professional Website Development",
-  "main1Desc": "Modern, fast and responsive websites designed to showcase your business, build credibility and generate new business opportunities.",
-
-  "main2Title": "Mobile App Development",
-  "main2Desc": "Intuitive mobile applications tailored to your needs, designed to improve engagement, simplify your services and build lasting relationships with your users.",
-
-  "sub1Title": "E-commerce Websites",
-  "sub1Desc": "Online stores designed to showcase your products effectively, simplify the purchasing journey and provide a seamless experience across mobile and desktop.",
-
-  "sub2Title": "Conversion-Focused Landing Pages",
-  "sub2Desc": "Landing pages built around one clear objective: turning your traffic into qualified leads through compelling messaging, clear structure and effective calls to action.",
-
-  "sub3Title": "Web Platforms & Business Solutions",
-  "sub3Desc": "Custom digital platforms and business tools designed to centralize your data, automate operations and address the specific needs of your organization.",
-
-  "sub4Title": "Maintenance & Continuous Improvement",
-  "sub4Desc": "Ongoing support to keep your solution updated, secure and performing well while adding new features as your business evolves.",
-
-  "faq": {
-    "q1": "Why choose a custom website?",
-    "a1": "A custom solution allows us to adapt the user experience, features and architecture to your actual business objectives. It also provides greater flexibility as your business grows.",
-
-    "q2": "Can my website be optimized for Google?",
-    "a2": "Yes. We integrate SEO best practices from the beginning, including page structure, performance, responsive design, SEO tags, internal linking, content and technical elements that help search engines understand your website.",
-
-    "q3": "Will my website work on smartphones and tablets?",
-    "a3": "Yes. We use a responsive approach to provide a consistent and comfortable experience across smartphones, tablets and desktop computers.",
-
-    "q4": "Can you connect the website to our existing tools?",
-    "a4": "Yes. Depending on your needs, we can connect your solution to business tools, databases, payment systems, external services or APIs to centralize and automate your operations.",
-
-    "q5": "Do you provide support after launch?",
-    "a5": "Yes. We can provide maintenance, updates, performance monitoring and feature improvements to keep your solution reliable and aligned with your business growth."
-  }
+      "webMobile": {
+  "title": "Web & Mobile",
+  "keywords": "Websites · Landing Pages · Apps",
+  "description": "Turn your visitors into customers with ultra-high-performance digital experiences.",
+  "longDescription": "We develop custom web and mobile platforms with Next.js and React, combining lightning-fast loading speeds, security, and conversion optimization.",
+  "ctaLabel": "Explore the solution",
+  "sub1": "Business websites & e-commerce platforms",
+  "sub2": "High-converting sales landing pages",
+  "sub3": "Custom web applications & portals",
+  "sub4": "Mobile applications (iOS & Android)"
 },
+  
       "dataPerformance": {
         "title": "Data & Performance",
         "keywords": "Analytics · KPI · Tracking",
@@ -845,26 +796,26 @@
       "button": "Book a call"
     },
     "items": {
-      "delay": {
-        "question": "What is the average timeline for project delivery?",
-        "answer": "Timelines depend on scope: typically 2 to 3 weeks for visual branding or landing pages, 4 to 6 weeks for standard showcase/e-commerce websites, and 4 to 8 week agile sprints for custom MVPs and software."
-      },
-      "services": {
-        "question": "Do you work with businesses across Morocco and globally?",
-        "answer": "Yes, absolutely. We partner with companies across Morocco (Casablanca, Rabat, Marrakech, Tangier...) as well as international clients (France, Switzerland, Middle East)."
-      },
-      "pricing": {
-        "question": "How are your rates and quotes structured?",
-        "answer": "Every business has unique requirements. We provide tailored, transparent quotes following an initial audit of your goals."
-      },
-      "tracking": {
-        "question": "How do you track and measure the impact of your marketing efforts?",
-        "answer": "We believe in complete data transparency. Every campaign is wired into automated real-time dashboards (Google Looker Studio, GA4, CRM tracking)."
-      },
-      "support": {
-        "question": "Do you provide technical support and maintenance after launch?",
-        "answer": "Yes. Launch day is only the beginning. We provide post-launch warranties, team handover training sessions, and continuous maintenance agreements."
-      }
+    "delay": {
+  "question": "How does our engagement begin?",
+  "answer": "We always start with an in-depth audit to assess your current situation, understand where you stand, identify your strengths, and pinpoint the real challenges holding you back. This thorough diagnosis allows us to design a tailored strategy, supported by concrete actions that are perfectly aligned with your objectives and the specific characteristics of your market."
+},
+"services": {
+  "question": "Do we work with businesses across all industries?",
+  "answer": "We work with businesses of all sizes, from young startups to established organizations, regardless of their industry. Our strength lies in our ability to adapt seamlessly to different professional environments. We take the time to understand the specific characteristics of your business and market to fully meet your needs."
+},
+"pricing": {
+  "question": "How long does our engagement last?",
+  "answer": "It depends on your objectives and the size of the project. It can range from a few weeks for a targeted redesign or strategic implementation to long-term partnerships focused on continuously managing and optimizing your performance. We define a clear and realistic timeline from the start, with specific milestones to move forward together."
+},
+"tracking": {
+  "question": "How do we ensure communication and project tracking on a daily basis?",
+  "answer": "We rely on simple and direct communication, without unnecessary jargon, to make things easier for you and keep you informed in real time. Regular meetings are scheduled to validate each stage together and make adjustments when needed, giving you complete visibility and control over your project's progress."
+},
+"support": {
+  "question": "Do you provide support and maintenance after the project is delivered?",
+  "answer": "Absolutely. Delivery does not mark the end of our collaboration. We provide post-launch technical support and regular follow-up to ensure the continued performance and stability of your project."
+}
     }
   },
   "Cta": {
@@ -980,6 +931,8 @@
     
       
       "baselineBuzz": {
+        "metaTitle": "When Vaseline Becomes Baseline: The Story of a Perfect Marketing Buzz | Nexsetia",
+"metaDescription": "The cosmetics giant was renamed \"Baseline\" for the duration of a meme: discover how Vaseline capitalized on the buzz with spontaneity and self-deprecating humor.",
         "title": "When Vaseline Becomes Baseline: Anatomy of a Flawless Marketing Buzz",
         "p1": "We've all laughed at a mispronounced word. But seeing a global brand completely rebrand itself to join the joke is an entirely different story.",
 "img1Alt": "Baseline - Min Day Lee pronouncing Baseline with viral TikTok comments and reactions",        "img1Caption": "Min Day Lee's viral TikTok video after pronouncing 'Baseline'.",

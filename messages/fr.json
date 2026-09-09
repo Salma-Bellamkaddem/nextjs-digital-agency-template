@@ -795,27 +795,22 @@
       "button": "Réserver un appel"
     },
     "items": {
-      "delay": {
-        "question": "Quels sont les délais moyens pour la réalisation d'un projet ?",
-        "answer": "Les délais dépendent de l'envergure du projet : comptez 2 à 3 semaines pour une identité visuelle ou une landing page, 4 à 6 semaines pour un site vitrine ou e-commerce complet, et des sprints agiles de 4 à 8 semaines pour un MVP ou une application sur-mesure."
-      },
-      "services": {
-        "question": "Accompagnez-vous les entreprises partout au Maroc et à l'international ?",
-        "answer": "Oui, absolument. Nous collaborons avec des entreprises partout au Maroc (Casablanca, Rabat, Marrakech, Tanger...) ainsi qu'avec des clients internationaux (France, Suisse, pays du Golfe)."
-      },
-      "pricing": {
-        "question": "Comment sont calculés vos tarifs et devis ?",
-        "answer": "Chaque entreprise a des besoins uniques. Nos devis sont personnalisés et transparents, établis après un audit initial de vos objectifs."
-      },
-      "tracking": {
-        "question": "Comment mesurez-vous l'impact et les résultats de vos actions marketing ?",
-        "answer": "Nous croyons en la transparence par la donnée. Chaque campagne ou prestation est adossée à un tableau de bord en temps réel."
-      },
-      "support": {
-        "question": "Assurez-vous un support et une maintenance après la livraison du projet ?",
-        "answer": "Absolument. La livraison ne marque pas la fin de notre collaboration. Nous offrons une garantie technique post-lancement et un suivi régulier."
-      }
-    }
+    "delay": {
+  "question": "Par quoi se lance notre accompagnement ?",
+  "answer": "Nous démarrons systématiquement par un audit approfondi pour diagnostiquer votre situation, identifier où vous en êtes, mesurer vos forces en présence et cibler vos réels points de blocage. C’est uniquement grâce à ce diagnostic approfondi que nous pouvons ensuite concevoir une stratégie sur mesure, assortie d’actions concrètes et parfaitement adaptées à vos objectifs et aux spécificités de votre marché."
+},
+"services": {
+  "question": "Intervenons-nous dans tous les secteurs d’activité ?",
+  "answer": "Nous accompagnons des entreprises de toutes tailles, des jeunes structures aux organisations établies, quel que soit votre domaine. Notre force réside dans notre capacité à nous adapter avec fluidité aux différents univers professionnels : nous prenons le temps d’assimiler les particularités de votre cadre d’entreprise pour épouser parfaitement les exigences de votre marché."
+},
+"pricing": {
+  "question": "Combien de temps dure notre accompagnement ?",
+  "answer": "Tout dépend de vos objectifs et de la taille du projet. Cela peut aller de quelques semaines pour une refonte ciblée ou une mise en place stratégique, à des collaborations sur le long terme pour piloter et optimiser vos performances en continu. Nous définissons ainsi un calendrier clair et réaliste dès le lancement, rythmé par des jalons précis pour avancer main dans la main."
+},
+"tracking": {
+  "question": "Comment assurons-nous la communication et le suivi du projet au quotidien ?",
+  "answer": "Nous misons sur une communication simple et directe, sans jargon superflu, pour vous faciliter les choses et vous tenir informés en temps réel. Des points réguliers sont planifiés pour valider chaque étape ensemble et ajuster le tir si besoin, vous garantissant ainsi un contrôle total sur l’avancement de votre projet."
+}}
   },
   "Cta": {
     "badge": "Prêt à passer à l'action",
@@ -929,6 +924,8 @@
     "posts": {
     
       "baselineBuzz": {
+        "metaTitle": "Quand Vaseline devient Baseline : chronique d'un buzz marketing parfait | Nexsetia",
+        "metaDescription": "Le géant de la cosmétique rebaptisé \"Baseline\" le temps d'un mème : découvrez comment Vaseline a surfé sur le buzz avec spontanéité et autodérision.",
         "title": "Quand Vaseline devient Baseline : chronique d'un buzz marketing parfait",
         "p1": "On a tous déjà rigolé en entendant quelqu’un prononcer mal un mot. Mais voir une marque mondiale changer carrément de nom pour s'en amuser, c'est une autre histoire.",
 "img1Alt": "Baseline - Min Day Lee prononçant Baseline avec les commentaires TikTok et la réaction officielle",

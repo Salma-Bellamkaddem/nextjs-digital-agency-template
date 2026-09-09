@@ -1,4 +1,3 @@
-import { ReactElement } from 'react'
 
 export type FaqIconKey = 'clock' | 'globe' | 'document' | 'rocket' | 'headset'
 
@@ -29,9 +28,5 @@ export const FAQ_ITEMS: IFaqItem[] = [
     key: 'tracking',
     icon: 'rocket',
   },
-  {
-    id: 'faq-support',
-    key: 'support',
-    icon: 'headset',
-  },
+  
 ]
