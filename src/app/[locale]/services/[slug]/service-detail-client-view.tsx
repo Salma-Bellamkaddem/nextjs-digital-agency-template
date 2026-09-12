@@ -210,73 +210,83 @@ export default function ServiceDetailClientView({ service, locale }: ServiceDeta
             </Grid>
 
             {/* Colonne Droite : Live Dashboard */}
-            <Grid size={{ xs: 12, lg: 6 }}>
-              <Box
-                sx={{
-                  p: { xs: 2.5, sm: 3.5 },
-                  borderRadius: 5,
-                  bgcolor: 'rgba(42, 4, 32, 0.85)',
-                  border: `1px solid ${BRAND.light}30`,
-                  boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)',
-                  backdropFilter: 'blur(12px)',
-                }}
-              >
-                <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
-                  <Typography sx={{ fontSize: 11, fontWeight: 800, color: BRAND.light, letterSpacing: 1 }}>
-                    {t.has('livePerformance') ? t('livePerformance') : 'PERFORMANCE LIVE'}
-                  </Typography>
-                  <Chip
-                    size="small"
-                    label={t.has('activeCampaign') ? t('activeCampaign') : 'Campagne Active'}
-                    sx={{
-                      bgcolor: 'rgba(16, 185, 129, 0.15)',
-                      color: '#10B981',
-                      fontWeight: 800,
-                      fontSize: 10,
-                    }}
-                  />
-                </Stack>
+          {/* Colonne Droite : Score de Performance & Rigueur */}
+<Grid size={{ xs: 12, lg: 6 }}>
+  <Box
+    sx={{
+      p: { xs: 2.5, sm: 3.5 },
+      borderRadius: 5,
+      bgcolor: 'rgba(42, 4, 32, 0.85)',
+      border: `1px solid ${BRAND.light}30`,
+      boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5)',
+      backdropFilter: 'blur(12px)',
+    }}
+  >
+    <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 3 }}>
+      <Typography sx={{ fontSize: 11, fontWeight: 800, color: BRAND.light, letterSpacing: 1 }}>
+        {isRtl ? 'معايير الجودة التقنية' : 'STANDARDS DE LIVRAISON'}
+      </Typography>
+      <Chip
+        size="small"
+        label={isRtl ? 'جاهز للإطلاق' : 'Audit Optimisé'}
+        sx={{
+          bgcolor: 'rgba(16, 185, 129, 0.15)',
+          color: '#10B981',
+          fontWeight: 800,
+          fontSize: 10,
+        }}
+      />
+    </Stack>
 
-                <Typography sx={{ fontSize: { xs: '2.4rem', sm: '3rem' }, fontWeight: 900, color: '#FFFFFF', lineHeight: 1 }}>
-                  {service.heroStats.impressions}
-                </Typography>
-                <Typography sx={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.6)', mb: 3 }}>
-                  {t.has('impressions') ? t('impressions') : 'Impressions'}
-                </Typography>
+    {/* Grand Chiffre d'Impact : 98/100 */}
+    <Typography sx={{ fontSize: { xs: '2.4rem', sm: '3rem' }, fontWeight: 900, color: '#FFFFFF', lineHeight: 1 }}>
+      98/100
+    </Typography>
+    <Typography sx={{ fontSize: '0.8rem', color: 'rgba(255, 255, 255, 0.7)', mb: 3 }}>
+      {isRtl ? 'مؤشر كفاءة الأداء وتجربة المستخدم' : 'Indice de performance & optimisation globale'}
+    </Typography>
 
-                <Box sx={{ height: 90, width: '100%', mb: 3, display: 'flex', alignItems: 'flex-end', gap: 1 }}>
-                  {[35, 55, 40, 70, 60, 95, 85, 100].map((h, i) => (
-                    <Box
-                      key={i}
-                      sx={{
-                        flex: 1,
-                        height: `${h}%`,
-                        borderRadius: '4px 4px 0 0',
-                        background:
-                          i === 7
-                            ? `linear-gradient(to top, ${BRAND.primary}, ${BRAND.light})`
-                            : `${BRAND.primary}45`,
-                      }}
-                    />
-                  ))}
-                </Box>
+    {/* Barres d'évaluation par pôle */}
+    <Box sx={{ height: 80, width: '100%', mb: 3, display: 'flex', alignItems: 'flex-end', gap: 1 }}>
+      {[75, 85, 80, 92, 88, 95, 94, 100].map((h, i) => (
+        <Box
+          key={i}
+          sx={{
+            flex: 1,
+            height: `${h}%`,
+            borderRadius: '4px 4px 0 0',
+            background:
+              i === 7
+                ? `linear-gradient(to top, ${BRAND.primary}, ${BRAND.light})`
+                : `${BRAND.primary}45`,
+          }}
+        />
+      ))}
+    </Box>
 
-                <Grid container spacing={2}>
-                  <Grid size={{ xs: 4 }}>
-                    <Typography sx={{ fontSize: '1.1rem', fontWeight: 900, color: '#FFFFFF' }}>{service.heroStats.clicks}</Typography>
-                    <Typography sx={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.6)' }}>{t.has('clicks') ? t('clicks') : 'Visiteurs'}</Typography>
-                  </Grid>
-                  <Grid size={{ xs: 4 }}>
-                    <Typography sx={{ fontSize: '1.1rem', fontWeight: 900, color: '#FFFFFF' }}>{service.heroStats.cpc}</Typography>
-                    <Typography sx={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.6)' }}>{t.has('avgCpc') ? t('avgCpc') : 'CPC Moyen'}</Typography>
-                  </Grid>
-                  <Grid size={{ xs: 4 }}>
-                    <Typography sx={{ fontSize: '1.1rem', fontWeight: 900, color: '#10B981' }}>{service.heroStats.growth}</Typography>
-                    <Typography sx={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.6)' }}>{t.has('growth') ? t('growth') : 'Croissance'}</Typography>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Grid>
+    {/* 3 Métriques Techniques & Business Réelles */}
+    <Grid container spacing={2}>
+      <Grid size={{ xs: 4 }}>
+        <Typography sx={{ fontSize: '1.1rem', fontWeight: 900, color: '#FFFFFF' }}>&lt; 1.5s</Typography>
+        <Typography sx={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+          {isRtl ? 'سرعة التحميل' : 'Vitesse / Core Web Vitals'}
+        </Typography>
+      </Grid>
+      <Grid size={{ xs: 4 }}>
+        <Typography sx={{ fontSize: '1.1rem', fontWeight: 900, color: '#FFFFFF' }}>100%</Typography>
+        <Typography sx={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+          {isRtl ? 'تتبع دقيق للبيانات' : 'Tracking GA4 / GTM'}
+        </Typography>
+      </Grid>
+      <Grid size={{ xs: 4 }}>
+        <Typography sx={{ fontSize: '1.1rem', fontWeight: 900, color: '#10B981' }}>Sur-mesure</Typography>
+        <Typography sx={{ fontSize: '0.7rem', color: 'rgba(255, 255, 255, 0.6)' }}>
+          {isRtl ? 'هندسة بدون قوالب' : 'Code & Stratégie Clean'}
+        </Typography>
+      </Grid>
+    </Grid>
+  </Box>
+</Grid>
           </Grid>
         </Container>
       </Box>
