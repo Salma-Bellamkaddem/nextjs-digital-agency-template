@@ -60,6 +60,10 @@ export async function generateMetadata({
 
   return {
     metadataBase: new URL(siteUrl),
+    other: {
+      'p:domain_verify': '949e187c0576e0d472ee31b5a7bfb274',
+    },
+  
     title: {
       default: t('titleDefault'),
       template: '%s | Nexsetia',
