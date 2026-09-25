@@ -5,10 +5,9 @@ import { TARGET_CITIES } from '@/constants/locations'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://www.nexsetia.com'
-  const locales = ['fr', 'ar', 'en']
+  const locales = ['fr', 'ar', 'en'] as const
   const now = new Date()
 
-  // Génère les entrées hreflang pour FR, AR, EN + la balise par défaut x-default
   const buildAlternates = (path: string) => ({
     languages: {
       ...Object.fromEntries(
@@ -20,7 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const sitemapEntries: MetadataRoute.Sitemap = []
 
-  // 1. Pages statiques principales (Accueil, Blog, Recrutement)
+  // 1. Pages statiques principales
   const corePaths = [
     { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
     { path: '/blog', priority: 0.9, changeFrequency: 'daily' as const },
@@ -39,7 +38,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   })
 
-  // 2. Pages Services dynamiques
+  // 2. Pages Services — les 6 services existent dans les 3 langues (même liste, clés i18n séparées)
   services.forEach((service) => {
     const path = `/services/${service.slug}`
     locales.forEach((locale) => {
@@ -53,7 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   })
 
-  // 3. Articles de Blog dynamiques (FR, AR, EN avec date réelle de publication)
+  // 3. Articles de blog
   blogPosts.forEach((post) => {
     const path = `/blog/${post.slug}`
     const postDate = post.publishedAt ? new Date(post.publishedAt) : now
@@ -70,7 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })
   })
 
-  // 4. Pages SEO Locales (Villes cibles)
+  // 4. Pages villes
   TARGET_CITIES.forEach((city) => {
     const path = `/agence-marketing-digital-${city.slug}`
     locales.forEach((locale) => {

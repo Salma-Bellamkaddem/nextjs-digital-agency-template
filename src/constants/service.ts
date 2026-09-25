@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 
 export interface IService {
+  
   id: number
   slug: string
   number: string
@@ -63,6 +64,7 @@ export interface IServiceDetailConfig {
 
 // ── Liste des 6 services ──
 export const services: IService[] = [
+  
   {
     id: 1,
     slug: 'strategie-data',
