@@ -8,12 +8,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const locales = ['fr', 'ar', 'en'] as const
   const now = new Date()
 
-  const buildAlternates = (path: string) => ({
+  // Helper sécurisé pour construire les alternates avec gestion des slugs localisés si disponibles
+  const buildAlternates = (getLocalizedPath: (loc: string) => string) => ({
     languages: {
       ...Object.fromEntries(
-        locales.map((loc) => [loc, `${baseUrl}/${loc}${path}`])
+        locales.map((loc) => [loc, `${baseUrl}/${loc}${getLocalizedPath(loc)}`])
       ),
-      'x-default': `${baseUrl}/fr${path}`,
+      'x-default': `${baseUrl}/fr${getLocalizedPath('fr')}`,
     },
   })
 
@@ -33,43 +34,55 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: now,
         changeFrequency,
         priority,
-        alternates: buildAlternates(path),
+        alternates: buildAlternates(() => path),
       })
     })
   })
 
-  // 2. Pages Services — les 6 services existent dans les 3 langues (même liste, clés i18n séparées)
+  // 2. Pages Services — Sécurisation des slugs par langue si votre objet service le gère
   services.forEach((service) => {
-    const path = `/services/${service.slug}`
     locales.forEach((locale) => {
+      // Si vos slugs sont multilingues, utilisez service.slug[locale], sinon fallback sur service.slug
+      const serviceSlug = typeof service.slug === 'object' ? service.slug[locale] : service.slug
+      const path = `/services/${serviceSlug}`
+
       sitemapEntries.push({
         url: `${baseUrl}/${locale}${path}`,
         lastModified: now,
         changeFrequency: 'monthly' as const,
         priority: 0.9,
-        alternates: buildAlternates(path),
+        alternates: buildAlternates((loc) => {
+          const locSlug = typeof service.slug === 'object' ? service.slug[loc] : service.slug
+          return `/services/${locSlug}`
+        }),
       })
     })
   })
 
   // 3. Articles de blog
   blogPosts.forEach((post) => {
-    const path = `/blog/${post.slug}`
     const postDate = post.publishedAt ? new Date(post.publishedAt) : now
     const validDate = isNaN(postDate.getTime()) ? now : postDate
 
     locales.forEach((locale) => {
+      // Idem : vérifiez si vos articles gèrent des slugs par langue, sinon utilisez le slug par défaut
+      const postSlug = typeof post.slug === 'object' ? post.slug[locale] : post.slug
+      const path = `/blog/${postSlug}`
+
       sitemapEntries.push({
         url: `${baseUrl}/${locale}${path}`,
         lastModified: validDate,
         changeFrequency: 'weekly' as const,
         priority: 0.8,
-        alternates: buildAlternates(path),
+        alternates: buildAlternates((loc) => {
+          const locSlug = typeof post.slug === 'object' ? post.slug[loc] : post.slug
+          return `/blog/${locSlug}`
+        }),
       })
     })
   })
 
-  // 4. Pages villes
+  // 4. Pages villes (Les noms de villes restent généralement identiques, mais géré proprement)
   TARGET_CITIES.forEach((city) => {
     const path = `/agence-marketing-digital-${city.slug}`
     locales.forEach((locale) => {
@@ -78,7 +91,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         lastModified: now,
         changeFrequency: 'weekly' as const,
         priority: 0.85,
-        alternates: buildAlternates(path),
+        alternates: buildAlternates(() => path),
       })
     })
   })
