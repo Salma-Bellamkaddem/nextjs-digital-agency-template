@@ -979,11 +979,15 @@
       "contextText": "Affirmez votre identité avec un branding distinctif et du marketing ROIste."
     }
   },
-  "Metadata": {
-    "root": {
-      "ogTitle": "Nexsetia | Agence Marketing Digital & Solutions Web",
-      "description": "Nexsetia conçoit des stratégies digitales sur-mesure : acquisition de clients, SEO, campagnes Ads et solutions web."
-    },
+
+    "Metadata": {
+      "root": {
+        "titleDefault": "Nexsetia | Agence Marketing Digital & Solutions Web",
+        "ogTitle": "Nexsetia | Agence Marketing Digital & Solutions Web",
+        "description": "Nexsetia conçoit des stratégies digitales sur-mesure : acquisition de clients, SEO, campagnes Ads et solutions web."
+      }
+,
+
     "notFound": {
       "title": "Page Introuvable (404)",
       "description": "Désolé, la page demandée n'existe pas ou a été déplacée."

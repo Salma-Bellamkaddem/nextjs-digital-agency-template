@@ -984,12 +984,15 @@
       "contextText": "Stand out with distinctive branding and ROI-focused digital campaigns in Marrakech."
     }
   },
-  "Metadata": {
-    "root": {
-      "titleDefault": "Nexsetia | Digital Marketing & Web Development Agency in Morocco",
-      "ogTitle": "Nexsetia | Growth Marketing & Web Engineering Agency",
-      "description": "Nexsetia builds tailored digital growth engines: customer acquisition funnels, SEO, paid Ads, full-stack web platforms, and premium branding."
-    },
+
+    "Metadata": {
+      "root": {
+        "titleDefault": "Nexsetia | Digital Marketing & Web Development Agency in Morocco",
+        "ogTitle": "Nexsetia | Growth Marketing & Web Engineering Agency",
+        "description": "Nexsetia builds tailored digital growth engines: customer acquisition funnels, SEO, paid Ads, full-stack web platforms, and premium branding."
+      }
+
+,
     "notFound": {
       "title": "Page Not Found (404)",
       "description": "Sorry, the page you are looking for does not exist or has been moved. Explore our services and blog articles."
