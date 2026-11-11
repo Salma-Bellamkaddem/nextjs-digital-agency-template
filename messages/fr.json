@@ -945,7 +945,31 @@
         "faq1A": "C'est l'art pour une marque de rebondir en temps réel sur une tendance virale ou une actualité spontanée pour en faire une opportunité d'engagement authentique.",
         "faq2Q": "Pourquoi la réaction de Vaseline a-t-elle été si efficace ?",
         "faq2A": "Au lieu de censurer ou corriger formellement l'erreur phonétique, la marque a embrassé l'autodérision, renommé ses comptes officiels et célébré sa communauté."
+      },
+      "nvidiaHuang": {
+
+          "seoDescription": "Découvrez les enjeux technologiques, économiques et géopolitiques autour de NVIDIA, Jensen Huang et du marché mondial des puces d'intelligence artificielle."
+    ,
+        "title": "Quand l'amour coûte 400 milliards : Jensen Huang, Nvidia et la liaison qui secoue Wall Street",
+        "metaTitle": "Jensen Huang : sa liaison coûte 400 milliards à Nvidia | Nexsetia",
+        "metaDescription": "Nvidia perd 400 milliards de dollars en deux séances après l'aveu d'infidélité de Jensen Huang et l'ouverture d'une enquête du conseil d'administration.",
+        "p1": "Les amis, on a tous fait des erreurs par amour. Mais là, on change de division, lol. Jensen Huang, le patron de Nvidia, vit une semaine que même le meilleur scénariste de Netflix n'aurait pas osé écrire : il a reconnu avoir été infidèle, son conseil d'administration enquête, et la bourse ne lui a fait aucun cadeau.",
+        "p2": "<strongText>400 milliards de dollars, juste ça.</strongText> Oui, vous avez bien lu : 400 milliards, en deux jours. Mardi, l'action clôturait 30,6 % sous son sommet de vendredi (243,37 $). Si elle termine la semaine en baisse, ce sera sa sixième semaine de recul d'affilée, du jamais-vu depuis 2012. Aïe.",
+        "p3": "<strongText>Mais qu'est-ce qui s'est passé ?</strongText> Fin octobre, le New York Times publie une enquête. Selon le journal, le renseignement américain estime qu'Alice Huang, une dirigeante chinoise liée à la société Megaspeed, transmettait des informations à Pékin, et qu'elle aurait noué une relation proche avec Jensen Huang. Détail à retenir : elle n'a aucun lien de parenté avec lui, malgré le même nom. Plot twist : au lieu de nier, Jensen Huang écrit à ses équipes : « J'ai été infidèle à ma femme. Mes actions ont blessé ma famille et nos enfants. » Au moins, il ne tourne pas autour du pot.",
+        "p4": "<strongText>Le conseil d'administration passe en mode « on vérifie tout ».</strongText> Une enquête indépendante est lancée, menée par un comité d'administrateurs indépendants avec l'aide de conseils juridiques externes. Jensen Huang dit soutenir pleinement cette revue. Le conseil affirme n'avoir « aucune raison de croire » que des secrets de l'entreprise ou la sécurité nationale aient été compromis.",
+        "p5": "<strongText>Et la Chine dans tout ça ?</strongText> Pékin a réagi vite : le porte-parole de la diplomatie chinoise, Guo Jiakun, dénonce un récit « entièrement infondé » et une campagne de dénigrement. Important : à ce stade, l'espionnage reste une allégation. Rien n'est prouvé publiquement.",
+        "p6": "<strongText>Pourquoi Wall Street panique autant.</strongText> Parce que Jensen Huang n'est pas juste un patron : c'est une figure centrale du boom de l'IA et un conseiller informel proche de Donald Trump. L'analyste Dan Ives parle d'un « moment de honte » et s'attend à plusieurs enquêtes du Congrès. Un autre analyste, Jay Goldberg, prévient que l'action chuterait encore plus fort si Jensen Huang était écarté. Et Nvidia avait déjà des soucis avec les craintes d'une bulle autour de l'IA. Mauvais timing, lol.",
+        "p7": "<strongText>Ce qu'on va surveiller.</strongText> Les conclusions de l'enquête du conseil d'administration, d'éventuelles auditions au Congrès américain, l'avenir de Jensen Huang à la tête de Nvidia et l'impact sur les relations tech entre les États-Unis et la Chine. On vous tient au courant dès que ça bouge. Et vous, vous en pensez quoi ? Dites-le-nous en commentaire ! (Sources : ABC News, AFP, Korea JoongAng Daily, New York Times. Article informatif, pas un conseil en investissement.)",
+        "img1Alt": "Graphique de la chute de l'action Nvidia",
+        "img1Caption": "La chute du titre Nvidia après les révélations.",
+        "img2Alt": "Siège de Nvidia à Santa Clara",
+        "img2Caption": "Le conseil d'administration a ouvert une enquête indépendante.",
+        "faq1Q": "Combien Nvidia a-t-elle perdu en bourse ?",
+        "faq1A": "Environ 400 milliards de dollars de capitalisation boursière en deux séances, selon la presse financière. L'action a clôturé mardi 30,6 % sous son sommet de vendredi.",
+        "faq2Q": "L'espionnage est-il prouvé ?",
+        "faq2A": "Non. Il s'agit d'allégations rapportées par la presse américaine, que Pékin dément. Le conseil d'administration de Nvidia indique n'avoir aucune raison de croire que des secrets de l'entreprise ou la sécurité nationale aient été compromis."
       }
+  
     }
   },
   "Locations": {

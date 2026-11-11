@@ -464,14 +464,14 @@ export default async function BlogPostPage({ params }: ArticleProps) {
                     background: 'rgba(255, 255, 255, 0.05)',
                   }}
                 >
-                  <Image
-                    src={post.heroImage}
-                    alt={postTitle}
-                    fill
-                    priority
-                    sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 440px"
-                    style={{ objectFit: 'cover' }}
-                  />
+                <Image
+  src={post.heroImage}
+  alt={post.heroImage || `${postTitle} | Nexsetia`}
+  title={postTitle}
+  fill
+  sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 400px"
+  style={{ objectFit: 'cover' }}
+/>
                 </Box>
               </Box>
             </Box>
